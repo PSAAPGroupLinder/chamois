@@ -1,0 +1,357 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>CombinerGenerator | Chamois</title><link rel="icon" type="image/x-icon" href="../../media/chamois_logo.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down">Chamois</a><a href="https://github.com/matthiasneuner/chamois" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="7149e413-194b-4c20-9fc4-08ff5d3ee456" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#" class="sidenav-trigger" data-target="15759350-8006-4fb6-b839-a254e42a9b23"><i class="material-icons">menu</i></a><ul class="sidenav" id="15759350-8006-4fb6-b839-a254e42a9b23"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="c1a8df21-98b8-412d-aaaf-d04ab5fd7605" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="7149e413-194b-4c20-9fc4-08ff5d3ee456"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul><ul class="dropdown-content" id="c1a8df21-98b8-412d-aaaf-d04ab5fd7605"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="moose-content col s12 m12 l12"><section id="12d39518-020c-449f-91e4-0fe21267d747" data-section-level="1" data-section-text="CombinerGenerator"><h1 id="combinergenerator">CombinerGenerator</h1><p>Combine multiple meshes (or copies of one mesh) together into one (disjoint) mesh.  Can optionally translate those meshes before combining them.</p><section id="591ba496-abb0-49b5-9de6-759f73299da3" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p>The <code>CombinerGenerator</code> allows the user to combine the outputs of multiple <code>MeshGenerator</code>s into a single mesh.  This is somewhat similar to <a href="../mesh/StitchedMesh.html">StitchedMesh</a> with the difference being that <code>CombinerGenerator</code> makes no attempt to &quot;heal&quot; / &quot;join&quot; the mesh like <a href="../mesh/StitchedMesh.html">StitchedMesh</a>.  There <code>CombinerGenerator</code> is more suited to creation of disjoint meshes (where the individual pieces are not directly tied together).</p></section><section id="fd616617-6ef2-426a-93f0-5c3f3a93c531" data-section-level="2" data-section-text="Usage"><h2 id="usage">Usage</h2><p>There are three main ways to use the <code>CombinerGenerator</code>:</p><section id="374380df-14b2-42fe-8ea4-eabed3f6e75a" data-section-level="3" data-section-text="1 . Combine Multiple s MeshGenerator"><h3 id="1-combine-multiple-s">1. Combine Multiple <code>MeshGenerator</code>s</h3><p>The most straightforward thing to do is simply to combine the output of multiple <code>MeshGenerator</code>s together into a single mesh.  For example:</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Mesh]
+  [gen1]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 10
+    ny = 10
+    xmin = 0
+    xmax = 1
+    ymin = 0
+    ymax = 1
+  []
+  [gen2]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 12
+    ny = 12
+    xmin = 2
+    xmax = 3
+    ymin = 2
+    ymax = 3
+  []
+  [gen3]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 14
+    ny = 14
+    xmin = 3.5
+    xmax = 5
+    ymin = 3
+    ymax = 4
+  []
+  [cmbn]
+    type = CombinerGenerator
+    inputs = &#x27;gen1 gen2 gen3&#x27;
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#21067491-5652-400c-8fe7-620f32c7a254">(moose/test/tests/meshgenerators/combiner_generator/combiner_multi_input.i)</a><p>Will generate a mesh that looks like:</p><picture class="materialboxed moose-image"><img src="../../media/meshgenerators/combiner_multi.png" style="width:50%;"></img></picture></section><section id="14592554-7e83-44d9-9342-736eebec615b" data-section-level="3" data-section-text="2 . Combine Multiple s AND Translate Them MeshGenerator"><h3 id="2-combine-multiple-s-and-translate-them">2. Combine Multiple <code>MeshGenerator</code>s AND Translate Them</h3><p>It is also possible to translate (move) the input <code>MeshGenerator</code>s as they are combined.  This is done using the <code>positions</code> option which takes triplets of floating point numbers that are interpreted as displacement vectors for moving each of the input meshes.</p><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note</span></div><div class="card-content"><div class="moose-alert-content"><p>If you specify <code>positions</code> then the number of <code>positions</code> must match the number of <code>inputs</code>, unless only one input is specified (more on that in a moment).</p></div></div></div><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Mesh]
+  [gen1]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 10
+    ny = 10
+  []
+  [gen2]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 12
+    ny = 12
+  []
+  [gen3]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 14
+    ny = 14
+  []
+  [cmbn]
+    type = CombinerGenerator
+    inputs = &#x27;gen1 gen2 gen3&#x27;
+    positions = &#x27;1 0 0 2 2 2 3 0 0&#x27;
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#60d5629c-4a40-4041-8f79-e0c7faec4cd2">(moose/test/tests/meshgenerators/combiner_generator/combiner_multi_input_translate.i)</a><p>Will generate a mesh that looks like:</p><picture class="materialboxed moose-image"><img src="../../media/meshgenerators/combiner_multi_translate.png" style="width:75%;"></img></picture><p>Alternatively, the same displacement vectors can be supplied in a file with the <code>positions_file</code> option. The above mesh can equivalently be generated with the following.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Mesh]
+  [gen1]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 10
+    ny = 10
+  []
+  [gen2]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 12
+    ny = 12
+  []
+  [gen3]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 14
+    ny = 14
+  []
+  [cmbn]
+    type = CombinerGenerator
+    inputs = &#x27;gen1 gen2 gen3&#x27;
+    positions_file = &#x27;positions.txt&#x27;
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#0a2fe2a8-0872-4b22-91a5-bdffaae30f59">(moose/test/tests/meshgenerators/combiner_generator/combiner_multi_input_translate_from_file.i)</a><p>where the <code>positions.txt</code> file contains the floating point triplets.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">1 0 0
+2 2 2
+3 0 0
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#7ab79fc6-f09d-413a-bc18-bbf5253ca871">(moose/test/tests/meshgenerators/combiner_generator/positions.txt)</a><p>The same restrictions on <code>positions</code> also apply to the number of entries in <code>position_file</code>.</p></section><section id="abef6822-0daa-4b88-9533-72a015f5d1cc" data-section-level="3" data-section-text="3 . Copy a Single Input Multiple Times With Translations"><h3 id="3-copy-a-single-input-multiple-times-with-translations">3. Copy a Single Input Multiple Times With Translations</h3><p>The final option is to provide exactly one <code>inputs</code> but specify multiple <code>positions</code>.  This will cause the single input to be copied multiple times with the position of each copy specified by the <code>positions</code> parameter.  For example</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Mesh]
+  [gen]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 10
+    ny = 10
+  []
+  [cmbn]
+    type = CombinerGenerator
+    inputs = &#x27;gen&#x27;
+    positions = &#x27;1 0 0 2 2 2 3 0 0&#x27;
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#0a35a889-9d26-4efc-908a-a0c16d948748">(moose/test/tests/meshgenerators/combiner_generator/combiner_generator.i)</a><p>Will generate a mesh that looks like:</p><picture class="materialboxed moose-image"><img src="../../media/meshgenerators/combiner.png" style="width:75%;"></img></picture><p>Again, the same capability can be achieved with the <code>positions_file</code> option.</p></section></section><section id="16da006a-d555-4094-8260-e5098eda0847" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="249ba14c-347f-4e1a-be38-f7339df1e8e6" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">inputs</span><span class="moose-parameter-header-description">The input MeshGenerators.  This can either be N generators or 1 generator.  If only 1 is given then 'positions' must also be given.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;MeshGeneratorName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The input MeshGenerators.  This can either be N generators or 1 generator.  If only 1 is given then 'positions' must also be given.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="5ec68086-79b5-4871-8940-8e6afc556599" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">positions</span><span class="moose-parameter-header-description">The (optional) position of each given mesh.  If N 'inputs' were given then this must either be left blank or N positions must be given.  If 1 input was given then this MUST be provided.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;libMesh::Point&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The (optional) position of each given mesh.  If N 'inputs' were given then this must either be left blank or N positions must be given.  If 1 input was given then this MUST be provided.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">positions_file</span><span class="moose-parameter-header-description">Alternative way to provide the position of each given mesh.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;FileName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Alternative way to provide the position of each given mesh.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">show_info</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not to show mesh info after generating the mesh (bounding box, element types, sidesets, nodesets, subdomains, etc)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Whether or not to show mesh info after generating the mesh (bounding box, element types, sidesets, nodesets, subdomains, etc)</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="f28a2e72-1c01-4488-9dac-29cac8a429d0" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="21067491-5652-400c-8fe7-620f32c7a254"><div class="modal-content"><h4>(moose/test/tests/meshgenerators/combiner_generator/combiner_multi_input.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  [gen1]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 10
+    ny = 10
+    xmin=0
+    xmax=1
+    ymin=0
+    ymax=1
+  []
+  [gen2]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 12
+    ny = 12
+    xmin=2
+    xmax=3
+    ymin=2
+    ymax=3
+  []
+  [gen3]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 14
+    ny = 14
+    xmin=3.5
+    xmax=5
+    ymin=3
+    ymax=4
+  []
+  [cmbn]
+    type = CombinerGenerator
+    inputs = &#x27;gen1 gen2 gen3&#x27;
+  []
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = Diffusion
+    variable = u
+  []
+[]
+
+[BCs]
+  [left]
+    type = DirichletBC
+    variable = u
+    boundary = &#x27;left&#x27;
+    value = 0
+  []
+  [right]
+    type = DirichletBC
+    variable = u
+    boundary = &#x27;right&#x27;
+    value = 1
+  []
+[]
+
+[Executioner]
+  type = Steady
+  solve_type = PJFNK
+  petsc_options_iname = &#x27;-pc_type -pc_hypre_type&#x27;
+  petsc_options_value = &#x27;hypre boomeramg&#x27;
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="60d5629c-4a40-4041-8f79-e0c7faec4cd2"><div class="modal-content"><h4>(moose/test/tests/meshgenerators/combiner_generator/combiner_multi_input_translate.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  [gen1]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 10
+    ny = 10
+  []
+  [gen2]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 12
+    ny = 12
+  []
+  [gen3]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 14
+    ny = 14
+  []
+  [cmbn]
+    type = CombinerGenerator
+    inputs = &#x27;gen1 gen2 gen3&#x27;
+    positions = &#x27;1 0 0 2 2 2 3 0 0&#x27;
+  []
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = Diffusion
+    variable = u
+  []
+[]
+
+[BCs]
+  [left]
+    type = DirichletBC
+    variable = u
+    boundary = &#x27;left&#x27;
+    value = 0
+  []
+  [right]
+    type = DirichletBC
+    variable = u
+    boundary = &#x27;right&#x27;
+    value = 1
+  []
+[]
+
+[Executioner]
+  type = Steady
+  solve_type = PJFNK
+  petsc_options_iname = &#x27;-pc_type -pc_hypre_type&#x27;
+  petsc_options_value = &#x27;hypre boomeramg&#x27;
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="0a2fe2a8-0872-4b22-91a5-bdffaae30f59"><div class="modal-content"><h4>(moose/test/tests/meshgenerators/combiner_generator/combiner_multi_input_translate_from_file.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  [gen1]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 10
+    ny = 10
+  []
+  [gen2]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 12
+    ny = 12
+  []
+  [gen3]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 14
+    ny = 14
+  []
+  [cmbn]
+    type = CombinerGenerator
+    inputs = &#x27;gen1 gen2 gen3&#x27;
+    positions_file = &#x27;positions.txt&#x27;
+  []
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = Diffusion
+    variable = u
+  []
+[]
+
+[BCs]
+  [left]
+    type = DirichletBC
+    variable = u
+    boundary = &#x27;left&#x27;
+    value = 0
+  []
+  [right]
+    type = DirichletBC
+    variable = u
+    boundary = &#x27;right&#x27;
+    value = 1
+  []
+[]
+
+[Executioner]
+  type = Steady
+  solve_type = PJFNK
+  petsc_options_iname = &#x27;-pc_type -pc_hypre_type&#x27;
+  petsc_options_value = &#x27;hypre boomeramg&#x27;
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="7ab79fc6-f09d-413a-bc18-bbf5253ca871"><div class="modal-content"><h4>(moose/test/tests/meshgenerators/combiner_generator/positions.txt)</h4><pre class="moose-pre"><code class="language-text">1 0 0
+2 2 2
+3 0 0
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="0a35a889-9d26-4efc-908a-a0c16d948748"><div class="modal-content"><h4>(moose/test/tests/meshgenerators/combiner_generator/combiner_generator.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  [gen]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 10
+    ny = 10
+  []
+  [cmbn]
+    type = CombinerGenerator
+    inputs = &#x27;gen&#x27;
+    positions = &#x27;1 0 0 2 2 2 3 0 0&#x27;
+  []
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = Diffusion
+    variable = u
+  []
+[]
+
+[BCs]
+  [left]
+    type = DirichletBC
+    variable = u
+    boundary = &#x27;left&#x27;
+    value = 0
+  []
+  [right]
+    type = DirichletBC
+    variable = u
+    boundary = &#x27;right&#x27;
+    value = 1
+  []
+[]
+
+[Executioner]
+  type = Steady
+  solve_type = PJFNK
+  petsc_options_iname = &#x27;-pc_type -pc_hypre_type&#x27;
+  petsc_options_value = &#x27;hypre boomeramg&#x27;
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

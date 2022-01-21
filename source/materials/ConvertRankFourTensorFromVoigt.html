@@ -1,0 +1,836 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>ConvertRankFourTensorFromVoigt | Chamois</title><link rel="icon" type="image/x-icon" href="../../media/chamois_logo.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down">Chamois</a><a href="https://github.com/matthiasneuner/chamois" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="9e2c5c3a-e73e-4969-affe-a548e7c30715" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#" class="sidenav-trigger" data-target="388c6c0d-5c47-4064-8450-e273910596b1"><i class="material-icons">menu</i></a><ul class="sidenav" id="388c6c0d-5c47-4064-8450-e273910596b1"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="a5a615b2-3a21-40b2-a78b-e4240500b1dd" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="9e2c5c3a-e73e-4969-affe-a548e7c30715"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul><ul class="dropdown-content" id="a5a615b2-3a21-40b2-a78b-e4240500b1dd"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="moose-content col s12 m12 l12"><section id="40c4a61f-0888-4ea7-8e15-a56066590844" data-section-level="1" data-section-text="ConvertRankFourTensorFromVoigt"><h1 id="convertrankfourtensorfromvoigt">ConvertRankFourTensorFromVoigt</h1><div class="card moose-alert moose-alert-construction"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">build</i><span class="moose-alert-title-brand">construction:</span>Undocumented Class</div><div class="card-content"><div class="moose-alert-content"><p>The ConvertRankFourTensorFromVoigt has not been documented. The content listed below should be used as a starting point for documenting the class, which includes the typical automatic documentation associated with a MooseObject; however, what is contained is ultimately determined by what is necessary to make the documentation clear for users.</p></div></div></div><p>Convert any RankFourTensor from (Abaqus compatible) Voigt notation</p><section id="85ca893e-bab8-4f77-a023-c7dcb9b8cf75" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p></p></section><section id="75869fee-e1d2-4e78-afd3-e64304cddc34" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><p></p></section><section id="09637b3f-d5f7-4b28-bd1a-2f984bc3dc7c" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="d65ab913-a213-4841-8c47-02399092dcbd" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">tensor</span><span class="moose-parameter-header-description">The RankFourTensor to be converted</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The RankFourTensor to be converted</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">tensor_voigt</span><span class="moose-parameter-header-description">The Voigt RankFourTensor (in matrix form) to be converted</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The Voigt RankFourTensor (in matrix form) to be converted</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="7a8051b4-bbee-4f89-a883-2b57e2bb836d" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">base_name</span><span class="moose-parameter-header-description">Optional parameter that allows the user to define multiple mechanics material systems on the same block, i.e. for multiple phases</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Optional parameter that allows the user to define multiple mechanics material systems on the same block, i.e. for multiple phases</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of blocks (ids or names) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of blocks (ids or names) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundaries (ids or names) from the mesh where this boundary condition applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of boundaries (ids or names) from the mesh where this boundary condition applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">compute</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">When false, MOOSE will not call compute methods on this material. The user must call computeProperties() after retrieving the MaterialBase via MaterialBasePropertyInterface::getMaterialBase(). Non-computed MaterialBases are not sorted for dependencies.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>When false, MOOSE will not call compute methods on this material. The user must call computeProperties() after retrieving the MaterialBase via MaterialBasePropertyInterface::getMaterialBase(). Non-computed MaterialBases are not sorted for dependencies.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">constant_on</span><span class="moose-parameter-header-default">NONE</span><span class="moose-parameter-header-description">When ELEMENT, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps.When SUBDOMAIN, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps. Evaluations on element qps will be skipped</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>NONE</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, ELEMENT, SUBDOMAIN</p><p class="moose-parameter-description"><span>Description:</span>When ELEMENT, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps.When SUBDOMAIN, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps. Evaluations on element qps will be skipped</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">declare_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any declared properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any declared properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">shear_components_half_ij</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">divide shear terms by factor 2 (i.e., for strains)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>divide shear terms by factor 2 (i.e., for strains)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">shear_components_half_kl</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">divide shear terms by factor 2 (i.e., for strains)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>divide shear terms by factor 2 (i.e., for strains)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">tensor_voigt_uses_row_major_layout</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">input tensor is in row major</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>input tensor is in row major</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="6513201c-3ee4-4afe-91ff-8519bba561ba" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="ad1cdf39-2855-44e0-ba87-42cb5c33ca92" data-section-level="3" data-section-text="Outputs Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">output_properties</span><span class="moose-parameter-header-description">List of material properties, from this material, to output (outputs must also be defined to an output type)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>List of material properties, from this material, to output (outputs must also be defined to an output type)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">outputs</span><span class="moose-parameter-header-default">none </span><span class="moose-parameter-header-description">Vector of output names were you would like to restrict the output of variables(s) associated with this object</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>none </p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;OutputName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Vector of output names were you would like to restrict the output of variables(s) associated with this object</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Outputs Parameters</h3></summary></details></section></section><section id="95d6225b-7be8-49b6-ae45-a9f9ff256ae3" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#7a121893-7248-483f-a9a7-8e3545f6b029">(examples/modleon_nonlocal_triaxial_compression_test/test.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#da9ff28e-1c79-4da5-a29e-e0d24be70aae">(test/tests/materials/voigt_conversions/plane_strain_bft_linear_elastic.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#3bbf0acf-b70e-459a-85e6-cf5418f9fa35">(examples/gerankine_lshaped_panel/test_gradient_enhanced_rankine.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#fef28fd0-c704-4af2-b117-1b5dc72ce995">(test/tests/materials/voigt_conversions/plane_strain_bft_modleon.i)</a></li></ul></section></section><div class="moose-modal modal" id="7a121893-7248-483f-a9a7-8e3545f6b029"><div class="modal-content"><h4>(examples/modleon_nonlocal_triaxial_compression_test/test.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = FileMesh
+  file = structured_triaxial_compression_test_mesh.inp
+  construct_node_list_from_side_list = false 
+[]
+
+[GlobalParams]
+  volumetric_locking_correction = false
+  displacements = &#x27;disp_x disp_y disp_z&#x27;
+  nonlocal_damage = nonlocal_damage
+  order = SECOND
+  family = LAGRANGE
+[]
+
+[Variables]
+  [disp_x] []
+  [disp_y] []
+  [disp_z] []
+  [nonlocal_damage] []
+[]
+
+[Kernels]
+  [div_sig_x]
+    type = GradientEnhancedStressDivergenceTensors
+    variable = disp_x
+    component = 0
+    use_displaced_mesh = false
+  []
+  [div_sig_y]
+    type = GradientEnhancedStressDivergenceTensors
+    variable = disp_y
+    component = 1
+    use_displaced_mesh = false
+  []
+  [div_sig_z]
+    type = GradientEnhancedStressDivergenceTensors
+    variable = disp_z
+    component = 2
+    use_displaced_mesh = false
+  []
+  [implicit_gradient_damage]
+    type = ImplicitGradientEnhancedDamage
+    variable = nonlocal_damage 
+    use_displaced_mesh = false
+  []
+[]
+
+[AuxVariables]
+  [alphaP]
+    order=CONSTANT
+    family=MONOMIAL
+  []
+  [omega]
+    order=CONSTANT
+    family=MONOMIAL
+  []
+  [von_mises]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [stress_first_invariant]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+[]
+
+[AuxKernels]
+  [alphaP_kernel]
+    type = MaterialStdVectorAux
+    variable =alphaP 
+    property = state_vars
+    index = 0
+    execute_on = TIMESTEP_END
+  []
+  [omegal_kernel]
+    type = MaterialStdVectorAux
+    variable = omega
+    property = state_vars
+    index = 4
+    execute_on = TIMESTEP_END
+  []
+  [von_mises_kernel]
+    type = RankTwoScalarAux
+    variable = von_mises
+    rank_two_tensor = stress
+    execute_on = timestep_end
+    scalar_type = VonMisesStress
+  []
+  [first_invariant_kernel]
+    type = RankTwoScalarAux
+    variable = stress_first_invariant
+    rank_two_tensor = stress
+    execute_on = timestep_end
+    scalar_type = FirstInvariant
+  []
+[]
+
+
+[Materials]
+  [marmot_material_Elastic]
+    type = ComputeMarmotMaterialGradientEnhancedHypoElastic
+    block=&#x27;top_HEX20 tbottom_HEX20&#x27;
+    marmot_material_name = MODLEONNONLOCAL
+    marmot_material_parameters = &#x27;30000.0  0.15  13e3   47.4e3    55e3     4.74e3   0.85   0.12   0.003  2.0  0.000001  15.0  10  1.00  0.0017  0&#x27;
+  []
+  [marmot_material]
+    type = ComputeMarmotMaterialGradientEnhancedHypoElastic
+    block=&#x27;notWeakElements_HEX20&#x27;
+    marmot_material_name = MODLEONNONLOCAL
+    marmot_material_parameters = &#x27;30000.0  0.15  13   47.4    55     4.74   0.85   0.12   0.003  2.0  0.000001  15.0  10  1.00  0.0010  1&#x27;
+  []
+  [marmot_material_weak]
+    type = ComputeMarmotMaterialGradientEnhancedHypoElastic
+    block=&#x27;weakElements_HEX20&#x27;
+    marmot_material_name = MODLEONNONLOCAL
+    marmot_material_parameters = &#x27;31000.0  0.15  13   44.4    53     4.54   0.85   0.12   0.003  2.0  0.000001  15.0  10  1.00  0.0010  1&#x27;
+  []
+  [dstrain]
+    type = ComputeIncrementalSmallStrain
+  []
+  [dstrain_vgt_conv]
+    type = ConvertRankTwoTensorToVoigt
+    tensor = strain_increment
+    tensor_voigt = strain_increment_voigt
+    shear_components_twice = true
+  []
+  [stress_conv]
+    type = ConvertRankTwoTensorFromVoigt
+    tensor = stress
+    tensor_voigt = stress_voigt
+    shear_components_half = false
+  []
+  [Jacobian_conv]
+    type = ConvertRankFourTensorFromVoigt
+    tensor = Jacobian_mult
+    tensor_voigt = dstress_voigt_dstrain_voigt
+    shear_components_half_ij = false
+    shear_components_half_kl = false
+    tensor_voigt_uses_row_major_layout = false
+  []
+  [dstress_dk_conv]
+    type = ConvertRankTwoTensorFromVoigt
+    tensor = dstress_dnonlocal_damage
+    tensor_voigt = dstress_voigt_dnonlocal_damage
+    shear_components_half = false
+  []
+  [dlocal_damage_dstrain_conv]
+    type = ConvertRankTwoTensorFromVoigt
+    tensor = dlocal_damage_dstrain
+    tensor_voigt = dlocal_damage_dstrain_voigt
+    shear_components_half = false
+  []
+[]
+
+
+[Functions]
+  [./rampConstant1]
+    type = PiecewiseLinear
+    x = &#x27;0. 1. 2.&#x27;
+    y = &#x27;0. 1. 1.&#x27;
+    scale_factor = 0.5
+  [../]
+  [./rampConstant2]
+    type = PiecewiseLinear
+    x = &#x27;0. 1. 2.&#x27;
+    y = &#x27;0. 0. 1.&#x27;
+    scale_factor = -5
+  [../]
+[]
+
+[BCs]
+  [origin]
+    type = DirichletBC
+    variable = disp_x
+    boundary = origin 
+    value = 0
+  []
+  [bottom_z]
+    type = DirichletBC
+    variable = disp_z
+    boundary = bottom 
+    value = 0
+  []
+  [sym_y]
+    type = DirichletBC
+    variable = disp_y
+    boundary = ysym
+    value = 0 
+  []
+  [disp_top]
+    type = FunctionDirichletIncrementalBC
+    variable = disp_z
+    boundary = top 
+    function = rampConstant2
+    reset_times = &#x27;1.0&#x27;
+  []
+  [bottom_nl]
+    type = DirichletBC
+    variable = nonlocal_damage
+    boundary = bottom 
+    value = 0
+  []
+  [top_nl]
+    type = DirichletBC
+    variable = nonlocal_damage
+    boundary = top
+    value = 0
+  []
+  [Pressure]
+    [Side1]
+      boundary = &#x27;sleeveTop&#x27;
+      function = rampConstant1
+    []
+  []
+[]
+[Controls]
+  [./preconsolidation]
+    type = TimePeriod
+    disable_objects = &#x27;BCs/disp_top&#x27;
+    start_time = &#x27;0&#x27;
+    end_time = &#x27;1.0&#x27;
+  []
+  [axialdisplacement]
+    type = TimePeriod
+    enable_objects = &#x27;BCs/disp_top&#x27;
+    start_time = &#x27;1.0&#x27;
+    end_time = &#x27;2.0&#x27;
+  []
+[]
+
+[Preconditioning]
+  [smp]
+    type = SMP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  solve_type = &#x27;NEWTON&#x27;
+
+    petsc_options_iname = &#x27;-pc_type   -pc_hypre_type    -ksp_type     -ksp_gmres_restart  -pc_hypre_boomeramg_strong_threshold -pc_hypre_boomeramg_agg_nl -pc_hypre_boomeramg_agg_num_paths -pc_hypre_boomeramg_max_levels -pc_hypre_boomeramg_coarsen_type -pc_hypre_boomeramg_interp_type -pc_hypre_boomeramg_P_max -pc_hypre_boomeramg_truncfactor&#x27;
+    petsc_options_value = &#x27;hypre      boomeramg         gmres         301                  0.6                                  4                          5                                 25                             HMIS                             ext+i                           1                         0.3&#x27;
+
+  nl_rel_tol = 1e-5
+  nl_abs_tol = 1e-10
+  l_tol = 1e-3
+  l_max_its = 250
+  nl_max_its = 20
+  nl_div_tol = 1e2
+
+  automatic_scaling=true
+  compute_scaling_once =true
+  verbose=false
+
+  line_search = none
+
+  dtmin = 1e-5
+  dtmax= 1e-1
+  
+  start_time = 0.0
+  end_time = 2.0 
+
+  num_steps = 200
+  [TimeStepper]
+    type = IterationAdaptiveDT
+    optimal_iterations = 15
+    iteration_window = 3
+    linear_iteration_ratio = 1000
+    growth_factor=1.5
+    cutback_factor=0.5
+    dt=0.1
+    time_t =  &#x27;0        1.0&#x27;
+    time_dt = &#x27;0.1      1e-3&#x27;
+  []
+  [Quadrature]
+    order=SECOND
+  []
+  [Predictor]
+    type = SimplePredictor
+    scale = 1.0
+  []
+[] 
+
+[Outputs]
+  interval = 1
+  print_linear_residuals = false
+  csv = true
+  exodus = true
+  [pgraph]
+    type = PerfGraphOutput
+    execute_on = &#x27;final&#x27;  # Default is &quot;final&quot;
+    level = 2             # Default is 1
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="da9ff28e-1c79-4da5-a29e-e0d24be70aae"><div class="modal-content"><h4>(test/tests/materials/voigt_conversions/plane_strain_bft_linear_elastic.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 2
+  nx = 10
+  ny = 10
+  nz = 0
+  xmin = 0
+  xmax = 50
+  ymin = 0
+  ymax = 50
+  zmin = 0
+  zmax = 0
+  elem_type = QUAD4
+[]
+
+[GlobalParams]
+  displacements = &#x27;disp_x disp_y&#x27;
+[]
+
+[Variables]
+  [disp_x]
+  []
+  [disp_y]
+  []
+[]
+
+[Kernels]
+  [div_sig_x]
+    type = StressDivergenceTensors
+    variable = disp_x
+    component = 0
+  []
+  [div_sig_y]
+    type = StressDivergenceTensors
+    variable = disp_y
+    component = 1
+  []
+[]
+
+[Materials]
+  [./marmot_material]
+    type = ComputeMarmotMaterialHypoElastic
+    marmot_material_name = LINEARELASTIC
+    marmot_material_parameters = &#x27;1000 0.25&#x27;
+  []
+  [./char_element_length]
+    type = ComputeCharacteristicElementLength
+  []
+  [./dstrain]
+    type = ComputeIncrementalSmallStrain
+    displacements = &#x27;disp_x disp_y&#x27;
+  []
+  [./dstrain_vgt_conv]
+    type = ConvertRankTwoTensorToVoigt
+    tensor = strain_increment
+    tensor_voigt = strain_increment_voigt
+    shear_components_twice = true
+  [../]
+  [./stress_conv]
+    type = ConvertRankTwoTensorFromVoigt
+    tensor = stress
+    tensor_voigt = stress_voigt
+    shear_components_half = false
+  []
+  [./Jacobian_conv]
+    type = ConvertRankFourTensorFromVoigt
+    tensor = Jacobian_mult
+    tensor_voigt = dstress_voigt_dstrain_voigt 
+    shear_components_half_ij = false
+    shear_components_half_kl = false
+    tensor_voigt_uses_row_major_layout = false
+  []
+[]
+
+[BCs]
+  [left_x]
+    type = DirichletBC
+    variable = disp_x
+    boundary = left
+    value = 0
+  []
+  [left_y]
+    type = DirichletBC
+    variable = disp_y
+    boundary = left
+    value = 0
+  []
+  [right]
+    type = DirichletBC
+    variable = disp_x
+    boundary = right
+    value = 0
+  []
+  [right_y]
+    type = DirichletBC
+    variable = disp_y
+    boundary = right
+    value = 5
+  []
+[]
+
+[Executioner]
+  type = Steady
+  solve_type = &#x27;NEWTON&#x27;
+  petsc_options_iname = &#x27;-pc_type -pc_hypre_type&#x27;
+  petsc_options_value = &#x27;hypre boomeramg&#x27;
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="3bbf0acf-b70e-459a-85e6-cf5418f9fa35"><div class="modal-content"><h4>(examples/gerankine_lshaped_panel/test_gradient_enhanced_rankine.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = FileMesh
+  file = mesh_coarse.inp
+  construct_node_list_from_side_list = false # prevents from erronously adding side nodes to the alphabetically first nodeset
+[]
+
+[GlobalParams]
+  volumetric_locking_correction = false
+  displacements = &#x27;disp_x disp_y disp_z&#x27;
+  nonlocal_damage = nonlocal_damage
+  order = SECOND
+  family = LAGRANGE
+[]
+
+[Variables]
+  [disp_x] []
+  [disp_y] []
+  [disp_z] []
+  [nonlocal_damage] []
+[]
+
+[Kernels]
+  [div_sig_x]
+    type = GradientEnhancedStressDivergenceTensors
+    variable = disp_x
+    component = 0
+    use_displaced_mesh = false
+    save_in = force_x
+  []
+  [div_sig_y]
+    type = GradientEnhancedStressDivergenceTensors
+    variable = disp_y
+    component = 1
+    use_displaced_mesh = false
+    save_in = force_y
+  []
+  [div_sig_z]
+    type = GradientEnhancedStressDivergenceTensors
+    variable = disp_z
+    component = 2
+    use_displaced_mesh = false
+    save_in = force_z
+  []
+  [implicit_gradient_damage]
+    type = ImplicitGradientEnhancedDamage
+    variable = nonlocal_damage 
+    use_displaced_mesh = false
+  []
+[]
+
+[AuxVariables]
+#  [alphaP]
+#    order=CONSTANT
+#    family=MONOMIAL
+#  []
+#  [omega]
+#    order=CONSTANT
+#    family=MONOMIAL
+#  []
+  [von_mises]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [stress_first_invariant]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [force_x] []
+  [force_y] []
+  [force_z] []
+[]
+
+
+[Postprocessors]
+  [bot_react_y]
+    type = NodalSum
+    variable = force_y
+    boundary = bottom
+  []
+[]
+
+[AuxKernels]
+  [von_mises_kernel]
+    type = RankTwoScalarAux
+    variable = von_mises
+    rank_two_tensor = stress
+    execute_on = timestep_end
+    scalar_type = VonMisesStress
+  []
+  [first_invariant_kernel]
+    type = RankTwoScalarAux
+    variable = stress_first_invariant
+    rank_two_tensor = stress
+    execute_on = timestep_end
+    scalar_type = FirstInvariant
+  []
+[]
+
+
+[Materials]
+  [marmot_material_Elastic]
+    type = ComputeMarmotMaterialGradientEnhancedHypoElastic
+    block=&#x27;steel_HEX20&#x27;
+    marmot_material_name = GRADIENTENHANCEDDRUCKERPRAGER
+    marmot_material_parameters = &#x27;25850  0.18            20e3          2e3                     0      25        15          15    ${LDAM}     1.00         ${EPSF}      0.0&#x27;
+  []
+  [marmot_material]
+    type = ComputeMarmotMaterialGradientEnhancedHypoElastic
+    block=&#x27;concrete_HEX20&#x27;
+    marmot_material_name = GRADIENTENHANCEDDRUCKERPRAGER
+    marmot_material_parameters = &#x27;25850  0.18            20e3          2.65                    0      25        15          15    ${LDAM}   1.00         ${EPSF}       .99&#x27;
+  []
+  [dstrain]
+    type = ComputeIncrementalSmallStrain
+  []
+  [dstrain_vgt_conv]
+    type = ConvertRankTwoTensorToVoigt
+    tensor = strain_increment
+    tensor_voigt = strain_increment_voigt
+    shear_components_twice = true
+  []
+  [stress_conv]
+    type = ConvertRankTwoTensorFromVoigt
+    tensor = stress
+    tensor_voigt = stress_voigt
+    shear_components_half = false
+  []
+  [Jacobian_conv]
+    type = ConvertRankFourTensorFromVoigt
+    tensor = Jacobian_mult
+    tensor_voigt = dstress_voigt_dstrain_voigt
+    shear_components_half_ij = false
+    shear_components_half_kl = false
+    tensor_voigt_uses_row_major_layout = false
+  []
+  [dstress_dk_conv]
+    type = ConvertRankTwoTensorFromVoigt
+    tensor = dstress_dnonlocal_damage
+    tensor_voigt = dstress_voigt_dnonlocal_damage
+    shear_components_half = false
+  []
+  [dlocal_damage_dstrain_conv]
+    type = ConvertRankTwoTensorFromVoigt
+    tensor = dlocal_damage_dstrain
+    tensor_voigt = dlocal_damage_dstrain_voigt
+    shear_components_half = false
+  []
+[]
+
+[BCs]
+  [bottom_x]
+    type = DirichletBC
+    variable = disp_x
+    boundary = bottom
+    value = 0
+  []
+  [bottom_y]
+    type = DirichletBC
+    variable = disp_y
+    boundary = bottom
+    value = 0
+  []
+  [bottom_z]
+    type = DirichletBC
+    variable = disp_z
+    boundary = bottom 
+    value = 0
+  []
+  [sym_z]
+    type = DirichletBC
+    variable = disp_z
+    boundary = zsym
+    value = 0 
+  []
+  [load]
+    type = FunctionDirichletBC
+    variable = disp_y
+    boundary = load
+    function = &#x27;1 * t&#x27;
+  []
+[]
+
+[Preconditioning]
+  [smp]
+    type = SMP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  solve_type = &#x27;NEWTON&#x27;
+
+    petsc_options_iname = &#x27;-pc_type   -pc_hypre_type    -ksp_type     -ksp_gmres_restart  -pc_hypre_boomeramg_strong_threshold -pc_hypre_boomeramg_agg_nl -pc_hypre_boomeramg_agg_num_paths -pc_hypre_boomeramg_max_levels -pc_hypre_boomeramg_coarsen_type -pc_hypre_boomeramg_interp_type -pc_hypre_boomeramg_P_max -pc_hypre_boomeramg_truncfactor&#x27;
+    petsc_options_value = &#x27;hypre      boomeramg         gmres         301                  0.6                                  4                          5                                 25                             HMIS                             ext+i                           1                         0.3&#x27;
+
+  nl_rel_tol = 1e-5
+  nl_abs_tol = 1e-10
+  l_tol = 1e-3
+  l_max_its = 250
+  nl_max_its = 20
+  nl_div_tol = 1e2
+
+  automatic_scaling=true
+  compute_scaling_once = true
+  verbose=false
+
+  line_search = &#x27;none&#x27;
+
+  dtmin = 1e-4
+  dtmax= 1e-2
+  
+  start_time = 0.0
+  end_time = 1.0 
+
+  num_steps = 1000
+  [TimeStepper]
+    type = IterationAdaptiveDT
+    optimal_iterations = 15
+    iteration_window = 3
+    linear_iteration_ratio = 1000
+    growth_factor=1.5
+    cutback_factor=0.5
+    dt = 1e-2
+  []
+  [Quadrature]
+    order=SECOND
+  []
+  [Predictor]
+    type = SimplePredictor
+    scale = 1.0
+  []
+[] 
+
+[Outputs]
+  file_base=&#x27;${JOB}_LDAM_${LDAM}_EPSF_${EPSF}&#x27;
+  interval = 1
+  print_linear_residuals = false
+  csv = true
+  exodus = true
+  [pgraph]
+    type = PerfGraphOutput
+    execute_on = &#x27;final&#x27;  # Default is &quot;final&quot;
+    level = 1             # Default is 1
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="fef28fd0-c704-4af2-b117-1b5dc72ce995"><div class="modal-content"><h4>(test/tests/materials/voigt_conversions/plane_strain_bft_modleon.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 2
+  nx = 5
+  ny = 5
+  nz = 0
+  xmin = 0
+  xmax = 50
+  ymin = 0
+  ymax = 50
+  zmin = 0
+  zmax = 0
+  elem_type = QUAD4
+[]
+
+[GlobalParams]
+  displacements = &#x27;disp_x disp_y&#x27;
+[]
+
+[Variables]
+  [disp_x]
+  []
+  [disp_y]
+  []
+[]
+
+[Kernels]
+  [div_sig_x]
+    type = StressDivergenceTensors
+    variable = disp_x
+    component = 0
+  []
+  [div_sig_y]
+    type = StressDivergenceTensors
+    variable = disp_y
+    component = 1
+  []
+[]
+
+[AuxVariables]
+  [the_characteristic_element_length]
+    order=CONSTANT
+    family=MONOMIAL
+  []
+  [alphaP]
+    order=CONSTANT
+    family=MONOMIAL
+  []
+  [omega]
+    order=CONSTANT
+    family=MONOMIAL
+  []
+[]
+
+[AuxKernels]
+  [the_characteristic_element_length_kernel]
+    type = MaterialRealAux
+    variable = the_characteristic_element_length
+    property = characteristic_element_length
+    execute_on = TIMESTEP_END
+  []
+  [alphaP_kernel]
+    type = MaterialStdVectorAux
+    variable =alphaP 
+    property = state_vars
+    index = 0
+    execute_on = TIMESTEP_END
+  []
+  [omegal_kernel]
+    type = MaterialStdVectorAux
+    variable = omega
+    property = state_vars
+    index = 4
+    execute_on = TIMESTEP_END
+  []
+[]
+
+[Materials]
+  [marmot_material]
+    type = ComputeMarmotMaterialHypoElastic
+    marmot_material_name = MODLEON
+    marmot_material_parameters = &#x27; 30000.0	 0.15 	13 	 47.4 	  55   	 4.74 	 0.85 	 0.12 	 0.003	 2.0	 0.000001	 15.0	 0.10	 1&#x27;
+  []
+  [char_element_length]
+    type = ComputeCharacteristicElementLength
+  []
+  [dstrain]
+    type = ComputeIncrementalSmallStrain
+  []
+  [dstrain_vgt_conv]
+    type = ConvertRankTwoTensorToVoigt
+    tensor = strain_increment
+    tensor_voigt = strain_increment_voigt
+    shear_components_twice = true
+  []
+  [stress_conv]
+    type = ConvertRankTwoTensorFromVoigt
+    tensor = stress
+    tensor_voigt = stress_voigt
+    shear_components_half = false
+  []
+  [Jacobian_conv]
+    type = ConvertRankFourTensorFromVoigt
+    tensor = Jacobian_mult
+    tensor_voigt = dstress_voigt_dstrain_voigt
+    shear_components_half_ij = false
+    shear_components_half_kl = false
+    tensor_voigt_uses_row_major_layout = false
+  []
+[]
+
+[BCs]
+  [left_x]
+    type = DirichletBC
+    variable = disp_x
+    boundary = left
+    value = 0
+  []
+  [left_y]
+    type = DirichletBC
+    variable = disp_y
+    boundary = bottom
+    value = 0
+  []
+  [right]
+    type = FunctionDirichletBC
+    variable = disp_x
+    boundary = right
+    function = &#x27;-0.5 * t&#x27;
+  []
+[]
+
+[Preconditioning]
+  [smp]
+    type = SMP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  solve_type = &#x27;NEWTON&#x27;
+
+  petsc_options_iname = &#x27;-pc_type   -pc_hypre_type    -ksp_type     -ksp_gmres_restart  -pc_hypre_boomeramg_strong_threshold&#x27;
+  petsc_options_value = &#x27;hypre      boomeramg         gmres         301                 0.25&#x27;
+  #petsc_options_iname = &#x27;-pc_type -pc_factor_mat_solver_package&#x27;
+  #petsc_options_value = &#x27; lu       mumps&#x27;
+
+  nl_rel_tol = 1e-10
+  nl_abs_tol = 1e-10
+  l_tol = 1e-10
+  l_max_its = 30
+  nl_max_its = 20
+
+  line_search = &#x27;none&#x27;
+
+  dtmin = 1e-3
+  dtmax= 5e-2
+  
+  start_time = 0.0
+  end_time = 1.0 
+
+  num_steps = 100
+  [TimeStepper]
+    type = IterationAdaptiveDT
+    optimal_iterations = 8
+    iteration_window = 1
+    dt = 1e-3
+  []
+[] 
+
+[Outputs]
+  interval = 1
+  execute_on = &#x27;initial timestep_end final failed&#x27;
+  print_linear_residuals = false
+  csv = true
+  exodus=true
+  [pgraph]
+    type = PerfGraphOutput
+    execute_on = &#x27;final&#x27;  # Default is &quot;final&quot;
+    level = 2             # Default is 1
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

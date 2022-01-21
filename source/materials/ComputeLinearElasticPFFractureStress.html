@@ -1,0 +1,638 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Compute Linear Elastic Phase Field Fracture Stress | Chamois</title><link rel="icon" type="image/x-icon" href="../../media/chamois_logo.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down">Chamois</a><a href="https://github.com/matthiasneuner/chamois" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="ea54bb1d-b4b4-4904-976e-43e6981100b8" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#" class="sidenav-trigger" data-target="29bf8197-b65f-4186-b219-0dacf27cbdb6"><i class="material-icons">menu</i></a><ul class="sidenav" id="29bf8197-b65f-4186-b219-0dacf27cbdb6"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="53c2dd75-21ea-416c-b897-1c8e5403fa91" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="ea54bb1d-b4b4-4904-976e-43e6981100b8"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul><ul class="dropdown-content" id="53c2dd75-21ea-416c-b897-1c8e5403fa91"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="moose-content col s12 m12 l12"><section id="f5c29efb-52b7-4a72-be63-508f557db7ae" data-section-level="1" data-section-text="Compute Linear Elastic Phase Field Fracture Stress"><h1 id="compute-linear-elastic-phase-field-fracture-stress">Compute Linear Elastic Phase Field Fracture Stress</h1><section id="cfb21ca5-4f99-4fd1-929d-bade22823c40" data-section-level="2" data-section-text="Description"><h2 id="description">Description</h2><p>This material implements the unified phase-field model for mechanics of damage and quasi-brittle failure from Jian-Ying Wu <a href="#JYWu2017">Wu (2017)</a>. The pressure on the fracture surface can be optionally applied as described in <a href="#CHUKWUDOZIE2019957">Chukwudozie et al. (2019)</a> and <a href="#Mikelic2019">Mikelić et al. (2019)</a>.</p></section><section id="83bc7888-096f-4d35-b6c6-462e99d828b6" data-section-level="2" data-section-text="Crack Surface Energy"><h2 id="crack-surface-energy">Crack Surface Energy</h2><p>The regularized functional <span class="moose-katex-inline-equation" id="moose-equation-19cdadbe-010c-480a-8161-fe032779caca"><script>var element = document.getElementById("moose-equation-19cdadbe-010c-480a-8161-fe032779caca");katex.render("A_d", element, {displayMode:false,throwOnError:false});</script></span> is given as</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-32966516-89c1-4683-99e2-3e3ed9f73706"></span><script>var element = document.getElementById("moose-equation-32966516-89c1-4683-99e2-3e3ed9f73706");katex.render("A_d(d):= \\int_{\\mathcal{B}}\\gamma(d,\\nabla d) dV", element, {displayMode:true,throwOnError:false});</script></span></p><p>The crack surface density function <span class="moose-katex-inline-equation" id="moose-equation-d5873db7-8667-430d-90ed-b1be2bd92c2b"><script>var element = document.getElementById("moose-equation-d5873db7-8667-430d-90ed-b1be2bd92c2b");katex.render("\\gamma(d,\\nabla d)", element, {displayMode:false,throwOnError:false});</script></span> is expressed in terms of the crack phase-field <span class="moose-katex-inline-equation" id="moose-equation-c62b965e-6539-488b-b5ef-f66cb32263b1"><script>var element = document.getElementById("moose-equation-c62b965e-6539-488b-b5ef-f66cb32263b1");katex.render("d", element, {displayMode:false,throwOnError:false});</script></span> and its spatial gradient <span class="moose-katex-inline-equation" id="moose-equation-e79e0eea-3dad-420b-a509-6644a07aeb56"><script>var element = document.getElementById("moose-equation-e79e0eea-3dad-420b-a509-6644a07aeb56");katex.render("\\nabla d", element, {displayMode:false,throwOnError:false});</script></span> as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-74cfa981-091f-4279-bc49-fde3a8d347c5"></span><script>var element = document.getElementById("moose-equation-74cfa981-091f-4279-bc49-fde3a8d347c5");katex.render("\\gamma(d,\\nabla d) = \\frac{1}{c_0}(\\frac{1}{l}\\alpha(d) + l|\\nabla d|^2)~~~~~~~\\text{with}~~~~~~~c_0 = 4\\int_0^1\\sqrt{\\alpha(\\beta)}d\\beta", element, {displayMode:true,throwOnError:false});</script></span> where the geometric function <span class="moose-katex-inline-equation" id="moose-equation-4a93b915-125d-44a2-8ac1-e6e6f90212c4"><script>var element = document.getElementById("moose-equation-4a93b915-125d-44a2-8ac1-e6e6f90212c4");katex.render("\\alpha(d)", element, {displayMode:false,throwOnError:false});</script></span> characterizes homogeneous evolution of the crack phase-field. <span class="moose-katex-inline-equation" id="moose-equation-332711a9-49db-4028-8d73-f5db82c88a8e"><script>var element = document.getElementById("moose-equation-332711a9-49db-4028-8d73-f5db82c88a8e");katex.render("l", element, {displayMode:false,throwOnError:false});</script></span> is an internal length scale regularizing the sharp crack. <span class="moose-katex-inline-equation" id="moose-equation-86fe1154-09e1-4e58-ab12-d784863f4abd"><script>var element = document.getElementById("moose-equation-86fe1154-09e1-4e58-ab12-d784863f4abd");katex.render("c_0", element, {displayMode:false,throwOnError:false});</script></span> is a scaling parameter such that the regularized functional <span class="moose-katex-inline-equation" id="moose-equation-d70fb630-65fa-44c7-86e0-639f01c078a9"><script>var element = document.getElementById("moose-equation-d70fb630-65fa-44c7-86e0-639f01c078a9");katex.render("A_d(d)", element, {displayMode:false,throwOnError:false});</script></span> represents the crack surface.</p><p>The crack geometric function <span class="moose-katex-inline-equation" id="moose-equation-cae247b8-d3ee-4f19-8222-89dcb6d903ec"><script>var element = document.getElementById("moose-equation-cae247b8-d3ee-4f19-8222-89dcb6d903ec");katex.render("\\alpha(d)", element, {displayMode:false,throwOnError:false});</script></span> generally satisfies the following properties, <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-9e35d0d1-d1c4-4733-bb0d-a05e0ae9d326"></span><script>var element = document.getElementById("moose-equation-9e35d0d1-d1c4-4733-bb0d-a05e0ae9d326");katex.render("\\alpha(0) = 0~~~~~~~~,~~~~~~~~\\alpha(1) = 1", element, {displayMode:true,throwOnError:false});</script></span></p><p>In the classical phase-field models the modeling crack geometric function have been widely adopted for brittle fracture_energy <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-c192b7dd-d5a5-4d93-b7a9-37ccfb5782d8"></span><script>var element = document.getElementById("moose-equation-c192b7dd-d5a5-4d93-b7a9-37ccfb5782d8");katex.render("\\alpha(d) = \\begin{cases} d~~~~\\text{Linear function} \\\\ d^2~~~\\text{Quadratic function}\\end{cases}", element, {displayMode:true,throwOnError:false});</script></span></p></section><section id="15566bb7-578c-4d74-beca-9e995c9f33f9" data-section-level="2" data-section-text="Elastic Energy"><h2 id="elastic-energy">Elastic Energy</h2><p>The elastic energy is defined as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-4a3dda7b-24aa-4ba5-a4c5-bbc540566b5a"></span><script>var element = document.getElementById("moose-equation-4a3dda7b-24aa-4ba5-a4c5-bbc540566b5a");katex.render("\\Psi(\\varepsilon,d) = \\omega(d)\\Psi_0(\\varepsilon)", element, {displayMode:true,throwOnError:false});</script></span></p><p>The monotonically decreasing energetic function <span class="moose-katex-inline-equation" id="moose-equation-e3f35078-4957-48c2-88e2-87b1d1b3e76c"><script>var element = document.getElementById("moose-equation-e3f35078-4957-48c2-88e2-87b1d1b3e76c");katex.render("w(d)\\in[0,1]", element, {displayMode:false,throwOnError:false});</script></span> describes degradation of the initial strain energy <span class="moose-katex-inline-equation" id="moose-equation-29307937-0352-4935-a9c2-dea1e3933f70"><script>var element = document.getElementById("moose-equation-29307937-0352-4935-a9c2-dea1e3933f70");katex.render("\\Psi_0(\\varepsilon)", element, {displayMode:false,throwOnError:false});</script></span> as the crack phase-field evolves, satisfying the following properties <a href="#Miehe2015">Miehe et al. (2015)</a> <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-425961cd-cc05-422d-acb1-e006ce633a86"></span><script>var element = document.getElementById("moose-equation-425961cd-cc05-422d-acb1-e006ce633a86");katex.render("\\omega'(d) < 0~~~~~\\text{and}~~~~~\\omega(0)=1,~~~~~\\omega(1) = 0,~~~~~\\omega'(1)=0", element, {displayMode:true,throwOnError:false});</script></span></p><p>The variation of the elastic energy gives constitutive relations <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-adedea21-6287-4f26-9b32-000d4dbbf90e"></span><script>var element = document.getElementById("moose-equation-adedea21-6287-4f26-9b32-000d4dbbf90e");katex.render("\\boldsymbol{\\sigma} = \\omega(d)\\frac{\\partial{\\Psi_0}}{\\partial{\\varepsilon}},~~~~~~~~Y=-\\frac{\\partial\\Psi}{\\partial d} = -\\omega'(d)\\mathcal{Y}", element, {displayMode:true,throwOnError:false});</script></span> where the thermodynamic force <span class="moose-katex-inline-equation" id="moose-equation-2626d2a8-9a18-48f5-9892-249d9852ba5f"><script>var element = document.getElementById("moose-equation-2626d2a8-9a18-48f5-9892-249d9852ba5f");katex.render("Y", element, {displayMode:false,throwOnError:false});</script></span> drives evolution of the crack phase-field with the reference energy <span class="moose-katex-inline-equation" id="moose-equation-552dd5eb-60fb-4891-a6e5-11f39985753e"><script>var element = document.getElementById("moose-equation-552dd5eb-60fb-4891-a6e5-11f39985753e");katex.render("\\mathcal{Y}", element, {displayMode:false,throwOnError:false});</script></span> related to the strain field <span class="moose-katex-inline-equation" id="moose-equation-bb45950f-0710-4a10-94f5-64de43ad6c49"><script>var element = document.getElementById("moose-equation-bb45950f-0710-4a10-94f5-64de43ad6c49");katex.render("\\varepsilon", element, {displayMode:false,throwOnError:false});</script></span>.</p><section id="3fcd9853-e4b3-481c-8e41-5d634f531793" data-section-level="3" data-section-text="Energetic Degradation Function"><h3 id="energetic-degradation-function">Energetic Degradation Function</h3><p>A genetic expression for degradation function <span class="moose-katex-inline-equation" id="moose-equation-4b26e0a0-5054-4553-9b7a-7e598c0de654"><script>var element = document.getElementById("moose-equation-4b26e0a0-5054-4553-9b7a-7e598c0de654");katex.render("\\omega(d)", element, {displayMode:false,throwOnError:false});</script></span> is given as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-f007b689-626d-4607-be4d-3d65a7a3ae8c"></span><script>var element = document.getElementById("moose-equation-f007b689-626d-4607-be4d-3d65a7a3ae8c");katex.render("\\omega(d) = \\frac{1}{1+\\phi(d)} = \\frac{(1-d)^p}{(1-d)^p + Q(d)},~~~~~~\\phi(d) = \\frac{Q(d)}{(1-d)^p}", element, {displayMode:true,throwOnError:false});</script></span> for <span class="moose-katex-inline-equation" id="moose-equation-74ceed8c-f2da-4d27-9993-226ac532c040"><script>var element = document.getElementById("moose-equation-74ceed8c-f2da-4d27-9993-226ac532c040");katex.render("p>0", element, {displayMode:false,throwOnError:false});</script></span> and continuous function Q(d) &gt; 0. Jian-Ying Wu considers following polynomials <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-bd5e7477-d4ce-421f-be6a-2fb1b96737f0"></span><script>var element = document.getElementById("moose-equation-bd5e7477-d4ce-421f-be6a-2fb1b96737f0");katex.render("Q(d) = a_1d + a_1a_2d^2 + a_1a_2a_3d^3 + ...", element, {displayMode:true,throwOnError:false});</script></span> where the coefficients <span class="moose-katex-inline-equation" id="moose-equation-4008a2b2-ae17-4148-8177-6b20b2007e62"><script>var element = document.getElementById("moose-equation-4008a2b2-ae17-4148-8177-6b20b2007e62");katex.render("a_i", element, {displayMode:false,throwOnError:false});</script></span> are calibrated from standard material properties.</p><p>The energetic function recovers some particular examples used in the literature, such as <span class="moose-katex-inline-equation" id="moose-equation-d73e0034-c5c0-43d0-b087-bd744eeca2d7"><script>var element = document.getElementById("moose-equation-d73e0034-c5c0-43d0-b087-bd744eeca2d7");katex.render("\\omega(d) = (1-d)^2", element, {displayMode:false,throwOnError:false});</script></span> when <span class="moose-katex-inline-equation" id="moose-equation-e570a28f-e262-49bd-afe0-d47f5a411f04"><script>var element = document.getElementById("moose-equation-e570a28f-e262-49bd-afe0-d47f5a411f04");katex.render("p=2", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-a7be50f2-b63c-47e4-ab4f-25a09cf858a8"><script>var element = document.getElementById("moose-equation-a7be50f2-b63c-47e4-ab4f-25a09cf858a8");katex.render("Q(d) = 1 - (1-d)^p", element, {displayMode:false,throwOnError:false});</script></span>.</p></section><section id="9116b4d0-013f-437e-8611-114a956db51e" data-section-level="3" data-section-text="Decomposition Approaches"><h3 id="decomposition-approaches">Decomposition Approaches</h3><p>The elastic energy is usually decomposed additively to distinguish between tensile and compressive contributions. Three decomposition approaches are implemented.</p><section id="4722873d-4ebb-41dc-8f9c-b436a5eb3e70" data-section-level="4" data-section-text="Strain Spectral Decomposition"><h4 id="strain-spectral-decomposition">Strain Spectral Decomposition</h4><p>The total strain energy density is defined as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-5a50053a-6caf-464d-a4f3-f29b3dca6f40"></span><script>var element = document.getElementById("moose-equation-5a50053a-6caf-464d-a4f3-f29b3dca6f40");katex.render("\\Psi = \\omega(d) \\Psi^{+} +\\Psi^{-},", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-93954053-99da-4c4a-901a-df619f8bac54"><script>var element = document.getElementById("moose-equation-93954053-99da-4c4a-901a-df619f8bac54");katex.render("\\psi^{+}", element, {displayMode:false,throwOnError:false});</script></span> is the strain energy due to tensile stress, <span class="moose-katex-inline-equation" id="moose-equation-13041a78-e79a-4f47-8223-572e3f94c03d"><script>var element = document.getElementById("moose-equation-13041a78-e79a-4f47-8223-572e3f94c03d");katex.render("\\psi^{-}", element, {displayMode:false,throwOnError:false});</script></span> is the strain energy due to compressive stress. <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-5b9a8904-12aa-41c7-aec5-4ca613aa00e1"></span><script>var element = document.getElementById("moose-equation-5b9a8904-12aa-41c7-aec5-4ca613aa00e1");katex.render("\\Psi^{\\pm} = \\lambda \\left< \\varepsilon_1 + \\varepsilon_2 + \\varepsilon_3 \\right>^2_{\\pm}/2 + \\mu \\left(\\left< \\varepsilon_1 \\right>_{\\pm}^2 + \\left< \\varepsilon_1 \\right>_{\\pm}^2 + \\left< \\varepsilon_1 \\right>_{\\pm}^2 \\right),", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-b7395f92-b1aa-41cd-b75f-8a6cd8f33b86"><script>var element = document.getElementById("moose-equation-b7395f92-b1aa-41cd-b75f-8a6cd8f33b86");katex.render("\\epsilon_i", element, {displayMode:false,throwOnError:false});</script></span> is the <span class="moose-katex-inline-equation" id="moose-equation-a10ce145-7881-47a3-81b5-985307a7d562"><script>var element = document.getElementById("moose-equation-a10ce145-7881-47a3-81b5-985307a7d562");katex.render("i", element, {displayMode:false,throwOnError:false});</script></span>th eigenvalue of the strain tensor and <span class="moose-katex-inline-equation" id="moose-equation-c7089495-0905-4a5f-bbc7-ceb772247ad7"><script>var element = document.getElementById("moose-equation-c7089495-0905-4a5f-bbc7-ceb772247ad7");katex.render("\\left< \\right>_{\\pm}", element, {displayMode:false,throwOnError:false});</script></span> is an operator that provides the positive or negative part.</p><p>To be thermodynamically consistent, the stress is related to the deformation energy density according to <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-42290100-332f-4706-beb4-3f13e9a9d987"></span><script>var element = document.getElementById("moose-equation-42290100-332f-4706-beb4-3f13e9a9d987");katex.render("\\boldsymbol{\\sigma} = \\frac{\\partial \\Psi}{\\partial \\boldsymbol{\\varepsilon}}.", element, {displayMode:true,throwOnError:false});</script></span> Thus, <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-2a738c6a-1e38-498a-b9c7-a1d3622ec5ea"></span><script>var element = document.getElementById("moose-equation-2a738c6a-1e38-498a-b9c7-a1d3622ec5ea");katex.render("\\boldsymbol{\\sigma}^{\\pm} = \\frac{\\partial \\Psi^{\\pm}}{\\partial \\boldsymbol{\\varepsilon}} = \\sum_{a=1}^3 \\left( \\lambda \\left< \\varepsilon_1 + \\varepsilon_2 + \\varepsilon_3 \\right>_{\\pm} + 2 \\mu \\left< \\varepsilon_a \\right>_{\\pm} \\right) \\boldsymbol{n}_a \\otimes \\boldsymbol{n}_a,", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-002aa835-4319-41ce-87f4-0007bcc442dc"><script>var element = document.getElementById("moose-equation-002aa835-4319-41ce-87f4-0007bcc442dc");katex.render("\\boldsymbol{n}_a", element, {displayMode:false,throwOnError:false});</script></span> is the <span class="moose-katex-inline-equation" id="moose-equation-be94c5f4-c4c8-475c-b402-74cd50c68569"><script>var element = document.getElementById("moose-equation-be94c5f4-c4c8-475c-b402-74cd50c68569");katex.render("a", element, {displayMode:false,throwOnError:false});</script></span>th eigenvector. The stress becomes <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-7d793f63-c8f8-4ef8-8a70-f1cac5aef34e"></span><script>var element = document.getElementById("moose-equation-7d793f63-c8f8-4ef8-8a70-f1cac5aef34e");katex.render("\\boldsymbol{\\sigma} = \\left[(1-c)^2(1-k) + k \\right] \\boldsymbol{\\sigma}^{+} - \\boldsymbol{\\sigma}^{-}.", element, {displayMode:true,throwOnError:false});</script></span></p></section><section id="673a79e7-0a6f-4f41-98ae-3f30df146595" data-section-level="4" data-section-text="Strain Volumetric and Deviatoric Decomposition"><h4 id="strain-volumetric-and-deviatoric-decomposition">Strain Volumetric and Deviatoric Decomposition</h4><p>The approach is based on the orthogonal decomposition of the linearized strain tensor in its spherical and deviatoric components: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-697f71a0-4b0c-4be7-a09f-b713964c48bd"></span><script>var element = document.getElementById("moose-equation-697f71a0-4b0c-4be7-a09f-b713964c48bd");katex.render("\\varepsilon = \\varepsilon_S + \\varepsilon_D,~~~~\\varepsilon_D = \\frac{1}{n}tr(\\varepsilon)I,~~~~\\varepsilon_D = \\varepsilon - \\frac{1}{n}tr(\\varepsilon)I", element, {displayMode:true,throwOnError:false});</script></span> werhe <span class="moose-katex-inline-equation" id="moose-equation-1f5a1045-471e-4e09-9249-8daee3d13df5"><script>var element = document.getElementById("moose-equation-1f5a1045-471e-4e09-9249-8daee3d13df5");katex.render("I", element, {displayMode:false,throwOnError:false});</script></span> deontes the n-dimensional identity tensor.</p><p><span class="moose-katex-inline-equation" id="moose-equation-5cae5ebf-cd54-4b57-a076-615529c65245"><script>var element = document.getElementById("moose-equation-5cae5ebf-cd54-4b57-a076-615529c65245");katex.render("\\psi^{+}", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-56ec297f-48d2-451a-87e7-ffe4427ce285"><script>var element = document.getElementById("moose-equation-56ec297f-48d2-451a-87e7-ffe4427ce285");katex.render("\\psi^{-}", element, {displayMode:false,throwOnError:false});</script></span> is defined as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-8f46a1c9-3235-48bc-b0de-2e8fc2c38cc5"></span><script>var element = document.getElementById("moose-equation-8f46a1c9-3235-48bc-b0de-2e8fc2c38cc5");katex.render("\\psi^{+} = \\frac{1}{2}\\kappa\\left<tr(\\varepsilon)^2\\right>_{+} + \\mu\\varepsilon_{D}\\cdot\\varepsilon_{D}", element, {displayMode:true,throwOnError:false});</script></span> <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-41a1ca3f-7bf6-4c76-b461-5cd46735ccc3"></span><script>var element = document.getElementById("moose-equation-41a1ca3f-7bf6-4c76-b461-5cd46735ccc3");katex.render("\\psi^{-} = \\frac{1}{2}\\kappa\\left<tr(\\varepsilon)^2\\right>_{-}", element, {displayMode:true,throwOnError:false});</script></span></p><p>The stress is defined as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-6c81ac5d-4c85-435e-98bc-a79062024981"></span><script>var element = document.getElementById("moose-equation-6c81ac5d-4c85-435e-98bc-a79062024981");katex.render("\\boldsymbol{\\sigma}^- = \\kappa \\left<tr(\\varepsilon) \\right>", element, {displayMode:true,throwOnError:false});</script></span> and <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-37919565-272f-4143-a71b-77d23e057394"></span><script>var element = document.getElementById("moose-equation-37919565-272f-4143-a71b-77d23e057394");katex.render("\\boldsymbol{\\sigma}^+ = \\boldsymbol{\\mathcal{C}}\\varepsilon -\\boldsymbol{\\sigma}^-", element, {displayMode:true,throwOnError:false});</script></span></p></section><section id="3884fe74-8c37-43ba-9bec-bd2b67d452a7" data-section-level="4" data-section-text="Stress Spectral Decomposition"><h4 id="stress-spectral-decomposition">Stress Spectral Decomposition</h4><p><span class="moose-katex-inline-equation" id="moose-equation-32704eaa-ba7d-41ff-99b5-cd37d2a2cc40"><script>var element = document.getElementById("moose-equation-32704eaa-ba7d-41ff-99b5-cd37d2a2cc40");katex.render("\\psi^{+}", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-b91afd31-210b-4adb-9948-aa78d099079f"><script>var element = document.getElementById("moose-equation-b91afd31-210b-4adb-9948-aa78d099079f");katex.render("\\psi^{-}", element, {displayMode:false,throwOnError:false});</script></span> is defined as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-f7e8c93e-6d8d-4c21-8731-e594c0d5e8ad"></span><script>var element = document.getElementById("moose-equation-f7e8c93e-6d8d-4c21-8731-e594c0d5e8ad");katex.render("\\psi^{+} = \\frac{1}{2} \\boldsymbol{\\sigma}^{+} : \\boldsymbol{\\varepsilon}", element, {displayMode:true,throwOnError:false});</script></span> <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-a8e30712-8f0a-43c5-a50e-7abfbfd34770"></span><script>var element = document.getElementById("moose-equation-a8e30712-8f0a-43c5-a50e-7abfbfd34770");katex.render("\\psi^{-} = \\frac{1}{2} \\boldsymbol{\\sigma}^{-} : \\boldsymbol{\\varepsilon}.", element, {displayMode:true,throwOnError:false});</script></span></p><p>The compressive and tensile parts of the stress are computed from postive and negative projection tensors (computed from the spectral decomposition) according to <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-7ba93e89-31bd-4613-a35b-abb27e76d2a4"></span><script>var element = document.getElementById("moose-equation-7ba93e89-31bd-4613-a35b-abb27e76d2a4");katex.render("\t\\boldsymbol{\\sigma}^+ = \\mathbf{P}^+ \\boldsymbol{\\sigma}_0", element, {displayMode:true,throwOnError:false});</script></span> <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-8329a7e7-2b53-4cd4-ba87-1b25fe8f8d31"></span><script>var element = document.getElementById("moose-equation-8329a7e7-2b53-4cd4-ba87-1b25fe8f8d31");katex.render("\t\\boldsymbol{\\sigma}^- = \\mathbf{P}^- \\boldsymbol{\\sigma}_0,", element, {displayMode:true,throwOnError:false});</script></span></p><p>To be thermodynamically consistent, the stress is related to the deformation energy density according to <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-4066ad84-6a0d-48e7-add4-0ad64a830020"></span><script>var element = document.getElementById("moose-equation-4066ad84-6a0d-48e7-add4-0ad64a830020");katex.render("  \\boldsymbol{\\sigma} = \\frac{\\partial \\psi_e}{\\partial \\boldsymbol{\\varepsilon}} = \\omega{d}\\frac{\\partial \\psi^+}{\\partial \\boldsymbol{\\varepsilon}} + \\frac{\\partial \\psi^-}{\\partial \\boldsymbol{\\varepsilon}}.", element, {displayMode:true,throwOnError:false});</script></span> Since <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-e952f1df-2597-4814-b56d-89433a9507ef"></span><script>var element = document.getElementById("moose-equation-e952f1df-2597-4814-b56d-89433a9507ef");katex.render("\t\\frac{\\partial \\psi^+}{\\partial \\boldsymbol{\\varepsilon}} = \\boldsymbol{\\sigma}^+", element, {displayMode:true,throwOnError:false});</script></span> <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-3b216a18-0a25-4c10-a06a-4bd8606f1b30"></span><script>var element = document.getElementById("moose-equation-3b216a18-0a25-4c10-a06a-4bd8606f1b30");katex.render("\t\\frac{\\partial \\psi^-}{\\partial \\boldsymbol{\\varepsilon}} = \\boldsymbol{\\sigma}^-,", element, {displayMode:true,throwOnError:false});</script></span> then, <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-268066d2-abe2-4944-b8b7-345c841c164f"></span><script>var element = document.getElementById("moose-equation-268066d2-abe2-4944-b8b7-345c841c164f");katex.render("\t\\boldsymbol{\\sigma} = \\omega(d)\\boldsymbol{\\sigma}^+ + \\boldsymbol{\\sigma}^-", element, {displayMode:true,throwOnError:false});</script></span></p><p>The Jacobian matrix for the stress is <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-0790468b-dec2-4409-9ac0-35f86e16558f"></span><script>var element = document.getElementById("moose-equation-0790468b-dec2-4409-9ac0-35f86e16558f");katex.render("  \\boldsymbol{\\mathcal{J}} = \\frac{\\partial \\boldsymbol{\\sigma}}{\\partial \\boldsymbol{\\varepsilon}} = \\left((\\omega(d) \\boldsymbol{\\mathcal{P}}^+ + \\boldsymbol{\\mathcal{P}}^- \\right) \\boldsymbol{\\mathcal{C}},", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-4408d527-4e58-44b9-bce5-167985fb2444"><script>var element = document.getElementById("moose-equation-4408d527-4e58-44b9-bce5-167985fb2444");katex.render("\\boldsymbol{\\mathcal{C}}", element, {displayMode:false,throwOnError:false});</script></span> is the elasticity tensor.</p><p>Note that stress spectral decomposition approach can be used for anisotropic elasticity tensor.</p></section></section><section id="90ca0e98-6cd3-45b3-a694-ff566657e136" data-section-level="2" data-section-text="Evolution Equation ( Allen - Cahn )"><h2 id="evolution-equation-allen-cahn">Evolution Equation (Allen-Cahn)</h2><p>To avoid crack healing, a history variable <span class="moose-katex-inline-equation" id="moose-equation-b5b32f61-f973-41b4-be0b-4faf99d499b1"><script>var element = document.getElementById("moose-equation-b5b32f61-f973-41b4-be0b-4faf99d499b1");katex.render("H", element, {displayMode:false,throwOnError:false});</script></span> is defined that is the maximum energy density over the time interval <span class="moose-katex-inline-equation" id="moose-equation-3c16f782-7462-44c9-97fd-a086daddedb2"><script>var element = document.getElementById("moose-equation-3c16f782-7462-44c9-97fd-a086daddedb2");katex.render("t=[0,t_0]", element, {displayMode:false,throwOnError:false});</script></span>, where <span class="moose-katex-inline-equation" id="moose-equation-6aae1ee8-9e31-41f0-9671-518bfced987d"><script>var element = document.getElementById("moose-equation-6aae1ee8-9e31-41f0-9671-518bfced987d");katex.render("t_0", element, {displayMode:false,throwOnError:false});</script></span> is the current time step, i.e. <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-cf7903e8-8e2b-4ae3-a93e-8d6b924fa1e8"></span><script>var element = document.getElementById("moose-equation-cf7903e8-8e2b-4ae3-a93e-8d6b924fa1e8");katex.render("H = \\max_t (\\Psi^{+})", element, {displayMode:true,throwOnError:false});</script></span></p><p>Now, the total free energy is redefined as: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-fa6ea26f-62ca-48c7-9b0d-f41e18910176"></span><script>var element = document.getElementById("moose-equation-fa6ea26f-62ca-48c7-9b0d-f41e18910176");katex.render("\\begin{aligned} F =& \\omega(d) H +\\Psi^{-} + \\frac{1}{c_0}(\\frac{g_c}{l}\\alpha(d) + l|\\nabla d|^2) \\\\   =& f_{elastic} + f_{fracture} + \\frac{g_c l}{c_0} {|{\\nabla d}|}^2 \\end{aligned}", element, {displayMode:true,throwOnError:false});</script></span> with <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-cef6b522-01eb-4c0b-a3f7-b2263ec712bd"></span><script>var element = document.getElementById("moose-equation-cef6b522-01eb-4c0b-a3f7-b2263ec712bd");katex.render("f_{loc} = f_{elastic} + f_{fracture}", element, {displayMode:true,throwOnError:false});</script></span> and <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-9ece8c34-1913-4b37-97b3-388ef0eb617c"></span><script>var element = document.getElementById("moose-equation-9ece8c34-1913-4b37-97b3-388ef0eb617c");katex.render("f_{fracture} = \\frac{1}{c_0}\\frac{g_c}{l}\\alpha(d),~~~~~f_{elastic} = \\omega(d)H +\\Psi^{-}.", element, {displayMode:true,throwOnError:false});</script></span></p><p>Its derivatives are <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-bb271c09-ae7b-4465-8fda-d3b85f4d72ae"></span><script>var element = document.getElementById("moose-equation-bb271c09-ae7b-4465-8fda-d3b85f4d72ae");katex.render("\\begin{aligned} \\frac{\\partial f_{elastic}}{\\partial d} =& \\omega'(d)H\\\\ \\frac{\\partial^2 f_{elastic}}{\\partial d^2} =& \\omega''(d)H \\\\ \\frac{\\partial f_{fracture}}{\\partial d} =& \\frac{1}{c_0}\\frac{g_c}{l} \\alpha'(d) \\\\ \\frac{\\partial^2 f_{fracture}}{\\partial d^2} =& \\frac{1}{c_0}\\frac{g_c}{l} \\alpha''(d). \\end{aligned}", element, {displayMode:true,throwOnError:false});</script></span></p><p>To further avoid crack phase-field going to negative, <span class="moose-katex-inline-equation" id="moose-equation-1acc5fa0-0865-4471-96d3-3417bc82740a"><script>var element = document.getElementById("moose-equation-1acc5fa0-0865-4471-96d3-3417bc82740a");katex.render("H", element, {displayMode:false,throwOnError:false});</script></span> should overcome a barrier energy. The barrier energy <span class="moose-katex-inline-equation" id="moose-equation-6a59e1bd-822a-4ba8-9b18-da8518a95d18"><script>var element = document.getElementById("moose-equation-6a59e1bd-822a-4ba8-9b18-da8518a95d18");katex.render("f_{barrier}", element, {displayMode:false,throwOnError:false});</script></span> is determined by <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-0cbc0bf2-77bc-411c-a8ec-2b45e021558b"></span><script>var element = document.getElementById("moose-equation-0cbc0bf2-77bc-411c-a8ec-2b45e021558b");katex.render("f_{barrier} = -\\frac{f_{fracture}}{\\omega(d)}~/text{at}~d=0", element, {displayMode:true,throwOnError:false});</script></span> and the <span class="moose-katex-inline-equation" id="moose-equation-94321ab3-e26e-4301-b9b6-e7d5a7e0fe12"><script>var element = document.getElementById("moose-equation-94321ab3-e26e-4301-b9b6-e7d5a7e0fe12");katex.render("H", element, {displayMode:false,throwOnError:false});</script></span> is modified as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-c335a20e-acea-4bc3-ab0b-27aa6e0f229a"></span><script>var element = document.getElementById("moose-equation-c335a20e-acea-4bc3-ab0b-27aa6e0f229a");katex.render("H = \\max_t (\\Psi^{+}, f_{barrier})", element, {displayMode:true,throwOnError:false});</script></span></p><p>The evolution equation for the damage parameter follows the Allen-Cahn equation <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-c657b15c-b0a9-4dae-8c8d-4523cefb459d"></span><script>var element = document.getElementById("moose-equation-c657b15c-b0a9-4dae-8c8d-4523cefb459d");katex.render("\\dot{d} = -L \\frac{\\delta F}{\\delta d} = -L \\left( \\frac{\\partial f_{loc}}{\\partial d} - \\nabla \\cdot \\kappa \\nabla d \\right),", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-3ddda7dc-eb7a-4b01-b9df-9f2a0b3cf729"><script>var element = document.getElementById("moose-equation-3ddda7dc-eb7a-4b01-b9df-9f2a0b3cf729");katex.render("L = (g_c \\tilde\\eta)^{-1}", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-e76667aa-93cf-4e00-9468-a6ed5e9cbe18"><script>var element = document.getElementById("moose-equation-e76667aa-93cf-4e00-9468-a6ed5e9cbe18");katex.render("\\kappa = 2g_cl/c_0", element, {displayMode:false,throwOnError:false});</script></span>.The <span class="moose-katex-inline-equation" id="moose-equation-b7640aa1-a7f0-4876-895b-368e5d8ce698"><script>var element = document.getElementById("moose-equation-b7640aa1-a7f0-4876-895b-368e5d8ce698");katex.render("\\tilde\\eta = \\eta/g_c", element, {displayMode:false,throwOnError:false});</script></span> is scaled by the <span class="moose-katex-inline-equation" id="moose-equation-55a36857-e924-49a1-81f4-a723ae277e33"><script>var element = document.getElementById("moose-equation-55a36857-e924-49a1-81f4-a723ae277e33");katex.render("g_c", element, {displayMode:false,throwOnError:false});</script></span> which is consistent with the definition given by Miehe at.al <a href="#Miehe2015">Miehe et al. (2015)</a>.</p><p>This equation follows the standard Allen-Cahn and thus can be implemented in MOOSE using the standard Allen-Cahn kernels, TimeDerivative, AllenCahn, and ACInterface. There is now an action that automatically generates these kernels: NonconservedAction. See the <strong>PhaseField module documentation</strong> for more information.</p></section><section id="f571086e-6adc-48e1-bda3-4437c71dcaf2" data-section-level="2" data-section-text="Pressure on the fracture surface"><h2 id="pressure-on-the-fracture-surface">Pressure on the fracture surface</h2><p>As suggested by <a href="#CHUKWUDOZIE2019957">Chukwudozie et al. (2019)</a>, the work of pressure forces acting along each side of the cracks that is added to the total free energy can be approximated by <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-157994bb-a181-4704-bb5a-e7a1d3291027"></span><script>var element = document.getElementById("moose-equation-157994bb-a181-4704-bb5a-e7a1d3291027");katex.render("\\int_{\\Gamma}p(\\mathbf{u}\\cdot \\mathbf{n})ds \\approx \\int_{\\Omega}p(\\mathbf{u}\\cdot\\nabla d)", element, {displayMode:true,throwOnError:false});</script></span></p><p>Integration by parts yields <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-fda7cf1a-31bc-47c8-bd00-5e8075b8ba62"></span><script>var element = document.getElementById("moose-equation-fda7cf1a-31bc-47c8-bd00-5e8075b8ba62");katex.render("-\\int_{\\Omega}p(\\mathbf{u}\\cdot\\nabla d) = \\int_{\\Omega}pd\\nabla\\cdot\\mathbf{u}-\\int_{\\partial{\\Omega}}pd(\\mathbf{u}\\cdot\\mathbf{n})", element, {displayMode:true,throwOnError:false});</script></span></p><p>The boundary integral term can be neglected as in most applications <span class="moose-katex-inline-equation" id="moose-equation-388c2cd6-082e-41e9-902b-d13b0c4bd48e"><script>var element = document.getElementById("moose-equation-388c2cd6-082e-41e9-902b-d13b0c4bd48e");katex.render("d=0", element, {displayMode:false,throwOnError:false});</script></span> on <span class="moose-katex-inline-equation" id="moose-equation-e1018bcb-5a0d-46f8-aec7-000f8261c5c8"><script>var element = document.getElementById("moose-equation-e1018bcb-5a0d-46f8-aec7-000f8261c5c8");katex.render("\\partial\\Omega", element, {displayMode:false,throwOnError:false});</script></span>. Some authors <a href="#Mikelic2019">Mikelić et al. (2019)</a> have proposed to replace the indicator function <span class="moose-katex-inline-equation" id="moose-equation-91232117-61e5-4779-a898-d6465e6a7563"><script>var element = document.getElementById("moose-equation-91232117-61e5-4779-a898-d6465e6a7563");katex.render("d", element, {displayMode:false,throwOnError:false});</script></span> with <span class="moose-katex-inline-equation" id="moose-equation-160fbfa7-2760-44a8-beb3-66282807a827"><script>var element = document.getElementById("moose-equation-160fbfa7-2760-44a8-beb3-66282807a827");katex.render("d^2", element, {displayMode:false,throwOnError:false});</script></span> in the first term in order to make the functional convex. The indicator function is implemented as a generic material object that can be easily provided and modified in an input file. The stress equilibrium and damage evolution equations are also modified to account for the pressure contribution.</p></section><section id="2464c065-3312-4128-9480-13a626c4ffa5" data-section-level="2" data-section-text="PETSc SNES variational inequalities solver option"><h2 id="petsc-snes-variational-inequalities-solver-option">PETSc SNES variational inequalities solver option</h2><p>Alternatively, the damage irreversibility condition can be enforced by using PETSc&#x27;s SNES variational inequalities (VI) solver. In order to use PETSc&#x27;s VI solver, upper and lower bounds for damage variable should be provided. Specifically, <a href="../auxkernels/ConstantBoundsAux.html"><code>ConstantBoundsAux</code></a> can be used to set the upper bound to be 1. <a href="../auxkernels/VariableOldValueBoundsAux.html"><code>VariableOldValueBoundsAux</code></a> can be used to set the lower bound to be the old value. Note that in order for these bounds to have an effect, the user has to specify the PETSc options <code>-snes_type vinewtonssls</code> or <code>-snes_type vinewtonrsls</code>.</p></section><section id="3e3371c7-ee67-41d2-a4c3-4c7270b9489e" data-section-level="2" data-section-text="Example Input File"><h2 id="example-input-file">Example Input File</h2><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[./damage_stress]
+  type = ComputeLinearElasticPFFractureStress
+  c = c
+  E_name = &#x27;elastic_energy&#x27;
+  D_name = &#x27;degradation&#x27;
+  F_name = &#x27;local_fracture_energy&#x27;
+  decomposition_type = strain_spectral
+[../]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#230222e6-3e4d-4190-9da1-de4a5a39e88e">(moose/modules/combined/test/tests/phase_field_fracture/crack2d_iso.i)</a></section><section id="4ebdd75e-ec3d-4104-a23d-4a6cbc6f614e" data-section-level="2" data-section-text="Example Input File with pressure"><h2 id="example-input-file-with-pressure">Example Input File with pressure</h2><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[./damage_stress]
+  type = ComputeLinearElasticPFFractureStress
+  c = c
+  E_name = &#x27;elastic_energy&#x27;
+  D_name = &#x27;degradation&#x27;
+  I_name = &#x27;indicator_function&#x27;
+  F_name = &#x27;local_fracture_energy&#x27;
+  decomposition_type = strain_spectral
+[../]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#88f4740c-b1d9-41cf-8aff-98b855735078">(moose/modules/combined/test/tests/phase_field_fracture/crack2d_iso_with_pressure.i)</a><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[./pfbulkmat]
+  type = GenericConstantMaterial
+  prop_names = &#x27;gc_prop l visco fracture_pressure&#x27;
+  prop_values = &#x27;1e-3 0.04 1e-4 1e-3&#x27;
+[../]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#b3b086fe-f736-4249-9371-b14750ab4862">(moose/modules/combined/test/tests/phase_field_fracture/crack2d_iso_with_pressure.i)</a></section><section id="222e69a4-0fda-4e43-9ead-c6fc54c0327b" data-section-level="2" data-section-text="References"><h2 id="references">References</h2><div class="moose-bibliography"><ol><li id="CHUKWUDOZIE2019957">Chukwudi Chukwudozie, Blaise Bourdin, and Keita Yoshioka.
+A variational phase-field model for hydraulic fracturing in porous media.
+<em>Computer Methods in Applied Mechanics and Engineering</em>, 347:957 &ndash; 982, 2019.<a href="#d9cbf0d3-5711-45b5-84c4-9747ec56b199" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="d9cbf0d3-5711-45b5-84c4-9747ec56b199"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{CHUKWUDOZIE2019957,
+    author = "Chukwudozie, Chukwudi and Bourdin, Blaise and Yoshioka, Keita",
+    title = "A variational phase-field model for hydraulic fracturing in porous media",
+    journal = "Computer Methods in Applied Mechanics and Engineering",
+    volume = "347",
+    pages = "957 - 982",
+    year = "2019",
+    issn = "0045-7825"
+}
+</code></pre></div></div></li><li id="Miehe2015">Christian Miehe, Lisa-Marie Sch<span class="bibtex-protected">ä</span>nzel, and Heike Ulmer.
+Phase field modeling of fracture in multi-physics problems. part i. balance of crack surface and failure criteria for brittle crack propagation in thermo-elastic solids.
+<em>Computer Methods in Applied Mechanics and Engineering</em>, 294:449 &ndash; 485, 2015.
+URL: <a href="http://www.sciencedirect.com/science/article/pii/S0045782514004423">http://www.sciencedirect.com/science/article/pii/S0045782514004423</a>, <a href="https://doi.org/https://doi.org/10.1016/j.cma.2014.11.016">doi:https://doi.org/10.1016/j.cma.2014.11.016</a>.<a href="#2f2aab7f-bf79-472b-a835-5438d91e101d" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="2f2aab7f-bf79-472b-a835-5438d91e101d"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{Miehe2015,
+    author = {Miehe, Christian and Sch{\"a}nzel, Lisa-Marie and Ulmer, Heike},
+    title = "Phase field modeling of fracture in multi-physics problems. Part I. Balance of crack surface and failure criteria for brittle crack propagation in thermo-elastic solids",
+    journal = "Computer Methods in Applied Mechanics and Engineering",
+    volume = "294",
+    pages = "449 - 485",
+    year = "2015",
+    issn = "0045-7825",
+    doi = "https://doi.org/10.1016/j.cma.2014.11.016",
+    url = "http://www.sciencedirect.com/science/article/pii/S0045782514004423"
+}
+</code></pre></div></div></li><li id="Mikelic2019">A.&nbsp;Mikeli<span class="bibtex-protected">ć</span>, M.&nbsp;F. Wheeler, and T.&nbsp;Wick.
+Phase-field modeling through iterative splitting of hydraulic fractures in a poroelastic medium.
+<em>GEM - International Journal on Geomathematics</em>, 10(1):2, 2019.<a href="#94249718-b5c8-41c0-9fa4-4ca48483e5fa" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="94249718-b5c8-41c0-9fa4-4ca48483e5fa"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{Mikelic2019,
+    Author = "Mikeli{\'c}, A. and Wheeler, M. F. and Wick, T.",
+    Journal = "GEM - International Journal on Geomathematics",
+    Number = "1",
+    Pages = "2",
+    Title = "Phase-field modeling through iterative splitting of hydraulic fractures in a poroelastic medium",
+    Volume = "10",
+    Year = "2019"
+}
+</code></pre></div></div></li><li id="JYWu2017">Jian-Ying Wu.
+A unified phase-field theory for the mechanics of damage and quasi-brittle failure.
+<em>Journal of the Mechanics and Physics of Solids</em>, 103:72 &ndash; 99, 2017.
+URL: <a href="http://www.sciencedirect.com/science/article/pii/S0022509616308341">http://www.sciencedirect.com/science/article/pii/S0022509616308341</a>, <a href="https://doi.org/https://doi.org/10.1016/j.jmps.2017.03.015">doi:https://doi.org/10.1016/j.jmps.2017.03.015</a>.<a href="#525687d9-b90a-41da-bf7a-2f33776e35c5" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="525687d9-b90a-41da-bf7a-2f33776e35c5"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{JYWu2017,
+    author = "Wu, Jian-Ying",
+    title = "A unified phase-field theory for the mechanics of damage and quasi-brittle failure",
+    journal = "Journal of the Mechanics and Physics of Solids",
+    volume = "103",
+    pages = "72 - 99",
+    year = "2017",
+    issn = "0022-5096",
+    doi = "https://doi.org/10.1016/j.jmps.2017.03.015",
+    url = "http://www.sciencedirect.com/science/article/pii/S0022509616308341"
+}
+</code></pre></div></div></li></ol></div></section></section></section><div class="moose-modal modal" id="230222e6-3e4d-4190-9da1-de4a5a39e88e"><div class="modal-content"><h4>(moose/modules/combined/test/tests/phase_field_fracture/crack2d_iso.i)</h4><pre class="moose-pre"><code class="language-text">#This input uses PhaseField-Nonconserved Action to add phase field fracture bulk rate kernels
+[Mesh]
+  [gen]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 20
+    ny = 10
+    ymax = 0.5
+  []
+  [./noncrack]
+    type = BoundingBoxNodeSetGenerator
+    new_boundary = noncrack
+    bottom_left = &#x27;0.5 0 0&#x27;
+    top_right = &#x27;1 0 0&#x27;
+    input = gen
+  [../]
+[]
+
+[GlobalParams]
+  displacements = &#x27;disp_x disp_y&#x27;
+[]
+
+[Modules]
+  [./PhaseField]
+    [./Nonconserved]
+      [./c]
+        free_energy = F
+        kappa = kappa_op
+        mobility = L
+      [../]
+    [../]
+  [../]
+  [./TensorMechanics]
+    [./Master]
+      [./mech]
+        add_variables = true
+        strain = SMALL
+        additional_generate_output = &#x27;stress_yy&#x27;
+        save_in = &#x27;resid_x resid_y&#x27;
+      [../]
+    [../]
+  [../]
+[]
+
+[AuxVariables]
+  [./resid_x]
+  [../]
+  [./resid_y]
+  [../]
+[]
+
+[Kernels]
+  [./solid_x]
+    type = PhaseFieldFractureMechanicsOffDiag
+    variable = disp_x
+    component = 0
+    c = c
+  [../]
+  [./solid_y]
+    type = PhaseFieldFractureMechanicsOffDiag
+    variable = disp_y
+    component = 1
+    c = c
+  [../]
+[]
+
+[BCs]
+  [./ydisp]
+    type = FunctionDirichletBC
+    variable = disp_y
+    boundary = top
+    function = &#x27;t&#x27;
+  [../]
+  [./yfix]
+    type = DirichletBC
+    variable = disp_y
+    boundary = noncrack
+    value = 0
+  [../]
+  [./xfix]
+    type = DirichletBC
+    variable = disp_x
+    boundary = top
+    value = 0
+  [../]
+[]
+
+[Materials]
+  [./pfbulkmat]
+    type = GenericConstantMaterial
+    prop_names = &#x27;gc_prop l visco&#x27;
+    prop_values = &#x27;1e-3 0.04 1e-4&#x27;
+  [../]
+  [./define_mobility]
+    type = ParsedMaterial
+    material_property_names = &#x27;gc_prop visco&#x27;
+    f_name = L
+    function = &#x27;1.0/(gc_prop * visco)&#x27;
+  [../]
+  [./define_kappa]
+    type = ParsedMaterial
+    material_property_names = &#x27;gc_prop l&#x27;
+    f_name = kappa_op
+    function = &#x27;gc_prop * l&#x27;
+  [../]
+  [./elasticity_tensor]
+    type = ComputeElasticityTensor
+    C_ijkl = &#x27;120.0 80.0&#x27;
+    fill_method = symmetric_isotropic
+  [../]
+  [./damage_stress]
+    type = ComputeLinearElasticPFFractureStress
+    c = c
+    E_name = &#x27;elastic_energy&#x27;
+    D_name = &#x27;degradation&#x27;
+    F_name = &#x27;local_fracture_energy&#x27;
+    decomposition_type = strain_spectral
+  [../]
+  [./degradation]
+    type = DerivativeParsedMaterial
+    f_name = degradation
+    args = &#x27;c&#x27;
+    function = &#x27;(1.0-c)^2*(1.0 - eta) + eta&#x27;
+    constant_names       = &#x27;eta&#x27;
+    constant_expressions = &#x27;0.0&#x27;
+    derivative_order = 2
+  [../]
+  [./local_fracture_energy]
+    type = DerivativeParsedMaterial
+    f_name = local_fracture_energy
+    args = &#x27;c&#x27;
+    material_property_names = &#x27;gc_prop l&#x27;
+    function = &#x27;c^2 * gc_prop / 2 / l&#x27;
+    derivative_order = 2
+  [../]
+  [./fracture_driving_energy]
+    type = DerivativeSumMaterial
+    args = c
+    sum_materials = &#x27;elastic_energy local_fracture_energy&#x27;
+    derivative_order = 2
+    f_name = F
+  [../]
+[]
+
+[Postprocessors]
+  [./resid_x]
+    type = NodalSum
+    variable = resid_x
+    boundary = 2
+  [../]
+  [./resid_y]
+    type = NodalSum
+    variable = resid_y
+    boundary = 2
+  [../]
+[]
+
+[Preconditioning]
+  [./smp]
+    type = SMP
+    full = true
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+
+  solve_type = PJFNK
+  petsc_options_iname = &#x27;-pc_type -ksp_gmres_restart -sub_ksp_type -sub_pc_type -pc_asm_overlap&#x27;
+  petsc_options_value = &#x27;asm      31                  preonly       lu           1&#x27;
+
+  nl_rel_tol = 1e-8
+  l_max_its = 10
+  nl_max_its = 10
+
+  dt = 1e-4
+  dtmin = 1e-4
+  num_steps = 2
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="88f4740c-b1d9-41cf-8aff-98b855735078"><div class="modal-content"><h4>(moose/modules/combined/test/tests/phase_field_fracture/crack2d_iso_with_pressure.i)</h4><pre class="moose-pre"><code class="language-text">#This input uses PhaseField-Nonconserved Action to add phase field fracture bulk rate kernels
+[Mesh]
+  [gen]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 20
+    ny = 10
+    ymax = 0.5
+  []
+  [./noncrack]
+    type = BoundingBoxNodeSetGenerator
+    new_boundary = noncrack
+    bottom_left = &#x27;0.5 0 0&#x27;
+    top_right = &#x27;1 0 0&#x27;
+    input = gen
+  [../]
+[]
+
+[GlobalParams]
+  displacements = &#x27;disp_x disp_y&#x27;
+[]
+
+[Modules]
+  [./PhaseField]
+    [./Nonconserved]
+      [./c]
+        free_energy = F
+        kappa = kappa_op
+        mobility = L
+      [../]
+    [../]
+  [../]
+  [./TensorMechanics]
+    [./Master]
+      [./mech]
+        add_variables = true
+        strain = SMALL
+        additional_generate_output = &#x27;stress_yy&#x27;
+        save_in = &#x27;resid_x resid_y&#x27;
+      [../]
+    [../]
+  [../]
+[]
+
+[AuxVariables]
+  [./resid_x]
+  [../]
+  [./resid_y]
+  [../]
+[]
+
+[Kernels]
+  [./solid_x]
+    type = PhaseFieldFractureMechanicsOffDiag
+    variable = disp_x
+    component = 0
+    c = c
+  [../]
+  [./solid_y]
+    type = PhaseFieldFractureMechanicsOffDiag
+    variable = disp_y
+    component = 1
+    c = c
+  [../]
+[]
+
+[BCs]
+  [./ydisp]
+    type = FunctionDirichletBC
+    variable = disp_y
+    boundary = top
+    function = &#x27;t&#x27;
+  [../]
+  [./yfix]
+    type = DirichletBC
+    variable = disp_y
+    boundary = noncrack
+    value = 0
+  [../]
+  [./xfix]
+    type = DirichletBC
+    variable = disp_x
+    boundary = top
+    value = 0
+  [../]
+[]
+
+[Materials]
+  [./pfbulkmat]
+    type = GenericConstantMaterial
+    prop_names = &#x27;gc_prop l visco fracture_pressure&#x27;
+    prop_values = &#x27;1e-3 0.04 1e-4 1e-3&#x27;
+  [../]
+  [./define_mobility]
+    type = ParsedMaterial
+    material_property_names = &#x27;gc_prop visco&#x27;
+    f_name = L
+    function = &#x27;1.0/(gc_prop * visco)&#x27;
+  [../]
+  [./define_kappa]
+    type = ParsedMaterial
+    material_property_names = &#x27;gc_prop l&#x27;
+    f_name = kappa_op
+    function = &#x27;gc_prop * l&#x27;
+  [../]
+  [./elasticity_tensor]
+    type = ComputeElasticityTensor
+    C_ijkl = &#x27;120.0 80.0&#x27;
+    fill_method = symmetric_isotropic
+  [../]
+  [./damage_stress]
+    type = ComputeLinearElasticPFFractureStress
+    c = c
+    E_name = &#x27;elastic_energy&#x27;
+    D_name = &#x27;degradation&#x27;
+    I_name = &#x27;indicator_function&#x27;
+    F_name = &#x27;local_fracture_energy&#x27;
+    decomposition_type = strain_spectral
+  [../]
+  [./degradation]
+    type = DerivativeParsedMaterial
+    f_name = degradation
+    args = &#x27;c&#x27;
+    function = &#x27;(1.0-c)^2*(1.0 - eta) + eta&#x27;
+    constant_names       = &#x27;eta&#x27;
+    constant_expressions = &#x27;0.0&#x27;
+    derivative_order = 2
+  [../]
+  [./indicator_function]
+    type = DerivativeParsedMaterial
+    f_name = indicator_function
+    args = &#x27;c&#x27;
+    function = &#x27;c&#x27;
+    derivative_order = 2
+  [../]
+  [./local_fracture_energy]
+    type = DerivativeParsedMaterial
+    f_name = local_fracture_energy
+    args = &#x27;c&#x27;
+    material_property_names = &#x27;gc_prop l&#x27;
+    function = &#x27;c^2 * gc_prop / 2 / l&#x27;
+    derivative_order = 2
+  [../]
+  [./fracture_driving_energy]
+    type = DerivativeSumMaterial
+    args = c
+    sum_materials = &#x27;elastic_energy local_fracture_energy&#x27;
+    derivative_order = 2
+    f_name = F
+  [../]
+[]
+
+[Postprocessors]
+  [./resid_x]
+    type = NodalSum
+    variable = resid_x
+    boundary = 2
+  [../]
+  [./resid_y]
+    type = NodalSum
+    variable = resid_y
+    boundary = 2
+  [../]
+[]
+
+[Preconditioning]
+  [./smp]
+    type = SMP
+    full = true
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+
+  solve_type = PJFNK
+  petsc_options_iname = &#x27;-pc_type -ksp_gmres_restart -sub_ksp_type -sub_pc_type -pc_asm_overlap&#x27;
+  petsc_options_value = &#x27;asm      31                  preonly       lu           1&#x27;
+
+  nl_rel_tol = 1e-8
+  l_max_its = 10
+  nl_max_its = 10
+
+  dt = 1e-4
+  dtmin = 1e-4
+  num_steps = 2
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="b3b086fe-f736-4249-9371-b14750ab4862"><div class="modal-content"><h4>(moose/modules/combined/test/tests/phase_field_fracture/crack2d_iso_with_pressure.i)</h4><pre class="moose-pre"><code class="language-text">#This input uses PhaseField-Nonconserved Action to add phase field fracture bulk rate kernels
+[Mesh]
+  [gen]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 20
+    ny = 10
+    ymax = 0.5
+  []
+  [./noncrack]
+    type = BoundingBoxNodeSetGenerator
+    new_boundary = noncrack
+    bottom_left = &#x27;0.5 0 0&#x27;
+    top_right = &#x27;1 0 0&#x27;
+    input = gen
+  [../]
+[]
+
+[GlobalParams]
+  displacements = &#x27;disp_x disp_y&#x27;
+[]
+
+[Modules]
+  [./PhaseField]
+    [./Nonconserved]
+      [./c]
+        free_energy = F
+        kappa = kappa_op
+        mobility = L
+      [../]
+    [../]
+  [../]
+  [./TensorMechanics]
+    [./Master]
+      [./mech]
+        add_variables = true
+        strain = SMALL
+        additional_generate_output = &#x27;stress_yy&#x27;
+        save_in = &#x27;resid_x resid_y&#x27;
+      [../]
+    [../]
+  [../]
+[]
+
+[AuxVariables]
+  [./resid_x]
+  [../]
+  [./resid_y]
+  [../]
+[]
+
+[Kernels]
+  [./solid_x]
+    type = PhaseFieldFractureMechanicsOffDiag
+    variable = disp_x
+    component = 0
+    c = c
+  [../]
+  [./solid_y]
+    type = PhaseFieldFractureMechanicsOffDiag
+    variable = disp_y
+    component = 1
+    c = c
+  [../]
+[]
+
+[BCs]
+  [./ydisp]
+    type = FunctionDirichletBC
+    variable = disp_y
+    boundary = top
+    function = &#x27;t&#x27;
+  [../]
+  [./yfix]
+    type = DirichletBC
+    variable = disp_y
+    boundary = noncrack
+    value = 0
+  [../]
+  [./xfix]
+    type = DirichletBC
+    variable = disp_x
+    boundary = top
+    value = 0
+  [../]
+[]
+
+[Materials]
+  [./pfbulkmat]
+    type = GenericConstantMaterial
+    prop_names = &#x27;gc_prop l visco fracture_pressure&#x27;
+    prop_values = &#x27;1e-3 0.04 1e-4 1e-3&#x27;
+  [../]
+  [./define_mobility]
+    type = ParsedMaterial
+    material_property_names = &#x27;gc_prop visco&#x27;
+    f_name = L
+    function = &#x27;1.0/(gc_prop * visco)&#x27;
+  [../]
+  [./define_kappa]
+    type = ParsedMaterial
+    material_property_names = &#x27;gc_prop l&#x27;
+    f_name = kappa_op
+    function = &#x27;gc_prop * l&#x27;
+  [../]
+  [./elasticity_tensor]
+    type = ComputeElasticityTensor
+    C_ijkl = &#x27;120.0 80.0&#x27;
+    fill_method = symmetric_isotropic
+  [../]
+  [./damage_stress]
+    type = ComputeLinearElasticPFFractureStress
+    c = c
+    E_name = &#x27;elastic_energy&#x27;
+    D_name = &#x27;degradation&#x27;
+    I_name = &#x27;indicator_function&#x27;
+    F_name = &#x27;local_fracture_energy&#x27;
+    decomposition_type = strain_spectral
+  [../]
+  [./degradation]
+    type = DerivativeParsedMaterial
+    f_name = degradation
+    args = &#x27;c&#x27;
+    function = &#x27;(1.0-c)^2*(1.0 - eta) + eta&#x27;
+    constant_names       = &#x27;eta&#x27;
+    constant_expressions = &#x27;0.0&#x27;
+    derivative_order = 2
+  [../]
+  [./indicator_function]
+    type = DerivativeParsedMaterial
+    f_name = indicator_function
+    args = &#x27;c&#x27;
+    function = &#x27;c&#x27;
+    derivative_order = 2
+  [../]
+  [./local_fracture_energy]
+    type = DerivativeParsedMaterial
+    f_name = local_fracture_energy
+    args = &#x27;c&#x27;
+    material_property_names = &#x27;gc_prop l&#x27;
+    function = &#x27;c^2 * gc_prop / 2 / l&#x27;
+    derivative_order = 2
+  [../]
+  [./fracture_driving_energy]
+    type = DerivativeSumMaterial
+    args = c
+    sum_materials = &#x27;elastic_energy local_fracture_energy&#x27;
+    derivative_order = 2
+    f_name = F
+  [../]
+[]
+
+[Postprocessors]
+  [./resid_x]
+    type = NodalSum
+    variable = resid_x
+    boundary = 2
+  [../]
+  [./resid_y]
+    type = NodalSum
+    variable = resid_y
+    boundary = 2
+  [../]
+[]
+
+[Preconditioning]
+  [./smp]
+    type = SMP
+    full = true
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+
+  solve_type = PJFNK
+  petsc_options_iname = &#x27;-pc_type -ksp_gmres_restart -sub_ksp_type -sub_pc_type -pc_asm_overlap&#x27;
+  petsc_options_value = &#x27;asm      31                  preonly       lu           1&#x27;
+
+  nl_rel_tol = 1e-8
+  l_max_its = 10
+  nl_max_its = 10
+
+  dt = 1e-4
+  dtmin = 1e-4
+  num_steps = 2
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

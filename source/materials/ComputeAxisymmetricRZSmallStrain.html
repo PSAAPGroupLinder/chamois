@@ -1,0 +1,197 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Compute Axisymmetric RZ Small Strain | Chamois</title><link rel="icon" type="image/x-icon" href="../../media/chamois_logo.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down">Chamois</a><a href="https://github.com/matthiasneuner/chamois" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="ff9014bc-4c17-4eba-b5d0-635cd7b4a857" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#" class="sidenav-trigger" data-target="b4771427-55a8-49d3-968e-7c4a813d49e8"><i class="material-icons">menu</i></a><ul class="sidenav" id="b4771427-55a8-49d3-968e-7c4a813d49e8"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="779762ff-2308-4cea-b047-a42682425dae" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="ff9014bc-4c17-4eba-b5d0-635cd7b4a857"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul><ul class="dropdown-content" id="779762ff-2308-4cea-b047-a42682425dae"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="moose-content col s12 m12 l12"><section id="2be5edbc-46e5-4c4b-9301-a5d21e95c28e" data-section-level="1" data-section-text="Compute Axisymmetric RZ Small Strain"><h1 id="compute-axisymmetric-rz-small-strain">Compute Axisymmetric RZ Small Strain</h1><p>Compute a small strain in an Axisymmetric geometry</p><section id="99125f76-d95e-4b3d-9679-118e10049571" data-section-level="2" data-section-text="Description"><h2 id="description">Description</h2><p>The material <code>ComputeAxisymmetricRZSmallStrain</code> calculates the small total strain for Axisymmetric systems.</p><p>Axisymmetric (cylindrical) materials are included in Tensor Mechanics for revolved geometries and assume symmetrical loading. These &#x27;strain calculator&#x27; materials compute the strain within the appropriate coordinate system and rely on specialized AxisymmetricRZ kernels to handle the stress divergence.</p><div class="card moose-alert moose-alert-warning"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">warning</i><span class="moose-alert-title-brand">warning:</span>Symmetry Assumed About the <span class="moose-katex-inline-equation" id="moose-equation-35c4acfc-c36e-4a85-9e4e-5a2b8a3c4dca"><script>var element = document.getElementById("moose-equation-35c4acfc-c36e-4a85-9e4e-5a2b8a3c4dca");katex.render("z", element, {displayMode:false,throwOnError:false});</script></span>-axis</div><div class="card-content"><div class="moose-alert-content"><p>The axis of symmetry must lie along the <span class="moose-katex-inline-equation" id="moose-equation-375ba08a-2467-462d-8180-4cf098e5ac53"><script>var element = document.getElementById("moose-equation-375ba08a-2467-462d-8180-4cf098e5ac53");katex.render("z", element, {displayMode:false,throwOnError:false});</script></span>-axis in a <span class="moose-katex-inline-equation" id="moose-equation-b308a1dd-5823-4cdb-9433-938aababfff3"><script>var element = document.getElementById("moose-equation-b308a1dd-5823-4cdb-9433-938aababfff3");katex.render("\\left(r, z, \\theta \\right)", element, {displayMode:false,throwOnError:false});</script></span> or cylindrical coordinate system. This symmetry orientation is required for the calculation of the residual and of the jacobian. See <a href="../kernels/StressDivergenceRZTensors.html">StressDivergenceRZTensors</a> for the residual equation and the germane discussion.</p></div></div></div><p> The <code></code><code>AxisymmetricRZ</code><code></code> material is appropriate for a 2D simulation and assumes symmetry revolved about the z-axis. A 2D formulation of an appropriate simulation problem can reduce the simulation run time while preserving key physics. Axisymmetric simulations are appropriate to problems in which a solid is generated by <a href="https://en.wikipedia.org/wiki/Axial_symmetry">revolving a planar area about an axis</a> in the same plane.</p><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note:</span>Use RZ Coordinate Type</div><div class="card-content"><div class="moose-alert-content"><p>The coordinate type in the Problem block of the input file must be set to <strong><code>COORD_TYPE = RZ</code></strong>.</p></div></div></div></section><section id="9910e210-e589-4a48-9b6e-c92ea63968a2" data-section-level="2" data-section-text="Axisymmetric Strain Formulation"><h2 id="axisymmetric-strain-formulation">Axisymmetric Strain Formulation</h2><p>The axisymmetric model employs the cylindrical coordinates, <span class="moose-katex-inline-equation" id="moose-equation-d12fc575-1053-48ca-a626-42b77dedc82c"><script>var element = document.getElementById("moose-equation-d12fc575-1053-48ca-a626-42b77dedc82c");katex.render("r", element, {displayMode:false,throwOnError:false});</script></span>, <span class="moose-katex-inline-equation" id="moose-equation-4b1f3a77-8f92-423d-b3a1-8abf266a2a97"><script>var element = document.getElementById("moose-equation-4b1f3a77-8f92-423d-b3a1-8abf266a2a97");katex.render("z", element, {displayMode:false,throwOnError:false});</script></span>, and <span class="moose-katex-inline-equation" id="moose-equation-42afc9b4-e790-422b-b796-86816d847c6b"><script>var element = document.getElementById("moose-equation-42afc9b4-e790-422b-b796-86816d847c6b");katex.render("\\theta", element, {displayMode:false,throwOnError:false});</script></span>, where the planar cross section formed by the <span class="moose-katex-inline-equation" id="moose-equation-4249949f-4d7a-4630-bd8c-39460bfbc91e"><script>var element = document.getElementById("moose-equation-4249949f-4d7a-4630-bd8c-39460bfbc91e");katex.render("r", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-0f8f69eb-f40c-4cc5-9943-ff3dc3bb1ffe"><script>var element = document.getElementById("moose-equation-0f8f69eb-f40c-4cc5-9943-ff3dc3bb1ffe");katex.render("z", element, {displayMode:false,throwOnError:false});</script></span> axes is rotated about the axial <span class="moose-katex-inline-equation" id="moose-equation-8fdd3648-1d08-459b-a642-525bdb473e5c"><script>var element = document.getElementById("moose-equation-8fdd3648-1d08-459b-a642-525bdb473e5c");katex.render("z", element, {displayMode:false,throwOnError:false});</script></span> axis, along the length of the cylinder, in the <span class="moose-katex-inline-equation" id="moose-equation-4f83db05-94d7-4be6-9743-c5c4f4a6d029"><script>var element = document.getElementById("moose-equation-4f83db05-94d7-4be6-9743-c5c4f4a6d029");katex.render("\\theta", element, {displayMode:false,throwOnError:false});</script></span> direction.  The cylindrical coordinate system strain tensor for axisymmetric problems has the form</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-6a884da9-74c9-4190-ad24-5c3fb7f5ed3c"></span><script>var element = document.getElementById("moose-equation-6a884da9-74c9-4190-ad24-5c3fb7f5ed3c");katex.render("\\begin{bmatrix} \\epsilon_{rr} & \\epsilon_{rz} & 0 \\\\ \\epsilon_{zr} & \\epsilon_{zz} & 0 \\\\ 0 & 0 & \\epsilon_{\\theta \\theta} \\end{bmatrix}", element, {displayMode:true,throwOnError:false});</script></span> where the value of the strain <span class="moose-katex-inline-equation" id="moose-equation-0e634ee2-96d0-4672-bf76-85b8d75f2e58"><script>var element = document.getElementById("moose-equation-0e634ee2-96d0-4672-bf76-85b8d75f2e58");katex.render("\\epsilon_{\\theta \\theta}", element, {displayMode:false,throwOnError:false});</script></span> depends on the displacement and position in the radial direction <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-645965d3-1b28-4e28-b8be-c0df7bb34a70"></span><script>var element = document.getElementById("moose-equation-645965d3-1b28-4e28-b8be-c0df7bb34a70");katex.render("\\epsilon_{\\theta \\theta} = \\frac{u_r}{X_r}.", element, {displayMode:true,throwOnError:false});</script></span></p><p>Although axisymmetric problems solve for 3D stress and strain fields, the problem is mathematically 2D. Using an appropriate set of geometry and boundary conditions, these types of problems have strain and stress fields which are not functions of the out of plane coordinate variable.  In the cylindrical coordinate axisymmetric system, the values of stress and strain in the <span class="moose-katex-inline-equation" id="moose-equation-921d9201-63e7-4d1d-9690-390892b0eb1d"><script>var element = document.getElementById("moose-equation-921d9201-63e7-4d1d-9690-390892b0eb1d");katex.render("\\theta", element, {displayMode:false,throwOnError:false});</script></span> direction do not depend on the <span class="moose-katex-inline-equation" id="moose-equation-32b48d2e-5c01-4205-8854-75c5c4b67e09"><script>var element = document.getElementById("moose-equation-32b48d2e-5c01-4205-8854-75c5c4b67e09");katex.render("\\theta", element, {displayMode:false,throwOnError:false});</script></span> coordinate.</p><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note:</span>Notation Order Change</div><div class="card-content"><div class="moose-alert-content"><p>The axisymmetric system changes the order of the displacement vector from <span class="moose-katex-inline-equation" id="moose-equation-d9260a7f-7c4b-46e8-a799-6f26000edfe7"><script>var element = document.getElementById("moose-equation-d9260a7f-7c4b-46e8-a799-6f26000edfe7");katex.render("(u_r, u_{\\theta}, u_z)", element, {displayMode:false,throwOnError:false});</script></span>, usually seen in textbooks, to <span class="moose-katex-inline-equation" id="moose-equation-f208b6a2-4e7c-4a11-a7ac-fbd01df46f27"><script>var element = document.getElementById("moose-equation-f208b6a2-4e7c-4a11-a7ac-fbd01df46f27");katex.render("(u_r, u_z, u_{\\theta})", element, {displayMode:false,throwOnError:false});</script></span>. Take care to follow this convention in your input files and when adding eigenstrains or extra stresses.</p></div></div></div><p>Only minimal changes are required to adapt a plane strain problem to an axisymmetric problem. The axisymmetric specific <code>ComputeAxisymmetricRZSmallStrain</code> code overwrites the method used to calculate the total strain component <span class="moose-katex-inline-equation" id="moose-equation-ff6531d5-0173-444d-b3b6-99fe4dc8a4a3"><script>var element = document.getElementById("moose-equation-ff6531d5-0173-444d-b3b6-99fe4dc8a4a3");katex.render("\\epsilon_{\\theta \\theta}", element, {displayMode:false,throwOnError:false});</script></span> before calculating the total strain measure with the small strain assumptions.</p></section><section id="03010d78-7b82-4941-b272-363755b20d74" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[./small_strain_rz]
+  type = ComputeAxisymmetricRZSmallStrain
+  block = PATCH
+[../]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#40fdc3ef-2cbb-4156-baf1-08c569990070">(moose/modules/combined/test/tests/evolving_mass_density/rz_tensors.i)</a></section><section id="87d0549a-6b00-4285-aa3a-b5ec4084ae4f" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="c97fa23b-f035-4881-b067-c7fd6925d2a8" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">displacements</span><span class="moose-parameter-header-description">The displacements appropriate for the simulation geometry and coordinate system</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The displacements appropriate for the simulation geometry and coordinate system</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="b1ff0f20-ce18-4f12-b941-836a6b419bce" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">base_name</span><span class="moose-parameter-header-description">Optional parameter that allows the user to define multiple mechanics material systems on the same block, i.e. for multiple phases</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Optional parameter that allows the user to define multiple mechanics material systems on the same block, i.e. for multiple phases</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of blocks (ids or names) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of blocks (ids or names) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundaries (ids or names) from the mesh where this boundary condition applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of boundaries (ids or names) from the mesh where this boundary condition applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">compute</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">When false, MOOSE will not call compute methods on this material. The user must call computeProperties() after retrieving the MaterialBase via MaterialBasePropertyInterface::getMaterialBase(). Non-computed MaterialBases are not sorted for dependencies.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>When false, MOOSE will not call compute methods on this material. The user must call computeProperties() after retrieving the MaterialBase via MaterialBasePropertyInterface::getMaterialBase(). Non-computed MaterialBases are not sorted for dependencies.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">constant_on</span><span class="moose-parameter-header-default">NONE</span><span class="moose-parameter-header-description">When ELEMENT, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps.When SUBDOMAIN, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps. Evaluations on element qps will be skipped</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>NONE</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, ELEMENT, SUBDOMAIN</p><p class="moose-parameter-description"><span>Description:</span>When ELEMENT, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps.When SUBDOMAIN, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps. Evaluations on element qps will be skipped</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">declare_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any declared properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any declared properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">eigenstrain_names</span><span class="moose-parameter-header-description">List of eigenstrains to be applied in this strain calculation</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;MaterialPropertyName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>List of eigenstrains to be applied in this strain calculation</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">global_strain</span><span class="moose-parameter-header-description">Optional material property holding a global strain tensor applied to the mesh as a whole</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Optional material property holding a global strain tensor applied to the mesh as a whole</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">out_of_plane_direction</span><span class="moose-parameter-header-default">z</span><span class="moose-parameter-header-description">The direction of the out-of-plane strain.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>z</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>x, y, z</p><p class="moose-parameter-description"><span>Description:</span>The direction of the out-of-plane strain.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">volumetric_locking_correction</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Flag to correct volumetric locking</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Flag to correct volumetric locking</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="1df9c8a6-cdbf-4c52-ade2-6045e2b5b31a" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="80b03210-ebf2-449a-a2f6-9a154f94c7c3" data-section-level="3" data-section-text="Outputs Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">output_properties</span><span class="moose-parameter-header-description">List of material properties, from this material, to output (outputs must also be defined to an output type)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>List of material properties, from this material, to output (outputs must also be defined to an output type)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">outputs</span><span class="moose-parameter-header-default">none </span><span class="moose-parameter-header-description">Vector of output names were you would like to restrict the output of variables(s) associated with this object</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>none </p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;OutputName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Vector of output names were you would like to restrict the output of variables(s) associated with this object</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Outputs Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="40fdc3ef-2cbb-4156-baf1-08c569990070"><div class="modal-content"><h4>(moose/modules/combined/test/tests/evolving_mass_density/rz_tensors.i)</h4><pre class="moose-pre"><code class="language-text">#  Constant mass in RZ using Tensor Mechanics
+#
+# This test forces an RZ mesh to move through a series of displacements
+#   in order to test whether the mass is constant.  The density is chosen
+#   such that the mass is 2.5.
+# This test is a duplicate of the rz.i test for solid mechanics, and the
+#   output of this tensor mechanics test is compared to the original
+#   solid mechanics output.  The duplication is necessary to test the
+#   migrated tensor mechanics version while maintaining tests for solid mechanics.
+
+[Mesh]
+  file = elastic_patch_rz.e
+[]
+
+[GlobalParams]
+  displacements = &#x27;disp_x disp_y&#x27;
+[]
+
+[Problem]
+  coord_type = RZ
+[]
+
+[Functions]
+  [./x101]
+    type = PiecewiseLinear
+    x = &#x27;0 5 6&#x27;
+    y = &#x27;0 0 0.24&#x27;
+  [../]
+  [./y101]
+    type = PiecewiseLinear
+    x = &#x27;0 6&#x27;
+    y = &#x27;0 0&#x27;
+  [../]
+  [./x102]
+    type = PiecewiseLinear
+    x = &#x27;0 4 5&#x27;
+    y = &#x27;0 0 0.24&#x27;
+  [../]
+  [./y102]
+    type = PiecewiseLinear
+    x = &#x27;0 1 2 3&#x27;
+    y = &#x27;0 0 0.12 0&#x27;
+  [../]
+  [./x103]
+    type = PiecewiseLinear
+    x = &#x27;0 4 5&#x27;
+    y = &#x27;0 0 0.24&#x27;
+  [../]
+  [./y103]
+    type = PiecewiseLinear
+    x = &#x27;0 1    3    4&#x27;
+    y = &#x27;0 0.12 0.12 0&#x27;
+  [../]
+  [./x104]
+    type = PiecewiseLinear
+    x = &#x27;0 5 6&#x27;
+    y = &#x27;0 0 0.24&#x27;
+  [../]
+  [./y104]
+    type = PiecewiseLinear
+    x = &#x27;0 2 3    4&#x27;
+    y = &#x27;0 0 0.12 0&#x27;
+  [../]
+[]
+
+[Variables]
+  [./disp_x]
+    order = FIRST
+    family = LAGRANGE
+  [../]
+
+  [./disp_y]
+    order = FIRST
+    family = LAGRANGE
+  [../]
+[]
+
+[Kernels]
+  [./TensorMechanics]
+    use_displaced_mesh = true
+  [../]
+[]
+
+[BCs]
+
+  [./101x]
+    type = FunctionDirichletBC
+    variable = disp_x
+    boundary = 101
+    function = x101
+  [../]
+  [./101y]
+    type = FunctionDirichletBC
+    variable = disp_y
+    boundary = 101
+    function = y101
+  [../]
+
+  [./102x]
+    type = FunctionDirichletBC
+    variable = disp_x
+    boundary = 102
+    function = x102
+  [../]
+  [./102y]
+    type = FunctionDirichletBC
+    variable = disp_y
+    boundary = 102
+    function = y102
+  [../]
+
+  [./103x]
+    type = FunctionDirichletBC
+    variable = disp_x
+    boundary = 103
+    function = x103
+  [../]
+  [./103y]
+    type = FunctionDirichletBC
+    variable = disp_y
+    boundary = 103
+    function = y103
+  [../]
+
+  [./104x]
+    type = FunctionDirichletBC
+    variable = disp_x
+    boundary = 104
+    function = x104
+  [../]
+  [./104y]
+    type = FunctionDirichletBC
+    variable = disp_y
+    boundary = 104
+    function = y104
+  [../]
+[]
+
+[Materials]
+  [./elasticity_tensor]
+    type = ComputeIsotropicElasticityTensor
+    block = PATCH
+    youngs_modulus = 1e6
+    poissons_ratio = 0.0
+  [../]
+
+  [./small_strain_rz]
+    type = ComputeAxisymmetricRZSmallStrain
+    block = PATCH
+  [../]
+
+  [./elastic_stress]
+    type = ComputeLinearElasticStress
+    block = PATCH
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+
+  #Preconditioned JFNK (default)
+  solve_type = &#x27;PJFNK&#x27;
+
+  # Two sets of linesearch options are for petsc 3.1 and 3.3 respectively
+  petsc_options_iname = &#x27;-pc_type -ksp_gmres_restart&#x27;
+  petsc_options_value = &#x27;lu       101&#x27;
+
+  line_search = &#x27;none&#x27;
+  nl_abs_tol = 1e-10
+  l_max_its = 20
+
+  start_time = 0.0
+  dt = 1
+  num_steps = 6
+  end_time = 6.0
+[]
+
+[Outputs]
+  [./out]
+    type = Exodus
+    elemental_as_nodal = true
+    file_base = rz_out
+  [../]
+[]
+
+[Postprocessors]
+  [./mass]
+    type = Mass
+    variable = disp_x
+    execute_on = &#x27;initial timestep_end&#x27;
+  [../]
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

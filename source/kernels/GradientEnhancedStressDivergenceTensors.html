@@ -1,0 +1,542 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>GradientEnhancedStressDivergenceTensors | Chamois</title><link rel="icon" type="image/x-icon" href="../../media/chamois_logo.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down">Chamois</a><a href="https://github.com/matthiasneuner/chamois" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="5ce68114-f0bf-41d3-b0cd-709030705981" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#" class="sidenav-trigger" data-target="30ba89ba-3d8b-4989-994e-e101e22dfea9"><i class="material-icons">menu</i></a><ul class="sidenav" id="30ba89ba-3d8b-4989-994e-e101e22dfea9"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="f77c79d5-15b0-4919-b948-2d27a7d53eaf" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="5ce68114-f0bf-41d3-b0cd-709030705981"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul><ul class="dropdown-content" id="f77c79d5-15b0-4919-b948-2d27a7d53eaf"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="moose-content col s12 m12 l12"><section id="3e42ff3b-7479-4667-a3ab-5749db157799" data-section-level="1" data-section-text="GradientEnhancedStressDivergenceTensors"><h1 id="gradientenhancedstressdivergencetensors">GradientEnhancedStressDivergenceTensors</h1><div class="card moose-alert moose-alert-construction"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">build</i><span class="moose-alert-title-brand">construction:</span>Undocumented Class</div><div class="card-content"><div class="moose-alert-content"><p>The GradientEnhancedStressDivergenceTensors has not been documented. The content listed below should be used as a starting point for documenting the class, which includes the typical automatic documentation associated with a MooseObject; however, what is contained is ultimately determined by what is necessary to make the documentation clear for users.</p></div></div></div><p>Enhanced StressDivergenceTensors kernel considering off diagonal jacobian terms due to gradient-enhanced stress effects.</p><section id="b9c17074-9386-4847-b9c2-ba26a610b4d9" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p></p></section><section id="f2556932-08c0-4059-bf25-5c12ae1ed02d" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><p></p></section><section id="65aeb48b-5a9d-4768-b09a-344afd4e8e6a" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="652a6645-0fd8-46ae-8492-79e298914ff8" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">component</span><span class="moose-parameter-header-description">An integer corresponding to the direction the variable this kernel acts in. (0 for x, 1 for y, 2 for z)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>An integer corresponding to the direction the variable this kernel acts in. (0 for x, 1 for y, 2 for z)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">displacements</span><span class="moose-parameter-header-description">The string of displacements suitable for the problem statement</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The string of displacements suitable for the problem statement</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">nonlocal_damage</span><span class="moose-parameter-header-description">The nonlocal damage field</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The nonlocal damage field</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">variable</span><span class="moose-parameter-header-description">The name of the variable that this residual object operates on</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>NonlinearVariableName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of the variable that this residual object operates on</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="25dfbeda-02a4-4da4-a274-9fea69dab6b2" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">args</span><span class="moose-parameter-header-description">Vector of nonlinear variable arguments this object depends on</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Vector of nonlinear variable arguments this object depends on</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">base_name</span><span class="moose-parameter-header-description">Material property base name</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Material property base name</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of blocks (ids or names) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of blocks (ids or names) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">eigenstrain_names</span><span class="moose-parameter-header-description">List of eigenstrains used in the strain calculation. Used for computing their derivatives for off-diagonal Jacobian terms.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;MaterialPropertyName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>List of eigenstrains used in the strain calculation. Used for computing their derivatives for off-diagonal Jacobian terms.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">out_of_plane_direction</span><span class="moose-parameter-header-default">z</span><span class="moose-parameter-header-description">The direction of the out_of_plane_strain variable used in the WeakPlaneStress kernel.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>z</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>x, y, z</p><p class="moose-parameter-description"><span>Description:</span>The direction of the out_of_plane_strain variable used in the WeakPlaneStress kernel.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">out_of_plane_strain</span><span class="moose-parameter-header-description">The name of the out_of_plane_strain variable used in the WeakPlaneStress kernel.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of the out_of_plane_strain variable used in the WeakPlaneStress kernel.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">temperature</span><span class="moose-parameter-header-description">The name of the temperature variable used in the ComputeThermalExpansionEigenstrain.  (Not required for simulations without temperature coupling.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of the temperature variable used in the ComputeThermalExpansionEigenstrain.  (Not required for simulations without temperature coupling.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_finite_deform_jacobian</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Jacobian for corotational finite strain</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Jacobian for corotational finite strain</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">volumetric_locking_correction</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Set to false to turn off volumetric locking correction</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set to false to turn off volumetric locking correction</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="9bec9f4d-e39d-48c2-8d2b-26888a29ec4e" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">diag_save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this Kernel's diagonal Jacobian contributions to. Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this Kernel's diagonal Jacobian contributions to. Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this Kernel's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this Kernel's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation. Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation. Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="c6492648-a819-4150-ab2d-ccc3c1babc3f" data-section-level="3" data-section-text="Tagging Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">extra_matrix_tags</span><span class="moose-parameter-header-description">The extra tags for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_vector_tags</span><span class="moose-parameter-header-description">The extra tags for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the vectors this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_tags</span><span class="moose-parameter-header-default">system</span><span class="moose-parameter-header-description">The tag for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>system</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, system</p><p class="moose-parameter-description"><span>Description:</span>The tag for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">vector_tags</span><span class="moose-parameter-header-default">nontime</span><span class="moose-parameter-header-description">The tag for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nontime</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, time</p><p class="moose-parameter-description"><span>Description:</span>The tag for the vectors this Kernel should fill</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Tagging Parameters</h3></summary></details></section></section><section id="4e44450b-4d0f-491c-9797-7e152af18c62" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#97cdbeaf-1b49-4f80-86fa-9c93f05a831a">(examples/modleon_nonlocal_triaxial_compression_test/test.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#2e1004da-6721-44f5-bb9c-1f054ccce97d">(examples/gerankine_lshaped_panel/test_gradient_enhanced_rankine.i)</a></li></ul></section></section><div class="moose-modal modal" id="97cdbeaf-1b49-4f80-86fa-9c93f05a831a"><div class="modal-content"><h4>(examples/modleon_nonlocal_triaxial_compression_test/test.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = FileMesh
+  file = structured_triaxial_compression_test_mesh.inp
+  construct_node_list_from_side_list = false 
+[]
+
+[GlobalParams]
+  volumetric_locking_correction = false
+  displacements = &#x27;disp_x disp_y disp_z&#x27;
+  nonlocal_damage = nonlocal_damage
+  order = SECOND
+  family = LAGRANGE
+[]
+
+[Variables]
+  [disp_x] []
+  [disp_y] []
+  [disp_z] []
+  [nonlocal_damage] []
+[]
+
+[Kernels]
+  [div_sig_x]
+    type = GradientEnhancedStressDivergenceTensors
+    variable = disp_x
+    component = 0
+    use_displaced_mesh = false
+  []
+  [div_sig_y]
+    type = GradientEnhancedStressDivergenceTensors
+    variable = disp_y
+    component = 1
+    use_displaced_mesh = false
+  []
+  [div_sig_z]
+    type = GradientEnhancedStressDivergenceTensors
+    variable = disp_z
+    component = 2
+    use_displaced_mesh = false
+  []
+  [implicit_gradient_damage]
+    type = ImplicitGradientEnhancedDamage
+    variable = nonlocal_damage 
+    use_displaced_mesh = false
+  []
+[]
+
+[AuxVariables]
+  [alphaP]
+    order=CONSTANT
+    family=MONOMIAL
+  []
+  [omega]
+    order=CONSTANT
+    family=MONOMIAL
+  []
+  [von_mises]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [stress_first_invariant]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+[]
+
+[AuxKernels]
+  [alphaP_kernel]
+    type = MaterialStdVectorAux
+    variable =alphaP 
+    property = state_vars
+    index = 0
+    execute_on = TIMESTEP_END
+  []
+  [omegal_kernel]
+    type = MaterialStdVectorAux
+    variable = omega
+    property = state_vars
+    index = 4
+    execute_on = TIMESTEP_END
+  []
+  [von_mises_kernel]
+    type = RankTwoScalarAux
+    variable = von_mises
+    rank_two_tensor = stress
+    execute_on = timestep_end
+    scalar_type = VonMisesStress
+  []
+  [first_invariant_kernel]
+    type = RankTwoScalarAux
+    variable = stress_first_invariant
+    rank_two_tensor = stress
+    execute_on = timestep_end
+    scalar_type = FirstInvariant
+  []
+[]
+
+
+[Materials]
+  [marmot_material_Elastic]
+    type = ComputeMarmotMaterialGradientEnhancedHypoElastic
+    block=&#x27;top_HEX20 tbottom_HEX20&#x27;
+    marmot_material_name = MODLEONNONLOCAL
+    marmot_material_parameters = &#x27;30000.0  0.15  13e3   47.4e3    55e3     4.74e3   0.85   0.12   0.003  2.0  0.000001  15.0  10  1.00  0.0017  0&#x27;
+  []
+  [marmot_material]
+    type = ComputeMarmotMaterialGradientEnhancedHypoElastic
+    block=&#x27;notWeakElements_HEX20&#x27;
+    marmot_material_name = MODLEONNONLOCAL
+    marmot_material_parameters = &#x27;30000.0  0.15  13   47.4    55     4.74   0.85   0.12   0.003  2.0  0.000001  15.0  10  1.00  0.0010  1&#x27;
+  []
+  [marmot_material_weak]
+    type = ComputeMarmotMaterialGradientEnhancedHypoElastic
+    block=&#x27;weakElements_HEX20&#x27;
+    marmot_material_name = MODLEONNONLOCAL
+    marmot_material_parameters = &#x27;31000.0  0.15  13   44.4    53     4.54   0.85   0.12   0.003  2.0  0.000001  15.0  10  1.00  0.0010  1&#x27;
+  []
+  [dstrain]
+    type = ComputeIncrementalSmallStrain
+  []
+  [dstrain_vgt_conv]
+    type = ConvertRankTwoTensorToVoigt
+    tensor = strain_increment
+    tensor_voigt = strain_increment_voigt
+    shear_components_twice = true
+  []
+  [stress_conv]
+    type = ConvertRankTwoTensorFromVoigt
+    tensor = stress
+    tensor_voigt = stress_voigt
+    shear_components_half = false
+  []
+  [Jacobian_conv]
+    type = ConvertRankFourTensorFromVoigt
+    tensor = Jacobian_mult
+    tensor_voigt = dstress_voigt_dstrain_voigt
+    shear_components_half_ij = false
+    shear_components_half_kl = false
+    tensor_voigt_uses_row_major_layout = false
+  []
+  [dstress_dk_conv]
+    type = ConvertRankTwoTensorFromVoigt
+    tensor = dstress_dnonlocal_damage
+    tensor_voigt = dstress_voigt_dnonlocal_damage
+    shear_components_half = false
+  []
+  [dlocal_damage_dstrain_conv]
+    type = ConvertRankTwoTensorFromVoigt
+    tensor = dlocal_damage_dstrain
+    tensor_voigt = dlocal_damage_dstrain_voigt
+    shear_components_half = false
+  []
+[]
+
+
+[Functions]
+  [./rampConstant1]
+    type = PiecewiseLinear
+    x = &#x27;0. 1. 2.&#x27;
+    y = &#x27;0. 1. 1.&#x27;
+    scale_factor = 0.5
+  [../]
+  [./rampConstant2]
+    type = PiecewiseLinear
+    x = &#x27;0. 1. 2.&#x27;
+    y = &#x27;0. 0. 1.&#x27;
+    scale_factor = -5
+  [../]
+[]
+
+[BCs]
+  [origin]
+    type = DirichletBC
+    variable = disp_x
+    boundary = origin 
+    value = 0
+  []
+  [bottom_z]
+    type = DirichletBC
+    variable = disp_z
+    boundary = bottom 
+    value = 0
+  []
+  [sym_y]
+    type = DirichletBC
+    variable = disp_y
+    boundary = ysym
+    value = 0 
+  []
+  [disp_top]
+    type = FunctionDirichletIncrementalBC
+    variable = disp_z
+    boundary = top 
+    function = rampConstant2
+    reset_times = &#x27;1.0&#x27;
+  []
+  [bottom_nl]
+    type = DirichletBC
+    variable = nonlocal_damage
+    boundary = bottom 
+    value = 0
+  []
+  [top_nl]
+    type = DirichletBC
+    variable = nonlocal_damage
+    boundary = top
+    value = 0
+  []
+  [Pressure]
+    [Side1]
+      boundary = &#x27;sleeveTop&#x27;
+      function = rampConstant1
+    []
+  []
+[]
+[Controls]
+  [./preconsolidation]
+    type = TimePeriod
+    disable_objects = &#x27;BCs/disp_top&#x27;
+    start_time = &#x27;0&#x27;
+    end_time = &#x27;1.0&#x27;
+  []
+  [axialdisplacement]
+    type = TimePeriod
+    enable_objects = &#x27;BCs/disp_top&#x27;
+    start_time = &#x27;1.0&#x27;
+    end_time = &#x27;2.0&#x27;
+  []
+[]
+
+[Preconditioning]
+  [smp]
+    type = SMP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  solve_type = &#x27;NEWTON&#x27;
+
+    petsc_options_iname = &#x27;-pc_type   -pc_hypre_type    -ksp_type     -ksp_gmres_restart  -pc_hypre_boomeramg_strong_threshold -pc_hypre_boomeramg_agg_nl -pc_hypre_boomeramg_agg_num_paths -pc_hypre_boomeramg_max_levels -pc_hypre_boomeramg_coarsen_type -pc_hypre_boomeramg_interp_type -pc_hypre_boomeramg_P_max -pc_hypre_boomeramg_truncfactor&#x27;
+    petsc_options_value = &#x27;hypre      boomeramg         gmres         301                  0.6                                  4                          5                                 25                             HMIS                             ext+i                           1                         0.3&#x27;
+
+  nl_rel_tol = 1e-5
+  nl_abs_tol = 1e-10
+  l_tol = 1e-3
+  l_max_its = 250
+  nl_max_its = 20
+  nl_div_tol = 1e2
+
+  automatic_scaling=true
+  compute_scaling_once =true
+  verbose=false
+
+  line_search = none
+
+  dtmin = 1e-5
+  dtmax= 1e-1
+  
+  start_time = 0.0
+  end_time = 2.0 
+
+  num_steps = 200
+  [TimeStepper]
+    type = IterationAdaptiveDT
+    optimal_iterations = 15
+    iteration_window = 3
+    linear_iteration_ratio = 1000
+    growth_factor=1.5
+    cutback_factor=0.5
+    dt=0.1
+    time_t =  &#x27;0        1.0&#x27;
+    time_dt = &#x27;0.1      1e-3&#x27;
+  []
+  [Quadrature]
+    order=SECOND
+  []
+  [Predictor]
+    type = SimplePredictor
+    scale = 1.0
+  []
+[] 
+
+[Outputs]
+  interval = 1
+  print_linear_residuals = false
+  csv = true
+  exodus = true
+  [pgraph]
+    type = PerfGraphOutput
+    execute_on = &#x27;final&#x27;  # Default is &quot;final&quot;
+    level = 2             # Default is 1
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="2e1004da-6721-44f5-bb9c-1f054ccce97d"><div class="modal-content"><h4>(examples/gerankine_lshaped_panel/test_gradient_enhanced_rankine.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = FileMesh
+  file = mesh_coarse.inp
+  construct_node_list_from_side_list = false # prevents from erronously adding side nodes to the alphabetically first nodeset
+[]
+
+[GlobalParams]
+  volumetric_locking_correction = false
+  displacements = &#x27;disp_x disp_y disp_z&#x27;
+  nonlocal_damage = nonlocal_damage
+  order = SECOND
+  family = LAGRANGE
+[]
+
+[Variables]
+  [disp_x] []
+  [disp_y] []
+  [disp_z] []
+  [nonlocal_damage] []
+[]
+
+[Kernels]
+  [div_sig_x]
+    type = GradientEnhancedStressDivergenceTensors
+    variable = disp_x
+    component = 0
+    use_displaced_mesh = false
+    save_in = force_x
+  []
+  [div_sig_y]
+    type = GradientEnhancedStressDivergenceTensors
+    variable = disp_y
+    component = 1
+    use_displaced_mesh = false
+    save_in = force_y
+  []
+  [div_sig_z]
+    type = GradientEnhancedStressDivergenceTensors
+    variable = disp_z
+    component = 2
+    use_displaced_mesh = false
+    save_in = force_z
+  []
+  [implicit_gradient_damage]
+    type = ImplicitGradientEnhancedDamage
+    variable = nonlocal_damage 
+    use_displaced_mesh = false
+  []
+[]
+
+[AuxVariables]
+#  [alphaP]
+#    order=CONSTANT
+#    family=MONOMIAL
+#  []
+#  [omega]
+#    order=CONSTANT
+#    family=MONOMIAL
+#  []
+  [von_mises]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [stress_first_invariant]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [force_x] []
+  [force_y] []
+  [force_z] []
+[]
+
+
+[Postprocessors]
+  [bot_react_y]
+    type = NodalSum
+    variable = force_y
+    boundary = bottom
+  []
+[]
+
+[AuxKernels]
+  [von_mises_kernel]
+    type = RankTwoScalarAux
+    variable = von_mises
+    rank_two_tensor = stress
+    execute_on = timestep_end
+    scalar_type = VonMisesStress
+  []
+  [first_invariant_kernel]
+    type = RankTwoScalarAux
+    variable = stress_first_invariant
+    rank_two_tensor = stress
+    execute_on = timestep_end
+    scalar_type = FirstInvariant
+  []
+[]
+
+
+[Materials]
+  [marmot_material_Elastic]
+    type = ComputeMarmotMaterialGradientEnhancedHypoElastic
+    block=&#x27;steel_HEX20&#x27;
+    marmot_material_name = GRADIENTENHANCEDDRUCKERPRAGER
+    marmot_material_parameters = &#x27;25850  0.18            20e3          2e3                     0      25        15          15    ${LDAM}     1.00         ${EPSF}      0.0&#x27;
+  []
+  [marmot_material]
+    type = ComputeMarmotMaterialGradientEnhancedHypoElastic
+    block=&#x27;concrete_HEX20&#x27;
+    marmot_material_name = GRADIENTENHANCEDDRUCKERPRAGER
+    marmot_material_parameters = &#x27;25850  0.18            20e3          2.65                    0      25        15          15    ${LDAM}   1.00         ${EPSF}       .99&#x27;
+  []
+  [dstrain]
+    type = ComputeIncrementalSmallStrain
+  []
+  [dstrain_vgt_conv]
+    type = ConvertRankTwoTensorToVoigt
+    tensor = strain_increment
+    tensor_voigt = strain_increment_voigt
+    shear_components_twice = true
+  []
+  [stress_conv]
+    type = ConvertRankTwoTensorFromVoigt
+    tensor = stress
+    tensor_voigt = stress_voigt
+    shear_components_half = false
+  []
+  [Jacobian_conv]
+    type = ConvertRankFourTensorFromVoigt
+    tensor = Jacobian_mult
+    tensor_voigt = dstress_voigt_dstrain_voigt
+    shear_components_half_ij = false
+    shear_components_half_kl = false
+    tensor_voigt_uses_row_major_layout = false
+  []
+  [dstress_dk_conv]
+    type = ConvertRankTwoTensorFromVoigt
+    tensor = dstress_dnonlocal_damage
+    tensor_voigt = dstress_voigt_dnonlocal_damage
+    shear_components_half = false
+  []
+  [dlocal_damage_dstrain_conv]
+    type = ConvertRankTwoTensorFromVoigt
+    tensor = dlocal_damage_dstrain
+    tensor_voigt = dlocal_damage_dstrain_voigt
+    shear_components_half = false
+  []
+[]
+
+[BCs]
+  [bottom_x]
+    type = DirichletBC
+    variable = disp_x
+    boundary = bottom
+    value = 0
+  []
+  [bottom_y]
+    type = DirichletBC
+    variable = disp_y
+    boundary = bottom
+    value = 0
+  []
+  [bottom_z]
+    type = DirichletBC
+    variable = disp_z
+    boundary = bottom 
+    value = 0
+  []
+  [sym_z]
+    type = DirichletBC
+    variable = disp_z
+    boundary = zsym
+    value = 0 
+  []
+  [load]
+    type = FunctionDirichletBC
+    variable = disp_y
+    boundary = load
+    function = &#x27;1 * t&#x27;
+  []
+[]
+
+[Preconditioning]
+  [smp]
+    type = SMP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  solve_type = &#x27;NEWTON&#x27;
+
+    petsc_options_iname = &#x27;-pc_type   -pc_hypre_type    -ksp_type     -ksp_gmres_restart  -pc_hypre_boomeramg_strong_threshold -pc_hypre_boomeramg_agg_nl -pc_hypre_boomeramg_agg_num_paths -pc_hypre_boomeramg_max_levels -pc_hypre_boomeramg_coarsen_type -pc_hypre_boomeramg_interp_type -pc_hypre_boomeramg_P_max -pc_hypre_boomeramg_truncfactor&#x27;
+    petsc_options_value = &#x27;hypre      boomeramg         gmres         301                  0.6                                  4                          5                                 25                             HMIS                             ext+i                           1                         0.3&#x27;
+
+  nl_rel_tol = 1e-5
+  nl_abs_tol = 1e-10
+  l_tol = 1e-3
+  l_max_its = 250
+  nl_max_its = 20
+  nl_div_tol = 1e2
+
+  automatic_scaling=true
+  compute_scaling_once = true
+  verbose=false
+
+  line_search = &#x27;none&#x27;
+
+  dtmin = 1e-4
+  dtmax= 1e-2
+  
+  start_time = 0.0
+  end_time = 1.0 
+
+  num_steps = 1000
+  [TimeStepper]
+    type = IterationAdaptiveDT
+    optimal_iterations = 15
+    iteration_window = 3
+    linear_iteration_ratio = 1000
+    growth_factor=1.5
+    cutback_factor=0.5
+    dt = 1e-2
+  []
+  [Quadrature]
+    order=SECOND
+  []
+  [Predictor]
+    type = SimplePredictor
+    scale = 1.0
+  []
+[] 
+
+[Outputs]
+  file_base=&#x27;${JOB}_LDAM_${LDAM}_EPSF_${EPSF}&#x27;
+  interval = 1
+  print_linear_residuals = false
+  csv = true
+  exodus = true
+  [pgraph]
+    type = PerfGraphOutput
+    execute_on = &#x27;final&#x27;  # Default is &quot;final&quot;
+    level = 1             # Default is 1
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

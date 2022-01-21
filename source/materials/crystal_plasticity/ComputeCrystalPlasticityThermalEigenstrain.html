@@ -1,0 +1,336 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Compute Crystal Plasticity Thermal Eigenstrain | Chamois</title><link rel="icon" type="image/x-icon" href="../../../media/chamois_logo.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../../index.html" class="left moose-logo hide-on-med-and-down">Chamois</a><a href="https://github.com/matthiasneuner/chamois" class="right"><img src="../../../media/framework/github-logo.png" class="github-mark"></img><img src="../../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../../getting_started.html">Getting Started</a></li><li><a href="../../../singularity.html">Singularity container</a></li><li><a href="../../../publications.html">Publications</a></li><li><a href="../../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="29eb7f1a-2f2d-4654-bc74-6a44e339eb09" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#" class="sidenav-trigger" data-target="5ec52e1b-6ae7-4342-8ca0-caf6af987da6"><i class="material-icons">menu</i></a><ul class="sidenav" id="5ec52e1b-6ae7-4342-8ca0-caf6af987da6"><li><a href="../../../getting_started.html">Getting Started</a></li><li><a href="../../../singularity.html">Singularity container</a></li><li><a href="../../../publications.html">Publications</a></li><li><a href="../../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="eecefdb8-9e55-48e1-80e7-9709183ea86e" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="29eb7f1a-2f2d-4654-bc74-6a44e339eb09"><li><a href="../../../syntax/chamois.html">Chamois syntax</a></li></ul><ul class="dropdown-content" id="eecefdb8-9e55-48e1-80e7-9709183ea86e"><li><a href="../../../syntax/chamois.html">Chamois syntax</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="moose-content col s12 m12 l12"><section id="4c0bbda4-9611-4514-a1bc-1f7a29c85b51" data-section-level="1" data-section-text="Compute Crystal Plasticity Thermal Eigenstrain"><h1 id="compute-crystal-plasticity-thermal-eigenstrain">Compute Crystal Plasticity Thermal Eigenstrain</h1><p>As is described in <a href="ComputeMultipleCrystalPlasticityStress.html">ComputeMultipleCrystalPlasticityStress</a>, a thermal deformation gradient <span class="moose-katex-inline-equation" id="moose-equation-f19426ff-5442-4925-8310-fbd142b03695"><script>var element = document.getElementById("moose-equation-f19426ff-5442-4925-8310-fbd142b03695");katex.render("\\boldsymbol{F}^{\\theta}", element, {displayMode:false,throwOnError:false});</script></span> is introduced to account for the thermal induced deformations in a finite strain thermo-mechanical problem with crystal plasticity. Accordingly, the total deformation gradient is multiplicatively decomposed into three components as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-de643d43-8070-4799-8836-a0a3876ef30b"></span><span class="moose-katex-equation-number">(1)</span><script>var element = document.getElementById("moose-equation-de643d43-8070-4799-8836-a0a3876ef30b");katex.render("     \\boldsymbol{F} = \\boldsymbol{F}^e \\boldsymbol{F}^p \\boldsymbol{F}^{\\theta},", element, {displayMode:true,throwOnError:false});</script></span> such that <span class="moose-katex-inline-equation" id="moose-equation-cb2d563f-11b1-4fe1-9f70-e5c8fd0cff3a"><script>var element = document.getElementById("moose-equation-cb2d563f-11b1-4fe1-9f70-e5c8fd0cff3a");katex.render("\\text{det}\\left( \\boldsymbol{F}^e \\right) > 0", element, {displayMode:false,throwOnError:false});</script></span>, <span class="moose-katex-inline-equation" id="moose-equation-8e3cac89-d152-4b78-be6f-cc484877d62d"><script>var element = document.getElementById("moose-equation-8e3cac89-d152-4b78-be6f-cc484877d62d");katex.render("\\text{det}\\left( \\boldsymbol{F}^p \\right) = 1", element, {displayMode:false,throwOnError:false});</script></span>, and  <span class="moose-katex-inline-equation" id="moose-equation-767ab1b0-5ca1-47ea-af8f-8c0abd5e438c"><script>var element = document.getElementById("moose-equation-767ab1b0-5ca1-47ea-af8f-8c0abd5e438c");katex.render("\\text{det}\\left( \\boldsymbol{F}^{\\theta} \\right) > 0", element, {displayMode:false,throwOnError:false});</script></span> (see <a href="#li2019development">Li et al. (2019)</a>, <a href="#ozturk2016crystal">Ozturk et al. (2016)</a>, and <a href="#meissonnier2001finite">Meissonnier et al. (2001)</a>).</p><p>To account for more than one thermal eigenstrain, one can optionally decompose the total thermal deformation gradient <span class="moose-katex-inline-equation" id="moose-equation-3ce417a6-c6c7-471c-906b-7e9189618009"><script>var element = document.getElementById("moose-equation-3ce417a6-c6c7-471c-906b-7e9189618009");katex.render("\\boldsymbol{F}^{\\theta}", element, {displayMode:false,throwOnError:false});</script></span> into multiple components as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-ec9b4f62-6ffc-42c4-af81-ac43ca33e750"></span><span class="moose-katex-equation-number">(2)</span><script>var element = document.getElementById("moose-equation-ec9b4f62-6ffc-42c4-af81-ac43ca33e750");katex.render("     \\boldsymbol{F}^{\\theta} = \\boldsymbol{F}^1 \\boldsymbol{F}^2 \\cdots \\boldsymbol{F}^{N},", element, {displayMode:true,throwOnError:false});</script></span> where a total of <span class="moose-katex-inline-equation" id="moose-equation-0a83fdfd-b124-4a28-9534-6b122785c58c"><script>var element = document.getElementById("moose-equation-0a83fdfd-b124-4a28-9534-6b122785c58c");katex.render("N", element, {displayMode:false,throwOnError:false});</script></span> different thermal eigenstrains are considered.</p><p>The thermal Lagrangian strain that is associated with <span class="moose-katex-inline-equation" id="moose-equation-623b9c8b-32df-4855-b288-0d96764346ce"><script>var element = document.getElementById("moose-equation-623b9c8b-32df-4855-b288-0d96764346ce");katex.render("\\boldsymbol{F}^{N}", element, {displayMode:false,throwOnError:false});</script></span> is computed as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-41180e5a-b21b-4ebe-bd35-b98a97c970b1"></span><span class="moose-katex-equation-number">(3)</span><script>var element = document.getElementById("moose-equation-41180e5a-b21b-4ebe-bd35-b98a97c970b1");katex.render("     \\boldsymbol{E}^{N} = \\frac{1}{2}\\left({\\boldsymbol{F}^{N}}^{\\intercal} \\boldsymbol{F}^{N}   - \\boldsymbol{I}\\right).", element, {displayMode:true,throwOnError:false});</script></span></p><p>In this class, the evolution of a typical thermal deformation gradient component, <span class="moose-katex-inline-equation" id="moose-equation-6bd46d5f-1b9e-4f3d-be10-3065b0050ca0"><script>var element = document.getElementById("moose-equation-6bd46d5f-1b9e-4f3d-be10-3065b0050ca0");katex.render("\\boldsymbol{F}^N", element, {displayMode:false,throwOnError:false});</script></span> (see <a href="#moose-equation-ec9b4f62-6ffc-42c4-af81-ac43ca33e750">Eq. (2)</a>) is expressed with respect to its lattice symmetry axis as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-bf5cb8c9-246a-428c-af1d-517142501a80"></span><span class="moose-katex-equation-number">(4)</span><script>var element = document.getElementById("moose-equation-bf5cb8c9-246a-428c-af1d-517142501a80");katex.render("     \\dot{ \\boldsymbol{F}} ^{N} {(\\boldsymbol{F}^{N})}^{-1} = \\dot{\\theta} \\boldsymbol{\\beta},", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-814027ec-9699-4361-87cd-3af1cf09eb04"><script>var element = document.getElementById("moose-equation-814027ec-9699-4361-87cd-3af1cf09eb04");katex.render("\\dot{\\theta}", element, {displayMode:false,throwOnError:false});</script></span> is the temperature rate, and  <span class="moose-katex-inline-equation" id="moose-equation-4e71f97a-bfde-4563-855b-613c83924e1e"><script>var element = document.getElementById("moose-equation-4e71f97a-bfde-4563-855b-613c83924e1e");katex.render("\\boldsymbol{\\beta} = \\text{diag} \\left( \\beta_1, \\beta_2, \\beta_3 \\right)", element, {displayMode:false,throwOnError:false});</script></span> is a diagonal tensor for anisotropic thermal expansion coefficients. One can either use the above evolution equation, or create a different crystal plasticity thermal eigenstrain class with a customized constitutive equation by inheriting from the ComputeCrystalPlasticityEigenstrainBase class.</p><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note:</span>Base Class Requirement</div><div class="card-content"><div class="moose-alert-content"><p>Any constitutive eigenstrain model developed for use within the <a href="ComputeMultipleCrystalPlasticityStress.html">ComputeMultipleCrystalPlasticityStress</a> class must inherit from the ComputeCrystalPlasticityEigenstrainBase class.</p></div></div></div><p>We summarize the numerical implementation details that are specialized in crystal plasticity thermal eigenstrain computation in the following.</p><section id="fe8273e9-7b36-4da4-abba-286f07935b50" data-section-level="2" data-section-text="Numerical Implementation"><h2 id="numerical-implementation">Numerical Implementation</h2><p>The calculations of the thermal deformation gradient <span class="moose-katex-inline-equation" id="moose-equation-8451fdc0-54cb-431d-b9c7-dbe37a8273ca"><script>var element = document.getElementById("moose-equation-8451fdc0-54cb-431d-b9c7-dbe37a8273ca");katex.render("\\boldsymbol{F}^{\\theta}", element, {displayMode:false,throwOnError:false});</script></span> (or its component <span class="moose-katex-inline-equation" id="moose-equation-0d60c196-94ec-48c6-a608-fd87e2e5a7d3"><script>var element = document.getElementById("moose-equation-0d60c196-94ec-48c6-a608-fd87e2e5a7d3");katex.render("\\boldsymbol{F}^{N}", element, {displayMode:false,throwOnError:false});</script></span>), the Lagrangian strain <span class="moose-katex-inline-equation" id="moose-equation-95820b64-24de-482d-8e37-91b791538c20"><script>var element = document.getElementById("moose-equation-95820b64-24de-482d-8e37-91b791538c20");katex.render("\\boldsymbol{E}^{\\theta}", element, {displayMode:false,throwOnError:false});</script></span> (or <span class="moose-katex-inline-equation" id="moose-equation-ad7e3caf-6d62-4d73-9304-472551d366bb"><script>var element = document.getElementById("moose-equation-ad7e3caf-6d62-4d73-9304-472551d366bb");katex.render("\\boldsymbol{E}^{N}", element, {displayMode:false,throwOnError:false});</script></span>), and the associated derivative <span class="moose-katex-inline-equation" id="moose-equation-e385d02d-51d7-4df7-a233-eb0cde8dc84e"><script>var element = document.getElementById("moose-equation-e385d02d-51d7-4df7-a233-eb0cde8dc84e");katex.render("\\partial \\boldsymbol{F}^{\\theta} / \\partial \\theta", element, {displayMode:false,throwOnError:false});</script></span> (or <span class="moose-katex-inline-equation" id="moose-equation-4933fd3a-10e3-4b50-ba33-329f71769cfc"><script>var element = document.getElementById("moose-equation-4933fd3a-10e3-4b50-ba33-329f71769cfc");katex.render("\\partial \\boldsymbol{F}^{N} / \\partial \\theta", element, {displayMode:false,throwOnError:false});</script></span>) are included in this <a href="ComputeCrystalPlasticityThermalEigenstrain.html">ComputeCrystalPlasticityThermalEigenstrain</a> class. Meanwhile, changes are required in the residual and Jacobian calculations in <a href="ComputeMultipleCrystalPlasticityStress.html">ComputeMultipleCrystalPlasticityStress</a> in order to account for the additional configuration due to thermal expansion. The implementation details are described below.</p><section id="acd02686-bf5d-44e5-bba9-9b0ff521f2dc" data-section-level="3" data-section-text="1 . Time integration for var element = document.getElementById("moose-equation-c616c128-7736-467a-b06b-9a9efbff1727");katex.render("\\boldsymbol{F}^{N}", element, {displayMode:false,throwOnError:false});"><h3 id="1-time-integration-for">1. Time integration for <span class="moose-katex-inline-equation" id="moose-equation-c616c128-7736-467a-b06b-9a9efbff1727"><script>var element = document.getElementById("moose-equation-c616c128-7736-467a-b06b-9a9efbff1727");katex.render("\\boldsymbol{F}^{N}", element, {displayMode:false,throwOnError:false});</script></span></h3><p>The evolution of the thermal deformation gradient component <span class="moose-katex-inline-equation" id="moose-equation-cbe4e7a9-9fa1-45fc-ad8f-4c3a2ca4bdf1"><script>var element = document.getElementById("moose-equation-cbe4e7a9-9fa1-45fc-ad8f-4c3a2ca4bdf1");katex.render("\\boldsymbol{F} ^{N}", element, {displayMode:false,throwOnError:false});</script></span> is defined by <a href="#moose-equation-bf5cb8c9-246a-428c-af1d-517142501a80">Eq. (4)</a>. Similar to the time integration that has been implemented for <span class="moose-katex-inline-equation" id="moose-equation-1477d3f6-0d96-4f10-b0fd-bfb66ce6cf67"><script>var element = document.getElementById("moose-equation-1477d3f6-0d96-4f10-b0fd-bfb66ce6cf67");katex.render("\\boldsymbol{F}^p", element, {displayMode:false,throwOnError:false});</script></span>, we start with a backward difference expression as an approximation for <span class="moose-katex-inline-equation" id="moose-equation-e1314e58-6bc6-4f2f-8264-b96ded28625a"><script>var element = document.getElementById("moose-equation-e1314e58-6bc6-4f2f-8264-b96ded28625a");katex.render("\\boldsymbol{F}^N", element, {displayMode:false,throwOnError:false});</script></span>, <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-8b02d9d6-aa38-4e2f-bba0-d04254e14097"></span><script>var element = document.getElementById("moose-equation-8b02d9d6-aa38-4e2f-bba0-d04254e14097");katex.render("    {\\boldsymbol{F}^{N}_{n+1}} \\approx \\frac{ \\boldsymbol{F} ^{N}_{n+1} - \\boldsymbol{F} ^{N}_{n} }{\\Delta t},", element, {displayMode:true,throwOnError:false});</script></span> where the subscripts <span class="moose-katex-inline-equation" id="moose-equation-6a1be0e0-084e-4016-bc1e-4c112fa7f562"><script>var element = document.getElementById("moose-equation-6a1be0e0-084e-4016-bc1e-4c112fa7f562");katex.render("n", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-52707254-3720-4cdd-8c48-e60434d441df"><script>var element = document.getElementById("moose-equation-52707254-3720-4cdd-8c48-e60434d441df");katex.render("n+1", element, {displayMode:false,throwOnError:false});</script></span> identifies the time steps. By substituting into <a href="#moose-equation-bf5cb8c9-246a-428c-af1d-517142501a80">Eq. (4)</a> and rearranging, we have <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-b66ea721-eba5-47bb-a2a5-1a14abbaee93"></span><script>var element = document.getElementById("moose-equation-b66ea721-eba5-47bb-a2a5-1a14abbaee93");katex.render("     {(\\boldsymbol{F}^{N}_{n+1})}^{-1} = {(\\boldsymbol{F}^{N}_{n})}^{-1} \\left( \\boldsymbol{I} - \\Delta \\theta \\boldsymbol{\\beta} \\right)", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-eb14f29e-654c-48bd-ba59-f0313866cdc4"><script>var element = document.getElementById("moose-equation-eb14f29e-654c-48bd-ba59-f0313866cdc4");katex.render("\\Delta \\theta = \\dot{\\theta} \\Delta t", element, {displayMode:false,throwOnError:false});</script></span>.</p></section><section id="24ec9c79-d007-41be-a5a3-248f1defb8f8" data-section-level="3" data-section-text="2 . Crystal plasticity Jacobian"><h3 id="2-crystal-plasticity-jacobian">2. Crystal plasticity Jacobian</h3><p>The stress is updated iteratively by driving the stress residual to zero. The stress residual is computed by <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-07fde9a0-e62a-48d2-852f-740b56696d3e"></span><script>var element = document.getElementById("moose-equation-07fde9a0-e62a-48d2-852f-740b56696d3e");katex.render("    \\mathbb{R} = \\boldsymbol{S} - \\mathbb{C} : \\boldsymbol{E}^e,", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-faa76dcb-8a27-47c2-86ca-c1bff9fdda1b"><script>var element = document.getElementById("moose-equation-faa76dcb-8a27-47c2-86ca-c1bff9fdda1b");katex.render("\\boldsymbol{S}", element, {displayMode:false,throwOnError:false});</script></span> is the second Piola-Kirchhoff stress, the <span class="moose-katex-inline-equation" id="moose-equation-5022f1bb-1a12-42f8-b4d9-198bf20fb2ff"><script>var element = document.getElementById("moose-equation-5022f1bb-1a12-42f8-b4d9-198bf20fb2ff");katex.render("\\mathbb{C}", element, {displayMode:false,throwOnError:false});</script></span> is the elasticity tensor, and <span class="moose-katex-inline-equation" id="moose-equation-e3e97207-4b91-4468-96bb-f1ca0c2fe1f3"><script>var element = document.getElementById("moose-equation-e3e97207-4b91-4468-96bb-f1ca0c2fe1f3");katex.render("\\boldsymbol{E}^e", element, {displayMode:false,throwOnError:false});</script></span> is the elastic part of the Cauchy-Green deformation tensor. The crystal plasticity Jacobian is computed by taking the derivative of <span class="moose-katex-inline-equation" id="moose-equation-483cc74f-1bf8-4e04-9b42-16d767a73772"><script>var element = document.getElementById("moose-equation-483cc74f-1bf8-4e04-9b42-16d767a73772");katex.render("\\mathbb{R}", element, {displayMode:false,throwOnError:false});</script></span> with respect to <span class="moose-katex-inline-equation" id="moose-equation-ba56f21b-da63-478d-84b7-e52587dbf55b"><script>var element = document.getElementById("moose-equation-ba56f21b-da63-478d-84b7-e52587dbf55b");katex.render("\\boldsymbol{S}", element, {displayMode:false,throwOnError:false});</script></span>. By using the chain rule, we have <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-c929d27b-91dc-45bd-9c57-464fc01f93a6"></span><span class="moose-katex-equation-number">(5)</span><script>var element = document.getElementById("moose-equation-c929d27b-91dc-45bd-9c57-464fc01f93a6");katex.render("     \\mathbb{J} = \\mathbb{I} -  \\mathbb{C} : \\left\\{\\frac{\\partial\\boldsymbol{E}^e}{\\partial\\boldsymbol{F}^e}\\frac{\\partial\\boldsymbol{F}^e }{\\partial{\\boldsymbol{F}^p}^{-1}}\\frac{\\partial{\\boldsymbol{F}^p}^{-1}}{\\partial\\boldsymbol{S}}\\right\\}.", element, {displayMode:true,throwOnError:false});</script></span> The computation of each term in the curly bracket will be described in the follows using indicial notations. The <span class="moose-katex-inline-equation" id="moose-equation-034c7fdc-74fb-4e27-9df9-f843e3043e0d"><script>var element = document.getElementById("moose-equation-034c7fdc-74fb-4e27-9df9-f843e3043e0d");katex.render("{\\partial\\boldsymbol{E}^e_{ij}}/{\\partial \\boldsymbol{F}^e_{kl}}", element, {displayMode:false,throwOnError:false});</script></span> is computed as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-fdbcb38c-c754-4e36-87a0-47c5dda1a4d9"></span><script>var element = document.getElementById("moose-equation-fdbcb38c-c754-4e36-87a0-47c5dda1a4d9");katex.render("\\frac{\\partial \\boldsymbol{E}^e_{ij}}{ \\partial \\boldsymbol{F}^e_{kl}} = \\frac{1}{2} \\delta_{il} \\boldsymbol{F}^e_{kj} + \\frac{1}{2} \\delta_{jl} {\\boldsymbol{F}^e_{ik}}^{\\intercal}.", element, {displayMode:true,throwOnError:false});</script></span></p><p>From <a href="#moose-equation-de643d43-8070-4799-8836-a0a3876ef30b">Eq. (1)</a>, <span class="moose-katex-inline-equation" id="moose-equation-90efdff1-0dd7-4b9b-8453-b3fa33140bee"><script>var element = document.getElementById("moose-equation-90efdff1-0dd7-4b9b-8453-b3fa33140bee");katex.render("\\boldsymbol{F}^e_{ij} = \\boldsymbol{F}_{im} {\\boldsymbol{F}^{\\theta}}^{-1}_{mn} {\\boldsymbol{F}^{p}}^{-1}_{nj}", element, {displayMode:false,throwOnError:false});</script></span>. Therefore, <span class="moose-katex-inline-equation" id="moose-equation-241dfc0f-5ac0-4095-ab5b-2bff2b6242df"><script>var element = document.getElementById("moose-equation-241dfc0f-5ac0-4095-ab5b-2bff2b6242df");katex.render("{\\partial \\boldsymbol{F}^e_{ij} }/{\\partial{\\boldsymbol{F}^p}^{-1}_{kj}}=\\boldsymbol{F}_{im}{\\boldsymbol{F}^{\\theta}}^{-1}_{mk}", element, {displayMode:false,throwOnError:false});</script></span>.</p><p>we evaluate the last term in <a href="#moose-equation-c929d27b-91dc-45bd-9c57-464fc01f93a6">Eq. (5)</a> via chain rule: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-4abf74cd-b6f0-4d4b-944c-3fc955b4a900"></span><script>var element = document.getElementById("moose-equation-4abf74cd-b6f0-4d4b-944c-3fc955b4a900");katex.render("    \\frac{\\partial {\\boldsymbol{F}^p}^{-1} }{\\partial \\boldsymbol{S}} = \\sum_\\alpha \\left\\{  \\frac{\\partial {\\boldsymbol{F}^p}^{-1}}{\\partial \\gamma^{\\alpha} } \\frac {\\partial \\gamma^{\\alpha} }{\\partial \\tau^\\alpha} \\frac{\\partial \\tau^\\alpha}{\\partial  \\boldsymbol{S}}  \\right\\},", element, {displayMode:true,throwOnError:false});</script></span> where the evaluation of <span class="moose-katex-inline-equation" id="moose-equation-81c8b7a2-3c10-4c9a-8408-7cdb67a39278"><script>var element = document.getElementById("moose-equation-81c8b7a2-3c10-4c9a-8408-7cdb67a39278");katex.render("{\\partial {\\boldsymbol{F}^p}^{-1}}/{\\partial \\gamma^{\\alpha} }", element, {displayMode:false,throwOnError:false});</script></span> is based on <span class="moose-katex-inline-equation" id="moose-equation-2729a1f7-40a0-495c-9ce6-972999719c48"><script>var element = document.getElementById("moose-equation-2729a1f7-40a0-495c-9ce6-972999719c48");katex.render("\\boldsymbol{L^p} =\\dot{\\boldsymbol{F}}^p \\boldsymbol{F}^{p-1}", element, {displayMode:false,throwOnError:false});</script></span> by taking chain rule. The evaluation of <span class="moose-katex-inline-equation" id="moose-equation-a54d11eb-65cd-42d7-a415-d897f878e44e"><script>var element = document.getElementById("moose-equation-a54d11eb-65cd-42d7-a415-d897f878e44e");katex.render("{\\partial \\gamma^{\\alpha} } / {\\partial \\tau^\\alpha}", element, {displayMode:false,throwOnError:false});</script></span> varies based on the form of the flow rule that differs for different material types. The last term is evaluated as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-92e2ede2-79e7-4b8f-bc37-e2800a023d82"></span><script>var element = document.getElementById("moose-equation-92e2ede2-79e7-4b8f-bc37-e2800a023d82");katex.render("     \\frac{\\partial \\tau^\\alpha}{\\partial  \\boldsymbol{S}} = \\text{det}(\\boldsymbol{F}^{\\theta}) {\\boldsymbol{F}^\\theta} \\boldsymbol{S}_{o}^{\\alpha} {\\boldsymbol{F}^{\\theta}}^{-1}", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-d13cf8cf-24c6-4a0b-9ace-df676c0aed13"><script>var element = document.getElementById("moose-equation-d13cf8cf-24c6-4a0b-9ace-df676c0aed13");katex.render("\\boldsymbol{S}^{\\alpha}_{o}", element, {displayMode:false,throwOnError:false});</script></span> is the schmid tensor for slip system <span class="moose-katex-inline-equation" id="moose-equation-71ca1705-0722-4e98-be72-33d45478e8da"><script>var element = document.getElementById("moose-equation-71ca1705-0722-4e98-be72-33d45478e8da");katex.render("\\alpha", element, {displayMode:false,throwOnError:false});</script></span>.</p></section><section id="850435a8-2dd5-4b1e-91b8-608a5c1a8b71" data-section-level="3" data-section-text="3 . Elasto - plastic tangent moduli"><h3 id="3-elasto-plastic-tangent-moduli">3. Elasto-plastic tangent moduli</h3><p>The elasto-plastic tangent moduli is computed via <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-bdb7290a-a504-4cc9-8a22-4021bc7ab604"></span><script>var element = document.getElementById("moose-equation-bdb7290a-a504-4cc9-8a22-4021bc7ab604");katex.render("    \\frac{\\partial\\boldsymbol{\\sigma}}{ \\partial \\boldsymbol{F}} = \\left(  \\frac{\\partial \\boldsymbol{\\sigma}}{\\partial \\boldsymbol{S}} \\frac{\\partial \\boldsymbol{S}}{\\partial \\boldsymbol{F}^{e}} + \\frac{\\partial \\boldsymbol{\\sigma}}{\\partial \\boldsymbol{F}^e} \\right) \\frac{\\partial \\boldsymbol{F}^e}{\\partial \\boldsymbol{F}},", element, {displayMode:true,throwOnError:false});</script></span> where the <span class="moose-katex-inline-equation" id="moose-equation-3deb876a-2e42-4c97-855d-f0ddbb0725c5"><script>var element = document.getElementById("moose-equation-3deb876a-2e42-4c97-855d-f0ddbb0725c5");katex.render("{\\partial \\boldsymbol{\\sigma}}/{\\partial \\boldsymbol{S}}", element, {displayMode:false,throwOnError:false});</script></span>, <span class="moose-katex-inline-equation" id="moose-equation-a0ce179c-21b1-45f5-899a-82d6f3ff8f23"><script>var element = document.getElementById("moose-equation-a0ce179c-21b1-45f5-899a-82d6f3ff8f23");katex.render("{\\partial \\boldsymbol{S}}/{\\partial \\boldsymbol{F}^{e}}", element, {displayMode:false,throwOnError:false});</script></span> and  <span class="moose-katex-inline-equation" id="moose-equation-3b930af5-03f2-4519-ad84-6902ab5c056f"><script>var element = document.getElementById("moose-equation-3b930af5-03f2-4519-ad84-6902ab5c056f");katex.render("{\\partial \\boldsymbol{\\sigma}}/{\\partial \\boldsymbol{F}^e}", element, {displayMode:false,throwOnError:false});</script></span> remains the same with the inclusion of the thermal deformation gradient. The last term is evaluated as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-d07c87f7-0478-4188-a6c4-73fc419ef6a8"></span><script>var element = document.getElementById("moose-equation-d07c87f7-0478-4188-a6c4-73fc419ef6a8");katex.render("    \\frac{\\partial \\boldsymbol{F}^e_{ij}}{\\partial \\boldsymbol{F}_{il}} =  \\boldsymbol{F}^{\\theta -1 }_{ln} \\boldsymbol{F}^{p -1 }_{nj}.", element, {displayMode:true,throwOnError:false});</script></span></p><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note:</span>Off-diagonal Jacobian</div><div class="card-content"><div class="moose-alert-content"><p>The off-diagonal Jacobian contributions due to thermal expansion is currently <em>not</em> accounted for in the stress divergence calculation. Improving the Jacobian entries associated with thermal expansion remains an ongoing work.</p></div></div></div></section></section><section id="b41f79b9-375a-495f-9c8f-32f12b2a6db1" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[stress]
+  type = ComputeMultipleCrystalPlasticityStress
+  crystal_plasticity_models = &#x27;trial_xtalpl&#x27;
+  eigenstrain_names = &quot;thermal_eigenstrain_1 thermal_eigenstrain_2&quot;
+  tan_mod_type = exact
+  maximum_substep_iteration = 5
+[]
+
+[thermal_eigenstrain_1]
+  type = ComputeCrystalPlasticityThermalEigenstrain
+  eigenstrain_name = thermal_eigenstrain_1
+  deformation_gradient_name = thermal_deformation_gradient_1
+  temperature = temperature
+  thermal_expansion_coefficients = &#x27;1e-05 2e-05 3e-05&#x27; # thermal expansion coefficients along three directions
+[]
+
+[thermal_eigenstrain_2]
+  type = ComputeCrystalPlasticityThermalEigenstrain
+  eigenstrain_name = thermal_eigenstrain_2
+  deformation_gradient_name = thermal_deformation_gradient_2
+  temperature = temperature
+  thermal_expansion_coefficients = &#x27;2e-05 3e-05 4e-05&#x27; # thermal expansion coefficients along three directions
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#e23e4427-3af4-414f-a37c-aad8e6cdc560">(moose/modules/tensor_mechanics/test/tests/crystal_plasticity/stress_update_material_based/multiple_eigenstrains_test.i)</a></section><section id="09d19479-fea1-4c5c-96b9-28ec8a6b530c" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="efd80e1f-5919-4662-9902-f7f7762d7d01" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">deformation_gradient_name</span><span class="moose-parameter-header-description">Material property name for the deformation gradient tensor computed by this model.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Material property name for the deformation gradient tensor computed by this model.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">eigenstrain_name</span><span class="moose-parameter-header-description">Material property name for the eigenstrain tensor computed by this model. IMPORTANT: The name of this property must also be provided to the strain calculator.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Material property name for the eigenstrain tensor computed by this model. IMPORTANT: The name of this property must also be provided to the strain calculator.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">thermal_expansion_coefficients</span><span class="moose-parameter-header-description">Vector of values defining the constant second order thermal expansion coefficients, depending on the degree of anisotropy, this should be of size 1, 3, 6 or 9</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;double&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Vector of values defining the constant second order thermal expansion coefficients, depending on the degree of anisotropy, this should be of size 1, 3, 6 or 9</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="0d7db443-cb57-4c54-bd74-39cbd2fdb962" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">base_name</span><span class="moose-parameter-header-description">Optional parameter that allows the user to define multiple mechanics material systems on the same block, i.e. for multiple phases</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Optional parameter that allows the user to define multiple mechanics material systems on the same block, i.e. for multiple phases</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of blocks (ids or names) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of blocks (ids or names) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundaries (ids or names) from the mesh where this boundary condition applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of boundaries (ids or names) from the mesh where this boundary condition applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">constant_on</span><span class="moose-parameter-header-default">NONE</span><span class="moose-parameter-header-description">When ELEMENT, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps.When SUBDOMAIN, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps. Evaluations on element qps will be skipped</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>NONE</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, ELEMENT, SUBDOMAIN</p><p class="moose-parameter-description"><span>Description:</span>When ELEMENT, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps.When SUBDOMAIN, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps. Evaluations on element qps will be skipped</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">declare_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any declared properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any declared properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">temperature</span><span class="moose-parameter-header-description">Coupled temperature variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Coupled temperature variable</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="f763cd65-360e-40cb-b78d-7db7f4f4e7e8" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="efd556df-4040-40bb-ad79-8b6f97f8d43d" data-section-level="3" data-section-text="Outputs Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">output_properties</span><span class="moose-parameter-header-description">List of material properties, from this material, to output (outputs must also be defined to an output type)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>List of material properties, from this material, to output (outputs must also be defined to an output type)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">outputs</span><span class="moose-parameter-header-default">none </span><span class="moose-parameter-header-description">Vector of output names were you would like to restrict the output of variables(s) associated with this object</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>none </p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;OutputName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Vector of output names were you would like to restrict the output of variables(s) associated with this object</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Outputs Parameters</h3></summary></details></section></section><section id="519eb22c-ee18-4d3d-b3d0-0122e9adf8bb" data-section-level="2" data-section-text="References"><h2 id="references">References</h2><div class="moose-bibliography"><ol><li id="li2019development">Jifeng Li, Ignacio Romero, and Javier Segurado.
+Development of a thermo-mechanically coupled crystal plasticity modeling framework: application to polycrystalline homogenization.
+<em>International Journal of Plasticity</em>, 119:313–330, 2019.<a href="#527a0360-7a56-4816-a6a0-62b3b270343f" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="527a0360-7a56-4816-a6a0-62b3b270343f"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{li2019development,
+    author = "Li, Jifeng and Romero, Ignacio and Segurado, Javier",
+    title = "Development of a thermo-mechanically coupled crystal plasticity modeling framework: application to polycrystalline homogenization",
+    journal = "International Journal of Plasticity",
+    volume = "119",
+    pages = "313--330",
+    year = "2019",
+    publisher = "Elsevier"
+}
+</code></pre></div></div></li><li id="meissonnier2001finite">FT&nbsp;Meissonnier, EP&nbsp;Busso, and NP&nbsp;O'Dowd.
+Finite element implementation of a generalised non-local rate-dependent crystallographic formulation for finite strains.
+<em>International Journal of Plasticity</em>, 17(4):601–640, 2001.<a href="#85194c43-5c6b-49ad-9f52-98e59e143a74" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="85194c43-5c6b-49ad-9f52-98e59e143a74"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{meissonnier2001finite,
+    author = "Meissonnier, FT and Busso, EP and O'Dowd, NP",
+    title = "Finite element implementation of a generalised non-local rate-dependent crystallographic formulation for finite strains",
+    journal = "International Journal of Plasticity",
+    volume = "17",
+    number = "4",
+    pages = "601--640",
+    year = "2001",
+    publisher = "Elsevier"
+}
+</code></pre></div></div></li><li id="ozturk2016crystal">Deniz Ozturk, Ahmad Shahba, and Somnath Ghosh.
+Crystal plasticity <span class="bibtex-protected">FE</span> study of the effect of thermo-mechanical loading on fatigue crack nucleation in titanium alloys.
+<em>Fatigue &amp; Fracture of Engineering Materials &amp; Structures</em>, 39(6):752–769, 2016.<a href="#220a870f-0129-4b4e-bfc0-cc6a82ec3ddf" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="220a870f-0129-4b4e-bfc0-cc6a82ec3ddf"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{ozturk2016crystal,
+    author = "Ozturk, Deniz and Shahba, Ahmad and Ghosh, Somnath",
+    title = "Crystal plasticity {FE} study of the effect of thermo-mechanical loading on fatigue crack nucleation in titanium alloys",
+    journal = "Fatigue \\& Fracture of Engineering Materials \\& Structures",
+    volume = "39",
+    number = "6",
+    pages = "752--769",
+    year = "2016",
+    publisher = "Wiley Online Library"
+}
+</code></pre></div></div></li></ol></div></section></section><div class="moose-modal modal" id="e23e4427-3af4-414f-a37c-aad8e6cdc560"><div class="modal-content"><h4>(moose/modules/tensor_mechanics/test/tests/crystal_plasticity/stress_update_material_based/multiple_eigenstrains_test.i)</h4><pre class="moose-pre"><code class="language-text">[GlobalParams]
+  displacements = &#x27;disp_x disp_y disp_z&#x27;
+[]
+
+[Mesh]
+  type = GeneratedMesh
+  dim = 3
+  elem_type = HEX8
+[]
+
+[AuxVariables]
+  [temperature]
+    order = FIRST
+    family = LAGRANGE
+  []
+  [f1_xx]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [f1_yy]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [f1_zz]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [f2_xx]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [f2_yy]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [f2_zz]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [feig_xx]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [feig_yy]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [feig_zz]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+[]
+
+[Modules/TensorMechanics/Master/all]
+  strain = FINITE
+  add_variables = true
+  generate_output = stress_zz
+[]
+
+[AuxKernels]
+  [temperature]
+    type = FunctionAux
+    variable = temperature
+    function = &#x27;300+400*t&#x27; # temperature increases at a constant rate
+    execute_on = timestep_begin
+  []
+  [f1_xx]
+    type = RankTwoAux
+    variable = f1_xx
+    rank_two_tensor = thermal_deformation_gradient_1
+    index_j = 0
+    index_i = 0
+    execute_on = timestep_end
+  []
+  [f1_yy]
+    type = RankTwoAux
+    variable = f1_yy
+    rank_two_tensor = thermal_deformation_gradient_1
+    index_j = 1
+    index_i = 1
+    execute_on = timestep_end
+  []
+  [f1_zz]
+    type = RankTwoAux
+    variable = f1_zz
+    rank_two_tensor = thermal_deformation_gradient_1
+    index_j = 2
+    index_i = 2
+    execute_on = timestep_end
+  []
+  [f2_xx]
+    type = RankTwoAux
+    variable = f2_xx
+    rank_two_tensor = thermal_deformation_gradient_2
+    index_j = 0
+    index_i = 0
+    execute_on = timestep_end
+  []
+  [f2_yy]
+    type = RankTwoAux
+    variable = f2_yy
+    rank_two_tensor = thermal_deformation_gradient_2
+    index_j = 1
+    index_i = 1
+    execute_on = timestep_end
+  []
+  [f2_zz]
+    type = RankTwoAux
+    variable = f2_zz
+    rank_two_tensor = thermal_deformation_gradient_2
+    index_j = 2
+    index_i = 2
+    execute_on = timestep_end
+  []
+  [feig_xx]
+    type = RankTwoAux
+    variable = feig_xx
+    rank_two_tensor = eigenstrain_deformation_gradient
+    index_j = 0
+    index_i = 0
+    execute_on = timestep_end
+  []
+  [feig_yy]
+    type = RankTwoAux
+    variable = feig_yy
+    rank_two_tensor = eigenstrain_deformation_gradient
+    index_j = 1
+    index_i = 1
+    execute_on = timestep_end
+  []
+  [feig_zz]
+    type = RankTwoAux
+    variable = feig_zz
+    rank_two_tensor = eigenstrain_deformation_gradient
+    index_j = 2
+    index_i = 2
+    execute_on = timestep_end
+  []
+[]
+
+[BCs]
+  [symmy]
+    type = DirichletBC
+    variable = disp_y
+    boundary = bottom
+    value = 0
+  []
+  [symmx]
+    type = DirichletBC
+    variable = disp_x
+    boundary = left
+    value = 0
+  []
+  [symmz]
+    type = DirichletBC
+    variable = disp_z
+    boundary = back
+    value = 0
+  []
+  [tdisp]
+    type = DirichletBC
+    variable = disp_z
+    boundary = front
+    value = 0
+  []
+[]
+
+[Materials]
+  [elasticity_tensor]
+    type = ComputeElasticityTensorConstantRotationCP
+    C_ijkl = &#x27;1.684e5 1.214e5 1.214e5 1.684e5 1.214e5 1.684e5 0.754e5 0.754e5 0.754e5&#x27;
+    fill_method = symmetric9
+  []
+  [stress]
+    type = ComputeMultipleCrystalPlasticityStress
+    crystal_plasticity_models = &#x27;trial_xtalpl&#x27;
+    eigenstrain_names = &quot;thermal_eigenstrain_1 thermal_eigenstrain_2&quot;
+    tan_mod_type = exact
+    maximum_substep_iteration = 5
+  []
+  [trial_xtalpl]
+    type = CrystalPlasticityKalidindiUpdate
+    number_slip_systems = 12
+    slip_sys_file_name = input_slip_sys.txt
+  []
+  [thermal_eigenstrain_1]
+    type = ComputeCrystalPlasticityThermalEigenstrain
+    eigenstrain_name = thermal_eigenstrain_1
+    deformation_gradient_name = thermal_deformation_gradient_1
+    temperature = temperature
+    thermal_expansion_coefficients = &#x27;1e-05 2e-05 3e-05&#x27; # thermal expansion coefficients along three directions
+  []
+  [thermal_eigenstrain_2]
+    type = ComputeCrystalPlasticityThermalEigenstrain
+    eigenstrain_name = thermal_eigenstrain_2
+    deformation_gradient_name = thermal_deformation_gradient_2
+    temperature = temperature
+    thermal_expansion_coefficients = &#x27;2e-05 3e-05 4e-05&#x27; # thermal expansion coefficients along three directions
+  []
+[]
+
+[Postprocessors]
+  [stress_zz]
+    type = ElementAverageValue
+    variable = stress_zz
+  []
+  [f1_xx]
+    type = ElementAverageValue
+    variable = f1_xx
+  []
+  [f1_yy]
+    type = ElementAverageValue
+    variable = f1_yy
+  []
+  [f1_zz]
+    type = ElementAverageValue
+    variable = f1_zz
+  []
+  [f2_xx]
+    type = ElementAverageValue
+    variable = f2_xx
+  []
+  [f2_yy]
+    type = ElementAverageValue
+    variable = f2_yy
+  []
+  [f2_zz]
+    type = ElementAverageValue
+    variable = f2_zz
+  []
+  [feig_xx]
+    type = ElementAverageValue
+    variable = feig_xx
+  []
+  [feig_yy]
+    type = ElementAverageValue
+    variable = feig_yy
+  []
+  [feig_zz]
+    type = ElementAverageValue
+    variable = feig_zz
+  []
+  [temperature]
+    type = ElementAverageValue
+    variable = temperature
+  []
+[]
+
+[Preconditioning]
+  [smp]
+    type = SMP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  solve_type = &#x27;PJFNK&#x27;
+
+  petsc_options_iname = &#x27;-pc_type -pc_asm_overlap -sub_pc_type -ksp_type -ksp_gmres_restart&#x27;
+  petsc_options_value = &#x27; asm      2              lu            gmres     200&#x27;
+  nl_abs_tol = 1e-10
+  nl_rel_tol = 1e-10
+  nl_abs_step_tol = 1e-10
+
+  dt = 0.1
+  dtmin = 1e-4
+  end_time = 10
+[]
+
+[Outputs]
+  csv = true
+  [console]
+    type = Console
+    max_rows = 5
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div></div></div></main></div></body><script type="text/javascript" src="../../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../../js/init.js"></script><script type="text/javascript" src="../../../js/navigation.js"></script><script type="text/javascript" src="../../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../../js/search_index.js"></script><script type="text/javascript" src="../../../js/sqa_moose.js"></script>

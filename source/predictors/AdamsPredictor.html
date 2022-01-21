@@ -1,0 +1,94 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>AdamsPredictor | Chamois</title><link rel="icon" type="image/x-icon" href="../../media/chamois_logo.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down">Chamois</a><a href="https://github.com/matthiasneuner/chamois" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="d8901c85-f3a3-4387-8cdf-8b8458c4acd9" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#" class="sidenav-trigger" data-target="be6ce0ba-f07f-46ae-b823-5ca1ef7ade36"><i class="material-icons">menu</i></a><ul class="sidenav" id="be6ce0ba-f07f-46ae-b823-5ca1ef7ade36"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="81ea4a2f-97f1-4fc7-95b4-2a7cf2f2bce3" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="d8901c85-f3a3-4387-8cdf-8b8458c4acd9"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul><ul class="dropdown-content" id="81ea4a2f-97f1-4fc7-95b4-2a7cf2f2bce3"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="moose-content col s12 m12 l12"><section id="3fb2ad8f-056f-47bd-8c43-682f31646bcc" data-section-level="1" data-section-text="AdamsPredictor"><h1 id="adamspredictor">AdamsPredictor</h1><p>Implements an explicit Adams predictor based on two old solution vectors.</p><p>An Adams predictor is automatically added by MOOSE for the <a href="../timesteppers/AB2PredictorCorrector.html">AB2PredictorCorrector</a> time stepping/integration scheme.</p><p>The formula for the update by Adams&#x27; predictor is:</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-793d574e-d903-49ab-82ef-1be94166011c"></span><script>var element = document.getElementById("moose-equation-793d574e-d903-49ab-82ef-1be94166011c");katex.render("\\phi_{new} = A \\phi + B \\phi_{old} + C \\phi_{older}", element, {displayMode:true,throwOnError:false});</script></span><p>with \phi being the solution vector, including all degrees of freedom for the nonlinear variables and</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-ba03e160-e9a2-4890-bfab-2bbccef72b94"></span><script>var element = document.getElementById("moose-equation-ba03e160-e9a2-4890-bfab-2bbccef72b94");katex.render("A = 1 + \\dfrac{\\Delta t}{\\Delta t_{old}} (1 + \\dfrac{\\Delta t}{2\\Delta t_{old}})", element, {displayMode:true,throwOnError:false});</script></span><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-6683b897-e371-41bc-8250-1cee86eb80ad"></span><script>var element = document.getElementById("moose-equation-6683b897-e371-41bc-8250-1cee86eb80ad");katex.render("B = - \\dfrac{\\Delta t}{\\Delta t_{old}} (1 + \\dfrac{\\Delta t}{2\\Delta t_{old}} + \\dfrac{\\Delta t}{2\\Delta t_{older}})", element, {displayMode:true,throwOnError:false});</script></span><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-6f946425-c63d-4a6a-8725-6503440bb69b"></span><script>var element = document.getElementById("moose-equation-6f946425-c63d-4a6a-8725-6503440bb69b");katex.render("C = \\dfrac{\\Delta t}{\\Delta t_{old}} \\dfrac{\\Delta t}{2\\Delta t_{older}}", element, {displayMode:true,throwOnError:false});</script></span><p>with <span class="moose-katex-inline-equation" id="moose-equation-6f9aa2aa-c107-41c0-8f2e-da8b1503db1f"><script>var element = document.getElementById("moose-equation-6f9aa2aa-c107-41c0-8f2e-da8b1503db1f");katex.render("\\dfrac{\\Delta t}", element, {displayMode:false,throwOnError:false});</script></span>, <span class="moose-katex-inline-equation" id="moose-equation-52ea9ac7-dd7e-4646-8ebf-861d20808050"><script>var element = document.getElementById("moose-equation-52ea9ac7-dd7e-4646-8ebf-861d20808050");katex.render("\\dfrac{\\Delta t_{old}}", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-efccc376-1ed2-4e3b-bba1-ae5d2b3cf524"><script>var element = document.getElementById("moose-equation-efccc376-1ed2-4e3b-bba1-ae5d2b3cf524");katex.render("\\dfrac{\\Delta t_{older}}", element, {displayMode:false,throwOnError:false});</script></span> being the current, previous and antepenultimate time steps sizes.</p><section id="58b8b84c-5cb8-43ce-85e3-c9ffd0ad9602" data-section-level="2" data-section-text="Example input syntax"><h2 id="example-input-syntax">Example input syntax</h2><p>In this example, an <code>AdamsPredictor</code> is implicitly being created by specifying the <code>AB2PredictorCorrector</code> time stepping scheme. The predictor is being used on every time step to perform a first update step.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Executioner]
+  type = Transient
+  scheme = &#x27;BDF2&#x27;
+  #scheme = &#x27;crank-nicolson&#x27;
+  start_time = 0
+  num_steps = 4
+  nl_abs_tol = 1e-15
+  petsc_options = &#x27;-snes_converged_reason&#x27;
+  abort_on_solve_fail = true
+  [./TimeStepper]
+    type = AB2PredictorCorrector
+    dt = .01
+    e_max = 10
+    e_tol = 1
+  [../]
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#4563ad10-6584-4dc0-aef2-97354fc0aea8">(moose/test/tests/time_integrators/aee/aee.i)</a></section><section id="5f8432f9-5140-4b1f-a9d4-81c3c96775da" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="14a939c9-6aa2-4cdc-98f2-029108e0ad6e" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">scale</span><span class="moose-parameter-header-description">The scale factor for the predictor (can range from 0 to 1)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The scale factor for the predictor (can range from 0 to 1)</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="74800521-cacf-4bea-b58c-9d2b2b324f07" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">order</span><span class="moose-parameter-header-default">2</span><span class="moose-parameter-header-description">The maximum reachable order of the Adams-Bashforth Predictor</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>2</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The maximum reachable order of the Adams-Bashforth Predictor</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">skip_after_failed_timestep</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Skip prediction in a repeated time step after a failed time step</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Skip prediction in a repeated time step after a failed time step</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">skip_times</span><span class="moose-parameter-header-description">Skip the predictor if the current solution time is in this list of times</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;double&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Skip the predictor if the current solution time is in this list of times</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">skip_times_old</span><span class="moose-parameter-header-description">Skip the predictor if the previous solution time is in this list of times</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;double&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Skip the predictor if the previous solution time is in this list of times</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="c5c7cc52-2561-4245-9d7d-2c9765af9d89" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="4563ad10-6584-4dc0-aef2-97354fc0aea8"><div class="modal-content"><h4>(moose/test/tests/time_integrators/aee/aee.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 1
+
+  nx = 10
+
+  xmin = 0.0
+  xmax = 1.0
+
+[]
+
+#still need BC for Energy, IC&#x27;s for both.
+[Variables]
+  active = &#x27;Time&#x27;
+
+  [./Time]
+    order =  FIRST
+    family = LAGRANGE
+    initial_condition = 0.0
+  [../]
+[]
+
+[Functions]
+  active = &#x27;func&#x27;
+
+  [./func]
+    type = ParsedFunction
+    value = 2.0*t
+  [../]
+[]
+
+[Kernels]
+  active = &#x27;t_time func_time&#x27;
+
+  [./t_time]
+    type = TimeDerivative
+    variable = Time
+  [../]
+
+  [./func_time]
+    type = BodyForce
+    variable = Time
+    function = func
+  [../]
+[]
+
+[BCs]
+  active = &#x27;Top_Temperature&#x27;
+
+  [./Top_Temperature]
+    type = NeumannBC
+    variable = Time
+    boundary = &#x27;left right&#x27;
+  [../]
+
+[]
+
+[Executioner]
+  type = Transient
+  scheme = &#x27;BDF2&#x27;
+  #scheme = &#x27;crank-nicolson&#x27;
+  start_time = 0
+  num_steps = 4
+  nl_abs_tol = 1e-15
+  petsc_options = &#x27;-snes_converged_reason&#x27;
+  abort_on_solve_fail = true
+ [./TimeStepper]
+    type = AB2PredictorCorrector
+    dt = .01
+    e_max = 10
+    e_tol = 1
+  [../]
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

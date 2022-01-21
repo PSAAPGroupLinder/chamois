@@ -1,0 +1,335 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>ADComputeInstantaneousThermalExpansionFunctionEigenstrain | Chamois</title><link rel="icon" type="image/x-icon" href="../../media/chamois_logo.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down">Chamois</a><a href="https://github.com/matthiasneuner/chamois" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="2ef0e7cf-ce91-48b5-aee2-340c342e353e" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#" class="sidenav-trigger" data-target="d06de475-84b6-4121-92ee-38cc50680b6c"><i class="material-icons">menu</i></a><ul class="sidenav" id="d06de475-84b6-4121-92ee-38cc50680b6c"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="003038f7-f921-420a-aa8c-7152d735c28e" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="2ef0e7cf-ce91-48b5-aee2-340c342e353e"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul><ul class="dropdown-content" id="003038f7-f921-420a-aa8c-7152d735c28e"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="moose-content col s12 m12 l12"><section id="0e3ffc86-037e-4547-9a55-9c94bfd25f5b" data-section-level="1" data-section-text="ADComputeInstantaneousThermalExpansionFunctionEigenstrain"><h1 id="adcomputeinstantaneousthermalexpansionfunctioneigenstrain">ADComputeInstantaneousThermalExpansionFunctionEigenstrain</h1><p>Computes eigenstrain due to thermal expansion using a function that describes the instantaneous thermal expansion as a function of temperature</p><section id="cd349786-22aa-4d8c-9172-b9b52596925c" data-section-level="2" data-section-text="Description"><h2 id="description">Description</h2><p>This model computes the eigenstrain tensor resulting from isotropic thermal expansion where the temperature-dependent thermal expansion is defined by a user-supplied function that describes the instantaneous thermal expansion coefficient <span class="moose-katex-inline-equation" id="moose-equation-2a32bc08-0b35-41cf-9a1a-a47813f6b8a1"><script>var element = document.getElementById("moose-equation-2a32bc08-0b35-41cf-9a1a-a47813f6b8a1");katex.render("\\alpha", element, {displayMode:false,throwOnError:false});</script></span> as a function of temperature, <span class="moose-katex-inline-equation" id="moose-equation-0bd98f14-3deb-469a-8303-fd54c7062bf6"><script>var element = document.getElementById("moose-equation-0bd98f14-3deb-469a-8303-fd54c7062bf6");katex.render("T", element, {displayMode:false,throwOnError:false});</script></span>.  Using a trapezoidal rule to perform time integration of this function, the current value of the thermal eigenstrain tensor, <span class="moose-katex-inline-equation" id="moose-equation-6d26da48-6b89-44a9-b8e2-9d896d627e69"><script>var element = document.getElementById("moose-equation-6d26da48-6b89-44a9-b8e2-9d896d627e69");katex.render("\\boldsymbol{\\epsilon}^{th}_{t+1}", element, {displayMode:false,throwOnError:false});</script></span> is computed at a given time as: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-a74248fa-171a-44f2-94f0-cdf4e083636c"></span><script>var element = document.getElementById("moose-equation-a74248fa-171a-44f2-94f0-cdf4e083636c");katex.render("\\boldsymbol{\\epsilon}^{th}_{t+1} = \\boldsymbol{\\epsilon}^{th}_{t} + \\frac{1}{2}(\\alpha_{(T_t)} + \\alpha_{(T_{t+1})}) (T_{t+1}-T_{t}) \\boldsymbol{I}", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-ea74aa01-2806-4afc-bf41-6ef99d5544ff"><script>var element = document.getElementById("moose-equation-ea74aa01-2806-4afc-bf41-6ef99d5544ff");katex.render("t+1", element, {displayMode:false,throwOnError:false});</script></span> denotes quantities at the new step, and <span class="moose-katex-inline-equation" id="moose-equation-6e5c24ec-f26c-47e2-a50f-55d8d7a31537"><script>var element = document.getElementById("moose-equation-6e5c24ec-f26c-47e2-a50f-55d8d7a31537");katex.render("t", element, {displayMode:false,throwOnError:false});</script></span> denotes quantities at the previous step, <span class="moose-katex-inline-equation" id="moose-equation-80af31f0-746c-4ff7-873d-3bd7ef8ab92d"><script>var element = document.getElementById("moose-equation-80af31f0-746c-4ff7-873d-3bd7ef8ab92d");katex.render("T", element, {displayMode:false,throwOnError:false});</script></span> is the temperature, <span class="moose-katex-inline-equation" id="moose-equation-ec9b0a30-038e-4b23-a37b-4d5dc99097ff"><script>var element = document.getElementById("moose-equation-ec9b0a30-038e-4b23-a37b-4d5dc99097ff");katex.render("\\alpha_{(T)}", element, {displayMode:false,throwOnError:false});</script></span> is the instantaneous thermal expansion at a given temperature, and <span class="moose-katex-inline-equation" id="moose-equation-9c6b3590-3556-472d-baa4-1a4894d600b5"><script>var element = document.getElementById("moose-equation-9c6b3590-3556-472d-baa4-1a4894d600b5");katex.render("\\boldsymbol{I}", element, {displayMode:false,throwOnError:false});</script></span> is the identity matrix. On the first step, the stress-free temperature is used as the previous step&#x27;s temperature.</p><div class="card moose-alert moose-alert-warning"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">warning</i><span class="moose-alert-title-brand">warning</span></div><div class="card-content"><div class="moose-alert-content"><p>Functions are not able to handle dual numbers at this time, so no automatic differentiation information can be retained via the <span class="moose-katex-inline-equation" id="moose-equation-9da07440-b945-48df-81f2-b52b30fac8ed"><script>var element = document.getElementById("moose-equation-9da07440-b945-48df-81f2-b52b30fac8ed");katex.render("\\alpha_{(T)}", element, {displayMode:false,throwOnError:false});</script></span> function</p></div></div></div></section><section id="84ffb64c-9f13-41ea-8437-2a51ae712809" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[./thermal_expansion_strain1]
+  type = ADComputeMeanThermalExpansionFunctionEigenstrain
+  block = 1
+  thermal_expansion_function = cte_func_mean
+  thermal_expansion_function_reference_temperature = 0.5
+  stress_free_temperature = 0.0
+  temperature = temp
+  eigenstrain_name = eigenstrain
+[../]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#21003ed9-12c8-4c04-b127-c693a37e36bd">(moose/modules/tensor_mechanics/test/tests/ad_thermal_expansion_function/finite_const.i)</a><p>The <code>eigenstrain_name</code> parameter value must also be set for the strain calculator, and an example parameter setting is shown below:</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Modules/TensorMechanics/Master]
+  [Modules/TensorMechanics/Master]
+    [Modules/TensorMechanics/Master]
+      [./all]
+        strain = FINITE
+        add_variables = true
+        eigenstrain_names = eigenstrain
+        generate_output = &#x27;strain_xx strain_yy strain_zz&#x27;
+        use_automatic_differentiation = true
+      [../]
+    []
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#36fcff9e-a698-48cd-a6c9-f52d5580829e">(moose/modules/tensor_mechanics/test/tests/ad_thermal_expansion_function/finite_const.i)</a></section><section id="ef741388-d97e-4db7-9ddf-fe53536e32b8" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="cb9eafcc-0687-4184-bf42-b013579b5250" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">eigenstrain_name</span><span class="moose-parameter-header-description">Material property name for the eigenstrain tensor computed by this model. IMPORTANT: The name of this property must also be provided to the strain calculator.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Material property name for the eigenstrain tensor computed by this model. IMPORTANT: The name of this property must also be provided to the strain calculator.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">stress_free_temperature</span><span class="moose-parameter-header-description">Reference temperature at which there is no thermal expansion for thermal eigenstrain calculation</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Reference temperature at which there is no thermal expansion for thermal eigenstrain calculation</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">thermal_expansion_function</span><span class="moose-parameter-header-description">Function describing the instantaneous thermal expansion coefficient as a function of temperature</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>FunctionName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Function describing the instantaneous thermal expansion coefficient as a function of temperature</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="7a3a23f2-50cc-4289-87d8-febcc2d64743" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">base_name</span><span class="moose-parameter-header-description">Optional parameter that allows the user to define multiple mechanics material systems on the same block, i.e. for multiple phases</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Optional parameter that allows the user to define multiple mechanics material systems on the same block, i.e. for multiple phases</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of blocks (ids or names) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of blocks (ids or names) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundaries (ids or names) from the mesh where this boundary condition applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of boundaries (ids or names) from the mesh where this boundary condition applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">compute</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">When false, MOOSE will not call compute methods on this material. The user must call computeProperties() after retrieving the MaterialBase via MaterialBasePropertyInterface::getMaterialBase(). Non-computed MaterialBases are not sorted for dependencies.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>When false, MOOSE will not call compute methods on this material. The user must call computeProperties() after retrieving the MaterialBase via MaterialBasePropertyInterface::getMaterialBase(). Non-computed MaterialBases are not sorted for dependencies.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">constant_on</span><span class="moose-parameter-header-default">NONE</span><span class="moose-parameter-header-description">When ELEMENT, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps.When SUBDOMAIN, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps. Evaluations on element qps will be skipped</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>NONE</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, ELEMENT, SUBDOMAIN</p><p class="moose-parameter-description"><span>Description:</span>When ELEMENT, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps.When SUBDOMAIN, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps. Evaluations on element qps will be skipped</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">declare_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any declared properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any declared properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">temperature</span><span class="moose-parameter-header-description">Coupled temperature</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Coupled temperature</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_old_temperature</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Flag to optionally use the temperature value from the previous timestep.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Flag to optionally use the temperature value from the previous timestep.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="0265ba7e-5342-4eaf-8296-f02bd7efe7b6" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="86e549ac-5ea3-4028-a6de-09997cff37e4" data-section-level="3" data-section-text="Outputs Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">output_properties</span><span class="moose-parameter-header-description">List of material properties, from this material, to output (outputs must also be defined to an output type)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>List of material properties, from this material, to output (outputs must also be defined to an output type)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">outputs</span><span class="moose-parameter-header-default">none </span><span class="moose-parameter-header-description">Vector of output names were you would like to restrict the output of variables(s) associated with this object</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>none </p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;OutputName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Vector of output names were you would like to restrict the output of variables(s) associated with this object</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Outputs Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="21003ed9-12c8-4c04-b127-c693a37e36bd"><div class="modal-content"><h4>(moose/modules/tensor_mechanics/test/tests/ad_thermal_expansion_function/finite_const.i)</h4><pre class="moose-pre"><code class="language-text"># This tests the thermal expansion coefficient function using both
+# options to specify that function: mean and instantaneous.  There
+# two blocks, each containing a single element, and these use the
+# two variants of the function.
+
+# In this test, the instantaneous CTE function has a constant value,
+# while the mean CTE function is an analytic function designed to
+# give the same response.  If \bar{alpha}(T) is the mean CTE function,
+# and \alpha(T) is the instantaneous CTE function,
+
+# \bar{\alpha}(T) = 1/(T-Tref) \intA^{T}_{Tsf} \alpha(T) dT
+
+# where Tref is the reference temperature used to define the mean CTE
+# function, and Tsf is the stress-free temperature.
+
+# This version of the test uses finite deformation theory.
+# The two models produce very similar results.  There are slight
+# differences due to the large deformation treatment.
+
+[Mesh]
+  file = &#x27;blocks.e&#x27;
+[]
+
+[GlobalParams]
+  displacements = &#x27;disp_x disp_y disp_z&#x27;
+[]
+
+[AuxVariables]
+  [./temp]
+    order = FIRST
+    family = LAGRANGE
+  [../]
+[]
+
+[Modules/TensorMechanics/Master]
+  [./all]
+    strain = FINITE
+    add_variables = true
+    eigenstrain_names = eigenstrain
+    generate_output = &#x27;strain_xx strain_yy strain_zz&#x27;
+    use_automatic_differentiation = true
+  [../]
+[]
+
+[BCs]
+  [./left]
+    type = DirichletBC
+    variable = disp_x
+    boundary = 3
+    value = 0.0
+  [../]
+
+  [./bottom]
+    type = DirichletBC
+    variable = disp_y
+    boundary = 2
+    value = 0.0
+  [../]
+
+  [./back]
+    type = DirichletBC
+    variable = disp_z
+    boundary = 1
+    value = 0.0
+  [../]
+[]
+
+[AuxKernels]
+  [./temp]
+    type = FunctionAux
+    variable = temp
+    block = &#x27;1 2&#x27;
+    function = temp_func
+  [../]
+[]
+
+[Materials]
+  [./elasticity_tensor]
+    type = ADComputeIsotropicElasticityTensor
+    youngs_modulus = 1e6
+    poissons_ratio = 0.3
+  [../]
+  [./small_stress]
+    type = ADComputeFiniteStrainElasticStress
+  [../]
+  [./thermal_expansion_strain1]
+    type = ADComputeMeanThermalExpansionFunctionEigenstrain
+    block = 1
+    thermal_expansion_function = cte_func_mean
+    thermal_expansion_function_reference_temperature = 0.5
+    stress_free_temperature = 0.0
+    temperature = temp
+    eigenstrain_name = eigenstrain
+  [../]
+  [./thermal_expansion_strain2]
+    type = ADComputeInstantaneousThermalExpansionFunctionEigenstrain
+    block = 2
+    thermal_expansion_function = cte_func_inst
+    stress_free_temperature = 0.0
+    temperature = temp
+    eigenstrain_name = eigenstrain
+  [../]
+[]
+
+[Functions]
+  [./cte_func_mean]
+    type = ParsedFunction
+    vars = &#x27;tsf tref scale&#x27; #stress free temp, reference temp, scale factor
+    vals = &#x27;0.0 0.5  1e-4&#x27;
+    value = &#x27;scale * (t - tsf) / (t - tref)&#x27;
+  [../]
+  [./cte_func_inst]
+    type = PiecewiseLinear
+    xy_data = &#x27;0 1.0
+               2 1.0&#x27;
+    scale_factor = 1e-4
+  [../]
+
+  [./temp_func]
+    type = PiecewiseLinear
+    xy_data = &#x27;0 1
+               1 2&#x27;
+  [../]
+[]
+
+[Postprocessors]
+  [./disp_1]
+    type = NodalExtremeValue
+    variable = disp_x
+    boundary = 101
+  [../]
+
+  [./disp_2]
+    type = NodalExtremeValue
+    variable = disp_x
+    boundary = 102
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+
+  solve_type = NEWTON
+  l_max_its = 100
+  l_tol = 1e-4
+  nl_abs_tol = 1e-8
+  nl_rel_tol = 1e-12
+
+  start_time = 0.0
+  end_time = 1.0
+  dt = 0.1
+[]
+
+[Outputs]
+  csv = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="36fcff9e-a698-48cd-a6c9-f52d5580829e"><div class="modal-content"><h4>(moose/modules/tensor_mechanics/test/tests/ad_thermal_expansion_function/finite_const.i)</h4><pre class="moose-pre"><code class="language-text"># This tests the thermal expansion coefficient function using both
+# options to specify that function: mean and instantaneous.  There
+# two blocks, each containing a single element, and these use the
+# two variants of the function.
+
+# In this test, the instantaneous CTE function has a constant value,
+# while the mean CTE function is an analytic function designed to
+# give the same response.  If \bar{alpha}(T) is the mean CTE function,
+# and \alpha(T) is the instantaneous CTE function,
+
+# \bar{\alpha}(T) = 1/(T-Tref) \intA^{T}_{Tsf} \alpha(T) dT
+
+# where Tref is the reference temperature used to define the mean CTE
+# function, and Tsf is the stress-free temperature.
+
+# This version of the test uses finite deformation theory.
+# The two models produce very similar results.  There are slight
+# differences due to the large deformation treatment.
+
+[Mesh]
+  file = &#x27;blocks.e&#x27;
+[]
+
+[GlobalParams]
+  displacements = &#x27;disp_x disp_y disp_z&#x27;
+[]
+
+[AuxVariables]
+  [./temp]
+    order = FIRST
+    family = LAGRANGE
+  [../]
+[]
+
+[Modules/TensorMechanics/Master]
+  [./all]
+    strain = FINITE
+    add_variables = true
+    eigenstrain_names = eigenstrain
+    generate_output = &#x27;strain_xx strain_yy strain_zz&#x27;
+    use_automatic_differentiation = true
+  [../]
+[]
+
+[BCs]
+  [./left]
+    type = DirichletBC
+    variable = disp_x
+    boundary = 3
+    value = 0.0
+  [../]
+
+  [./bottom]
+    type = DirichletBC
+    variable = disp_y
+    boundary = 2
+    value = 0.0
+  [../]
+
+  [./back]
+    type = DirichletBC
+    variable = disp_z
+    boundary = 1
+    value = 0.0
+  [../]
+[]
+
+[AuxKernels]
+  [./temp]
+    type = FunctionAux
+    variable = temp
+    block = &#x27;1 2&#x27;
+    function = temp_func
+  [../]
+[]
+
+[Materials]
+  [./elasticity_tensor]
+    type = ADComputeIsotropicElasticityTensor
+    youngs_modulus = 1e6
+    poissons_ratio = 0.3
+  [../]
+  [./small_stress]
+    type = ADComputeFiniteStrainElasticStress
+  [../]
+  [./thermal_expansion_strain1]
+    type = ADComputeMeanThermalExpansionFunctionEigenstrain
+    block = 1
+    thermal_expansion_function = cte_func_mean
+    thermal_expansion_function_reference_temperature = 0.5
+    stress_free_temperature = 0.0
+    temperature = temp
+    eigenstrain_name = eigenstrain
+  [../]
+  [./thermal_expansion_strain2]
+    type = ADComputeInstantaneousThermalExpansionFunctionEigenstrain
+    block = 2
+    thermal_expansion_function = cte_func_inst
+    stress_free_temperature = 0.0
+    temperature = temp
+    eigenstrain_name = eigenstrain
+  [../]
+[]
+
+[Functions]
+  [./cte_func_mean]
+    type = ParsedFunction
+    vars = &#x27;tsf tref scale&#x27; #stress free temp, reference temp, scale factor
+    vals = &#x27;0.0 0.5  1e-4&#x27;
+    value = &#x27;scale * (t - tsf) / (t - tref)&#x27;
+  [../]
+  [./cte_func_inst]
+    type = PiecewiseLinear
+    xy_data = &#x27;0 1.0
+               2 1.0&#x27;
+    scale_factor = 1e-4
+  [../]
+
+  [./temp_func]
+    type = PiecewiseLinear
+    xy_data = &#x27;0 1
+               1 2&#x27;
+  [../]
+[]
+
+[Postprocessors]
+  [./disp_1]
+    type = NodalExtremeValue
+    variable = disp_x
+    boundary = 101
+  [../]
+
+  [./disp_2]
+    type = NodalExtremeValue
+    variable = disp_x
+    boundary = 102
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+
+  solve_type = NEWTON
+  l_max_its = 100
+  l_tol = 1e-4
+  nl_abs_tol = 1e-8
+  nl_rel_tol = 1e-12
+
+  start_time = 0.0
+  end_time = 1.0
+  dt = 0.1
+[]
+
+[Outputs]
+  csv = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

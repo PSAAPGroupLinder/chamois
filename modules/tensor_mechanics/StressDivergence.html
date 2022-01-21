@@ -1,0 +1,189 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Stress Divergence | Chamois</title><link rel="icon" type="image/x-icon" href="../../media/chamois_logo.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down">Chamois</a><a href="https://github.com/matthiasneuner/chamois" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="44bf16c3-fda3-4552-9cef-a5a0787a7ff1" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#" class="sidenav-trigger" data-target="ad85a3a7-1c40-45b5-8b27-0e78cf480f4a"><i class="material-icons">menu</i></a><ul class="sidenav" id="ad85a3a7-1c40-45b5-8b27-0e78cf480f4a"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="316fd4a6-f6e4-46fa-904c-71d305358db6" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="44bf16c3-fda3-4552-9cef-a5a0787a7ff1"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul><ul class="dropdown-content" id="316fd4a6-f6e4-46fa-904c-71d305358db6"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="moose-content col s12 m12 l12"><section id="4c075c44-e9ad-4e1b-a4de-cbc862754328" data-section-level="1" data-section-text="Stress Divergence"><h1 id="stress-divergence">Stress Divergence</h1><p>A material varies from its rest shape due to stress. This departure from the rest shape is called deformation or displacement, and the proportion of deformation to original size is called strain. To determine the deformed shape and the stress, a governing equation is solved to determine the displacement vector <span class="moose-katex-inline-equation" id="moose-equation-a5f6518a-78cf-4733-a5ae-8af8170244e7"><script>var element = document.getElementById("moose-equation-a5f6518a-78cf-4733-a5ae-8af8170244e7");katex.render("\\boldsymbol{u}", element, {displayMode:false,throwOnError:false});</script></span>.</p><section id="c95984b9-5629-424e-969b-5be68e45da90" data-section-level="2" data-section-text="Mathematical Introduction"><h2 id="mathematical-introduction">Mathematical Introduction</h2><p>The strong form of the governing equation on the domain <span class="moose-katex-inline-equation" id="moose-equation-b81c84e1-b2f8-4877-b695-e3d0c7db39c9"><script>var element = document.getElementById("moose-equation-b81c84e1-b2f8-4877-b695-e3d0c7db39c9");katex.render("\\Omega", element, {displayMode:false,throwOnError:false});</script></span> and boundary <span class="moose-katex-inline-equation" id="moose-equation-704bd90a-7743-4bcd-b8d7-67139d0a1de1"><script>var element = document.getElementById("moose-equation-704bd90a-7743-4bcd-b8d7-67139d0a1de1");katex.render("\\Gamma=\\Gamma_{\\mathit{t_i}}\\cup\\Gamma_{\\mathit{g_i}}", element, {displayMode:false,throwOnError:false});</script></span> can be stated as follows: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-94bd628f-9865-4b7c-aeb2-69e5eb0f1712"></span><script>var element = document.getElementById("moose-equation-94bd628f-9865-4b7c-aeb2-69e5eb0f1712");katex.render("\\begin{aligned} \\nabla \\cdot (\\boldsymbol{\\sigma} + \\boldsymbol{\\sigma}_0) + \\boldsymbol{b} =& \\boldsymbol{0} \\;\\mathrm{in}\\;\\Omega \\\\ \\boldsymbol{u} =& \\boldsymbol{g}\\;\\mathrm{in}\\;\\Gamma_{ \\boldsymbol{g}} \\\\ \\boldsymbol{\\sigma} \\cdot \\boldsymbol{n}=&\\boldsymbol{t}\\;\\mathrm{in}\\;\\Gamma_{ \\boldsymbol{t}} \\end{aligned}", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-ebc5d978-dc04-46f5-99b5-4cac7c7efc76"><script>var element = document.getElementById("moose-equation-ebc5d978-dc04-46f5-99b5-4cac7c7efc76");katex.render("\\boldsymbol{\\sigma}", element, {displayMode:false,throwOnError:false});</script></span>  is the Cauchy stress tensor, <span class="moose-katex-inline-equation" id="moose-equation-d42664ab-c41f-4113-9dd1-7cabb33e03c8"><script>var element = document.getElementById("moose-equation-d42664ab-c41f-4113-9dd1-7cabb33e03c8");katex.render("\\boldsymbol{\\sigma}_0", element, {displayMode:false,throwOnError:false});</script></span> is an additional source of stress (such as pore pressure), <span class="moose-katex-inline-equation" id="moose-equation-ec0eaefd-453b-4ea7-b2a8-9826aa047ce2"><script>var element = document.getElementById("moose-equation-ec0eaefd-453b-4ea7-b2a8-9826aa047ce2");katex.render("\\boldsymbol{u}", element, {displayMode:false,throwOnError:false});</script></span> is the displacement vector, <span class="moose-katex-inline-equation" id="moose-equation-5c339467-1958-43ee-96e7-db06ebba0e88"><script>var element = document.getElementById("moose-equation-5c339467-1958-43ee-96e7-db06ebba0e88");katex.render("\\boldsymbol{b}", element, {displayMode:false,throwOnError:false});</script></span> is the body force, <span class="moose-katex-inline-equation" id="moose-equation-5305326f-2a25-45b6-815e-c1afb7d24dbd"><script>var element = document.getElementById("moose-equation-5305326f-2a25-45b6-815e-c1afb7d24dbd");katex.render("\\boldsymbol{n}", element, {displayMode:false,throwOnError:false});</script></span> is the unit normal to the boundary, <span class="moose-katex-inline-equation" id="moose-equation-6f978599-7ba2-4dcb-a827-922c889ff5a5"><script>var element = document.getElementById("moose-equation-6f978599-7ba2-4dcb-a827-922c889ff5a5");katex.render("\\boldsymbol{g}", element, {displayMode:false,throwOnError:false});</script></span> is the prescribed displacement on the boundary and <span class="moose-katex-inline-equation" id="moose-equation-5e0a9c81-f4b1-484d-8241-b5b625a7e748"><script>var element = document.getElementById("moose-equation-5e0a9c81-f4b1-484d-8241-b5b625a7e748");katex.render("\\boldsymbol{t}", element, {displayMode:false,throwOnError:false});</script></span> is the prescribed traction on the boundary. The weak form of the residual equation is expressed as: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-0c4b90f5-f386-46c9-8e1e-53c6ea7a69a2"></span><script>var element = document.getElementById("moose-equation-0c4b90f5-f386-46c9-8e1e-53c6ea7a69a2");katex.render("  \\mathbb{R} = \\left( \\boldsymbol{\\sigma} + \\boldsymbol{\\sigma}_0, \\nabla \\phi_m \\right) - \\left< \\boldsymbol{t}, \\phi_m \\right> - \\left( \\boldsymbol{b}, \\phi_m \\right)  = \\boldsymbol{0}", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-b8bb8cef-16ff-48ad-ac5e-09b679181d1d"><script>var element = document.getElementById("moose-equation-b8bb8cef-16ff-48ad-ac5e-09b679181d1d");katex.render("(\\cdot)", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-d4fcd78e-5328-4936-bd45-e584ec0133f4"><script>var element = document.getElementById("moose-equation-d4fcd78e-5328-4936-bd45-e584ec0133f4");katex.render("\\left< \\cdot \\right>", element, {displayMode:false,throwOnError:false});</script></span> represent volume and boundary integrals, respectively. The solution of the residual equation with Newton&#x27;s method requires the Jacobian of the residual equation, which can be expressed as (ignoring boundary terms) <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-c08eaaec-47ca-4800-b8ba-7070b94a7743"></span><script>var element = document.getElementById("moose-equation-c08eaaec-47ca-4800-b8ba-7070b94a7743");katex.render("  \\mathbb{J} = \\left( \\frac{\\partial \\boldsymbol{\\sigma}}{\\partial \\nabla \\boldsymbol{u}} , \\nabla \\phi_m \\right),", element, {displayMode:true,throwOnError:false});</script></span> assuming <span class="moose-katex-inline-equation" id="moose-equation-fdc5feeb-e49e-4108-b090-e30819c3c7df"><script>var element = document.getElementById("moose-equation-fdc5feeb-e49e-4108-b090-e30819c3c7df");katex.render("\\boldsymbol{\\sigma}_0", element, {displayMode:false,throwOnError:false});</script></span> is independent of the strain.</p><p>The material stress response is described by the constitutive model, where the stress is determined as a function of the strain, i.e. <span class="moose-katex-inline-equation" id="moose-equation-0f366e98-e91b-4e5a-bf41-cb363be86712"><script>var element = document.getElementById("moose-equation-0f366e98-e91b-4e5a-bf41-cb363be86712");katex.render("\\tilde{\\boldsymbol{\\sigma}}( \\boldsymbol{\\epsilon} - \\boldsymbol{\\epsilon}_0)", element, {displayMode:false,throwOnError:false});</script></span>, where <span class="moose-katex-inline-equation" id="moose-equation-f523ab1c-89f0-49a4-bcdf-c20cf33d6d64"><script>var element = document.getElementById("moose-equation-f523ab1c-89f0-49a4-bcdf-c20cf33d6d64");katex.render("\\boldsymbol{\\epsilon}", element, {displayMode:false,throwOnError:false});</script></span> is the strain and <span class="moose-katex-inline-equation" id="moose-equation-bb30164c-292a-4ad0-b5e5-beb0bc110ab2"><script>var element = document.getElementById("moose-equation-bb30164c-292a-4ad0-b5e5-beb0bc110ab2");katex.render("\\boldsymbol{\\epsilon}_0", element, {displayMode:false,throwOnError:false});</script></span> is a stress free strain. For example, in linear elasticity (only valid for small strains), the material response is linear, i.e.  <span class="moose-katex-inline-equation" id="moose-equation-870fd406-d087-4480-a6fa-255c8eb5e0a9"><script>var element = document.getElementById("moose-equation-870fd406-d087-4480-a6fa-255c8eb5e0a9");katex.render("\\boldsymbol{\\sigma} = \\boldsymbol{\\mathcal{C}}(\\boldsymbol{\\epsilon} - \\boldsymbol{\\epsilon}_0)", element, {displayMode:false,throwOnError:false});</script></span>.</p></section><section id="1fcff5ad-520e-4aab-8b17-e9c137ee9cfb" data-section-level="2" data-section-text="Consistency Between Stress and Strain"><h2 id="consistency_stress_strain_use_displaced_mesh">Consistency Between Stress and Strain</h2><p>Within the tensor mechanics module, we have three separate ways to consistently calculate the strain and stress as shown in <a href="#strain_formulations">Table 1</a>. Attention to the correspondence among the stress and strain formulations is necessary to ensure the stress and strain calculations are performed on the correct material configuration.</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-heading">Table 1: </span><span class="moose-caption-text">Consistent Strain and Stress Formulations</span></p><div form="['center', 'center']" recursive class="moose-table-div"><table><thead><tr><th style=";text-align:center">Theoretical Formulation</th><th style=";text-align:center">Tensor Mechanics Classes</th></tr></thead><tbody><tr><td style=";text-align:center">Linearized elasticity total small strain problems</td><td style=";text-align:center"><a href="../../source/materials/ComputeLinearElasticStress.html">ComputeLinearElasticStress</a> and <a href="../../source/materials/ComputeSmallStrain.html">ComputeSmallStrain</a> (in the <a href="../../syntax/Modules/TensorMechanics/Master/index.html">TensorMechanics/MasterAction</a> use the argument <code>strain = SMALL</code>)</td></tr></tbody><tbody><tr><td style=";text-align:center">Linearized elasticity incremental small strain</td><td style=";text-align:center"><a href="../../source/materials/ComputeFiniteStrainElasticStress.html">ComputeFiniteStrainElasticStress</a> and <a href="../../source/materials/ComputeIncrementalSmallStrain.html">ComputeIncrementalSmallStrain</a> (in the <a href="../../syntax/Modules/TensorMechanics/Master/index.html">TensorMechanics/MasterAction</a> <code>strain = SMALL</code> and <code>incremental = true</code> )|</td></tr></tbody><tbody><tr><td style=";text-align:center">Large deformation problems, including elasticity and/or plasticity</td><td style=";text-align:center"><a href="../../source/materials/ComputeFiniteStrainElasticStress.html">ComputeFiniteStrainElasticStress</a>, or other inelastic stress material class, and <a href="../../source/materials/ComputeFiniteStrain.html">ComputeFiniteStrain</a> (in the <a href="../../syntax/Modules/TensorMechanics/Master/index.html">TensorMechanics/MasterAction</a> use <code>strain = FINITE</code>)</td></tr></tbody></table></div></div></div><section id="e300a470-0ef8-4345-ae36-973ef6584131" data-section-level="3" data-section-text="Linearized Elasticity Problems"><h3 id="linearized-elasticity-problems">Linearized Elasticity Problems</h3><p>The linearized elasticity problems are calculated on the reference mesh.  In the linearized elasticity total small strain formulation, <a href="../../source/materials/ComputeSmallStrain.html">ComputeSmallStrain</a> a rotation increment is not used; in <a href="../../source/materials/ComputeIncrementalSmallStrain.html">ComputeIncrementalSmallStrain</a> the rotation increment is defined as the identity tensor.  Both the total small strain and the incremental small strain classes pass to the stress divergence kernel a stress calculated on the reference mesh, <span class="moose-katex-inline-equation" id="moose-equation-381b8545-8dad-43f5-b4a8-406cfb977413"><script>var element = document.getElementById("moose-equation-381b8545-8dad-43f5-b4a8-406cfb977413");katex.render("\\sigma(X)", element, {displayMode:false,throwOnError:false});</script></span>.</p></section><section id="7136ebd0-5644-4460-a5af-5215fd439b71" data-section-level="3" data-section-text="Large Deformation Problems"><h3 id="large-deformation-problems">Large Deformation Problems</h3><p>In the third set of the plug-and-play tensor mechanics classes, the large deformation formulation calculates the strain and stress on the deformed (current) mesh.  As an example, at the end of the <a href="../../source/materials/ComputeFiniteStrain.html">ComputeFiniteStrain</a> class the strains are rotated to the deformed mesh, and in the <a href="../../source/materials/ComputeFiniteStrainElasticStress.html">ComputeFiniteStrainElasticStress</a> class the stress is rotated to the deformed mesh.  Newer material models, such as crystal plasticity models and creep models, also rotate the strain and stress to the deformed mesh.  In these large deformation classes, the stress passed to the stress divergence kernel is calculated with respect to the deformed mesh, <span class="moose-katex-inline-equation" id="moose-equation-a6318f01-464b-480e-a56a-72a54ab45fb1"><script>var element = document.getElementById("moose-equation-a6318f01-464b-480e-a56a-72a54ab45fb1");katex.render("\\sigma(x)", element, {displayMode:false,throwOnError:false});</script></span>.</p><div class="card moose-alert moose-alert-warning"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">warning</i><span class="moose-alert-title-brand">warning:</span>Ensure Consistency in Stress and Strain Formulations</div><div class="card-content"><div class="moose-alert-content"><p>As users and developers, we must take care to ensure consistency in the mesh used to calculate the strain and the mesh used to calculate the residual from the stress divergence equation.</p></div></div></div><p>In the <a href="../../source/kernels/StressDivergenceTensors.html">StressDivergenceTensors</a> kernel, or the various stress divergence actions, the parameter <code>use_displaced_mesh</code> is used to determine if the deformed or the reference mesh should be used as detailed in <a href="#governing_equation_mesh_formulation">Table 2</a>.</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-heading">Table 2: </span><span class="moose-caption-text">Stress Divergence Governing Equation and Mesh Configuration Correspondence</span></p><div form="['center', 'center', 'center', 'center']" recursive class="moose-table-div"><table><thead><tr><th style=";text-align:center">Simulation Formulation</th><th style=";text-align:center">Governing Equation</th><th style=";text-align:center">Correct Kernel Parameter</th><th style=";text-align:center">Mesh Configuration</th></tr></thead><tbody><tr><td style=";text-align:center">Linearized Elasticity</td><td style=";text-align:center"><span class="moose-katex-inline-equation" id="moose-equation-514e772c-b9e8-4cfd-a1be-19885093f3e9"><script>var element = document.getElementById("moose-equation-514e772c-b9e8-4cfd-a1be-19885093f3e9");katex.render("\\nabla_X \\cdot \\sigma (X) = 0", element, {displayMode:false,throwOnError:false});</script></span></td><td style=";text-align:center"><code>use_displaced_mesh = false</code></td><td style=";text-align:center">Reference mesh (undeformed)</td></tr></tbody><tbody><tr><td style=";text-align:center">Large Deformation (both Elasticity and Inelasticity)</td><td style=";text-align:center"><span class="moose-katex-inline-equation" id="moose-equation-67a2d218-607e-4c12-b7e2-db17b120b2b8"><script>var element = document.getElementById("moose-equation-67a2d218-607e-4c12-b7e2-db17b120b2b8");katex.render("\\nabla_x \\cdot \\sigma (x) = 0", element, {displayMode:false,throwOnError:false});</script></span></td><td style=";text-align:center"><code>use_displaced_mesh = true</code></td><td style=";text-align:center">Deformed mesh (current)</td></tr></tbody></table></div></div></div><p>In the stress divergence kernel, <span class="moose-katex-inline-equation" id="moose-equation-387947a2-d78f-428f-8590-123cfc540f77"><script>var element = document.getElementById("moose-equation-387947a2-d78f-428f-8590-123cfc540f77");katex.render("\\nabla", element, {displayMode:false,throwOnError:false});</script></span> is given by the gradients of the test functions, and the mesh, which the gradients are taken with respect to, is determined by the <code>use_displaced_mesh</code> parameter setting.  A source of confusion can be that the <code>use_displaced_mesh</code> parameter is not used in the materials, which compute strain and stress, but this parameter does play a large role in the calculations of the stress divergence kernel.</p></section></section><section id="838e62c5-f325-447c-a7df-43736f66a830" data-section-level="2" data-section-text="MasterAction in Tensor Mechanics"><h2 id="masteraction-in-tensor-mechanics">MasterAction in Tensor Mechanics</h2><p>The <code>use_displaced_mesh</code> parameter must be set correcting to ensure consistency in the equilibrium equation: if the stress is calculated with respect to the deformed mesh, the test function gradients must also be calculated with respect to the deformed mesh. The <a href="../../syntax/Modules/TensorMechanics/Master/index.html">TensorMechanics/MasterAction</a> is designed to automatically determine and set the flag for the <code>use_displaced_mesh</code> parameter correctly for the selected strain formulation.</p><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note:</span>Use of the Tensor Mechanics MasterAction Recommended</div><div class="card-content"><div class="moose-alert-content"><p>We recommend that users employ the <strong><a href="../../syntax/Modules/TensorMechanics/Master/index.html">TensorMechanics/MasterAction</a></strong> whenever possible to ensure consistency between the test function gradients and the strain formulation selected.</p></div></div></div><section id="7bedbc52-420e-424c-b253-bf3190c35759" data-section-level="3" data-section-text="Linearized Elasticity Problems"><h3 id="linearized-elasticity-problems">Linearized Elasticity Problems</h3><p>Small strain linearized elasticity problems should be run with the parameter <code>use_displaced_mesh =
+false</code> in the kernel to ensure all calculations across all three classes (strain, stress, and kernel) are computed with respect to the reference mesh. These settings are automatically handled with the <a href="../../syntax/Modules/TensorMechanics/Master/index.html">TensorMechanics/MasterAction</a> use.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Modules/TensorMechanics/Master]
+  [Modules/TensorMechanics/Master]
+    [Modules/TensorMechanics/Master]
+      [./block1]
+        strain = SMALL
+        add_variables = true
+      [../]
+    []
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#9846e58d-8bfd-43c7-ada5-13ead903243a">(moose/modules/tensor_mechanics/tutorials/basics/part_1.1.i)</a></section><section id="b9eec0bb-6ffb-4ddc-b533-8614306ed594" data-section-level="3" data-section-text="Large Deformation Problems"><h3 id="large-deformation-problems">Large Deformation Problems</h3><p>Large deformation problems should be run with the parameter setting <code>use_displaced_mesh = true</code> in the kernel so that the kernel and the materials all compute variables with respect to the deformed mesh; however, the setting of <code>use_displaced_mesh</code> should not be changed from the default in the materials. The <a href="../../syntax/Modules/TensorMechanics/Master/index.html">TensorMechanics/MasterAction</a> automatically creates the appropriate settings for all classes. The input file syntax to set the Stress Divergence kernel for finite strain problems is:</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Modules]
+  [./TensorMechanics]
+    [./Master]
+      [./all]
+        strain = FINITE
+        add_variables = true
+      [../]
+    [../]
+  [../]
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#cf8ca389-ec17-4b91-b169-1bbd24e1dccb">(moose/modules/tensor_mechanics/test/tests/finite_strain_elastic/finite_strain_elastic_new_test.i)</a></section></section></section><div class="moose-modal modal" id="9846e58d-8bfd-43c7-ada5-13ead903243a"><div class="modal-content"><h4>(moose/modules/tensor_mechanics/tutorials/basics/part_1.1.i)</h4><pre class="moose-pre"><code class="language-text">#Tensor Mechanics tutorial: the basics
+#Step 1, part 1
+#2D simulation of uniaxial tension with linear elasticity
+
+[GlobalParams]
+  displacements = &#x27;disp_x disp_y&#x27;
+[]
+
+[Mesh]
+  file = necking_quad4.e
+[]
+
+[Modules/TensorMechanics/Master]
+  [./block1]
+    strain = SMALL #Small linearized strain, automatically set to XY coordinates
+    add_variables = true #Add the variables from the displacement string in GlobalParams
+  [../]
+[]
+
+[Materials]
+  [./elasticity_tensor]
+    type = ComputeIsotropicElasticityTensor
+    youngs_modulus = 2.1e5
+    poissons_ratio = 0.3
+  [../]
+  [./stress]
+    type = ComputeLinearElasticStress
+  [../]
+[]
+
+[BCs]
+  [./left]
+    type = DirichletBC
+    variable = disp_x
+    boundary = left
+    value = 0.0
+  [../]
+  [./bottom]
+    type = DirichletBC
+    variable = disp_y
+    boundary = bottom
+    value = 0.0
+  [../]
+  [./top]
+    type = DirichletBC
+    variable = disp_y
+    boundary = top
+    value = 0.05
+  [../]
+[]
+
+[Preconditioning]
+  [./SMP]
+    type = SMP
+    full = true
+  [../]
+[]
+
+[Executioner]
+  type = Steady
+
+  solve_type = &#x27;NEWTON&#x27;
+
+  petsc_options = &#x27;-snes_ksp_ew&#x27;
+  petsc_options_iname = &#x27;-pc_type -sub_pc_type -pc_asm_overlap -ksp_gmres_restart&#x27;
+  petsc_options_value = &#x27;asm lu 1 101&#x27;
+[]
+
+[Outputs]
+  exodus = true
+  perf_graph = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="cf8ca389-ec17-4b91-b169-1bbd24e1dccb"><div class="modal-content"><h4>(moose/modules/tensor_mechanics/test/tests/finite_strain_elastic/finite_strain_elastic_new_test.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 3
+  elem_type = HEX8
+[]
+
+[GlobalParams]
+  displacements = &#x27;disp_x disp_y disp_z&#x27;
+[]
+
+[Functions]
+  [./tdisp]
+    type = ParsedFunction
+    value = &#x27;0.01 * t&#x27;
+  [../]
+[]
+
+[Modules]
+  [./TensorMechanics]
+    [./Master]
+      [./all]
+        strain = FINITE
+        add_variables = true
+      [../]
+    [../]
+  [../]
+[]
+
+[BCs]
+  [./symmy]
+    type = DirichletBC
+    variable = disp_y
+    boundary = bottom
+    value = 0
+  [../]
+  [./symmx]
+    type = DirichletBC
+    variable = disp_x
+    boundary = left
+    value = 0
+  [../]
+  [./symmz]
+    type = DirichletBC
+    variable = disp_z
+    boundary = back
+    value = 0
+  [../]
+  [./tdisp]
+    type = FunctionDirichletBC
+    variable = disp_z
+    boundary = front
+    function = tdisp
+  [../]
+[]
+
+[Materials]
+  [./elasticity_tensor]
+    type = ComputeElasticityTensor
+    C_ijkl = &#x27;1.684e5 0.176e5 0.176e5 1.684e5 0.176e5 1.684e5 0.754e5 0.754e5 0.754e5&#x27;
+    fill_method = symmetric9
+  [../]
+  [./stress]
+    type = ComputeFiniteStrainElasticStress
+  [../]
+[]
+
+[Preconditioning]
+  [./smp]
+    type = SMP
+    full = true
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+  dt = 0.05
+
+  #Preconditioned JFNK (default)
+  solve_type = &#x27;PJFNK&#x27;
+
+  petsc_options_iname = -pc_hypre_type
+  petsc_options_value = boomeramg
+  nl_abs_tol = 1e-10
+  nl_rel_step_tol = 1e-10
+  dtmax = 10.0
+  nl_rel_tol = 1e-10
+  end_time = 1
+  dtmin = 0.05
+  num_steps = 10
+  nl_abs_step_tol = 1e-10
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

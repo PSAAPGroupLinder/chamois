@@ -1,0 +1,87 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>TimeSequenceStepper | Chamois</title><link rel="icon" type="image/x-icon" href="../../media/chamois_logo.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down">Chamois</a><a href="https://github.com/matthiasneuner/chamois" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="7569196f-5e1a-44a5-b612-8626e8bc60b9" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#" class="sidenav-trigger" data-target="4513e6b7-115d-4585-8b30-7dd7e39b5b77"><i class="material-icons">menu</i></a><ul class="sidenav" id="4513e6b7-115d-4585-8b30-7dd7e39b5b77"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="23741071-084a-4f69-b846-75fc6f3516b8" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="7569196f-5e1a-44a5-b612-8626e8bc60b9"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul><ul class="dropdown-content" id="23741071-084a-4f69-b846-75fc6f3516b8"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="moose-content col s12 m12 l12"><section id="b170b004-2ef1-4a49-b458-f1823387379d" data-section-level="1" data-section-text="TimeSequenceStepper"><h1 id="timesequencestepper">TimeSequenceStepper</h1><p>Solves the Transient problem at a sequence of given time points.</p><p>If the solver fails to obtain a converged solution for a given step, the executioner cuts back the step size and attempts to advance the time from the previous step using a smaller time step. The time step is cut back by multiplying the time step by the cutback factor, defaulting to 0.5. If this is successful, the time stepper will then attempt to use the next time in the sequence, adjusting the time step to &quot;get back on track&quot;.</p><section id="32571450-de42-40c5-98a4-4630c3193b61" data-section-level="2" data-section-text="Example input syntax"><h2 id="example-input-syntax">Example input syntax</h2><p>In this example, the numerical problem is solved at four specified points in time using a <code>TimeSequenceStepper</code>.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Executioner]
+  type = Transient
+  end_time = 4.0
+  [./TimeStepper]
+    type = TimeSequenceStepper
+    time_sequence = &#x27;0   0.85 1.3 2 4&#x27;
+  [../]
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#3ba6f780-fa3e-44a2-9e60-a00006522181">(moose/test/tests/time_steppers/timesequence_stepper/timesequence.i)</a></section><section id="931107f1-d150-4fc5-bbf1-90cfbf7b1720" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="d498a756-5621-42a3-9b56-45f0c553e324" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">time_sequence</span><span class="moose-parameter-header-description">The values of t</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;double&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The values of t</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="8ac46385-014e-4f60-9881-d6081f5f7976" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">cutback_factor_at_failure</span><span class="moose-parameter-header-default">0.5</span><span class="moose-parameter-header-description">Factor to apply to timestep if a time step fails to converge.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0.5</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Factor to apply to timestep if a time step fails to converge.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">reset_dt</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Use when restarting a calculation to force a change in dt.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Use when restarting a calculation to force a change in dt.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="b2851d09-d851-4c36-afbc-fecd5ef4c509" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="3ba6f780-fa3e-44a2-9e60-a00006522181"><div class="modal-content"><h4>(moose/test/tests/time_steppers/timesequence_stepper/timesequence.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 2
+  xmin = -1
+  xmax =  1
+  ymin = -1
+  ymax =  1
+  nx = 2
+  ny = 2
+  elem_type = QUAD9
+[]
+
+[Functions]
+  [./exact_fn]
+    type = ParsedFunction
+    value = t*t*(x*x+y*y)
+  [../]
+
+  [./forcing_fn]
+    type = ParsedFunction
+    value = 2*t*(x*x+y*y)-4*t*t
+  [../]
+[]
+
+[Variables]
+  [./u]
+    family = LAGRANGE
+    order = SECOND
+  [../]
+[]
+
+[ICs]
+  [./u_var]
+    type = FunctionIC
+    variable = u
+    function = exact_fn
+  [../]
+[]
+
+[Kernels]
+  [./td]
+    type = TimeDerivative
+    variable = u
+  [../]
+
+  [./diff]
+    type = Diffusion
+    variable = u
+  [../]
+
+  [./ffn]
+    type = BodyForce
+    variable = u
+    function = forcing_fn
+  [../]
+[]
+
+[BCs]
+  [./all]
+    type = FunctionDirichletBC
+    variable = u
+    boundary = &#x27;left right top bottom&#x27;
+    function = exact_fn
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+  end_time = 4.0
+  [./TimeStepper]
+    type = TimeSequenceStepper
+    time_sequence  = &#x27;0   0.85 1.3 2 4&#x27;
+  [../]
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

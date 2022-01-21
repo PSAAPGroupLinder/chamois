@@ -1,0 +1,440 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Fracture Integrals | Chamois</title><link rel="icon" type="image/x-icon" href="../../media/chamois_logo.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down">Chamois</a><a href="https://github.com/matthiasneuner/chamois" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="4cda78ff-b835-4008-bb03-e9cfe534f071" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#" class="sidenav-trigger" data-target="2b6b9204-e231-4417-bdc5-0d171b9220fc"><i class="material-icons">menu</i></a><ul class="sidenav" id="2b6b9204-e231-4417-bdc5-0d171b9220fc"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="35a6878d-60e6-4910-accc-2f834650ce75" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="4cda78ff-b835-4008-bb03-e9cfe534f071"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul><ul class="dropdown-content" id="35a6878d-60e6-4910-accc-2f834650ce75"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="moose-content col s12 m12 l12"><section id="acdb1014-2bd5-4a6b-83cc-84133829512e" data-section-level="1" data-section-text="Fracture Integrals"><h1 id="fracture-integrals">Fracture Integrals</h1><section id="5d0c24dd-e594-443c-b73d-ddbacf4d42fe" data-section-level="2" data-section-text="J - Integral"><h2 id="j-integral">J-Integral</h2><p>A finite element calculation in which a crack is represented in the mesh geometry can be used to calculate the displacement and stress fields in the vicinity of the crack.  One straightforward way to evaluate the stress intensity from a finite element solution is through the <span class="moose-katex-inline-equation" id="moose-equation-7aae4b3a-6c8c-4fe7-880d-30158b418ed7"><script>var element = document.getElementById("moose-equation-7aae4b3a-6c8c-4fe7-880d-30158b418ed7");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span>-integral (<a href="#rice_path_1968">Rice, 1968</a>), which provides the mechanical energy release rate. If the crack is subjected to pure mode-<span class="moose-katex-inline-equation" id="moose-equation-dc6a0210-9986-4870-8d9c-a0007c9922d3"><script>var element = document.getElementById("moose-equation-dc6a0210-9986-4870-8d9c-a0007c9922d3");katex.render("I", element, {displayMode:false,throwOnError:false});</script></span> loading, <span class="moose-katex-inline-equation" id="moose-equation-c9cc6878-9b7f-4d72-8a8f-7bc3360a03c3"><script>var element = document.getElementById("moose-equation-c9cc6878-9b7f-4d72-8a8f-7bc3360a03c3");katex.render("K_I", element, {displayMode:false,throwOnError:false});</script></span> can be calculated from <span class="moose-katex-inline-equation" id="moose-equation-0f1fe5ac-88b2-429c-b6f4-3b4d39e4a177"><script>var element = document.getElementById("moose-equation-0f1fe5ac-88b2-429c-b6f4-3b4d39e4a177");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span> using the following relationship: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-9278c182-956b-4b52-b7d6-38f7cb600e63"></span><script>var element = document.getElementById("moose-equation-9278c182-956b-4b52-b7d6-38f7cb600e63");katex.render("J= \\begin{cases} \\frac{1-\\nu^2}{E}K_I^2 & \\text{plane strain}\\\\ \\frac{1}{E}K_I^2 & \\text{plane stress} \\end{cases}", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-09854bd0-86e4-4bf6-9e07-b534ccb317b9"><script>var element = document.getElementById("moose-equation-09854bd0-86e4-4bf6-9e07-b534ccb317b9");katex.render("E", element, {displayMode:false,throwOnError:false});</script></span> is the Young&#x27;s modulus and <span class="moose-katex-inline-equation" id="moose-equation-b3999c83-9752-447d-8e70-a5a84b7e6d51"><script>var element = document.getElementById("moose-equation-b3999c83-9752-447d-8e70-a5a84b7e6d51");katex.render("\\nu", element, {displayMode:false,throwOnError:false});</script></span> is the Poisson&#x27;s ratio. The <span class="moose-katex-inline-equation" id="moose-equation-277d9147-0b64-4f9e-a124-c47efb8d7316"><script>var element = document.getElementById("moose-equation-277d9147-0b64-4f9e-a124-c47efb8d7316");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span>-integral was originally formulated as an integral over a closed curve around the crack tip in 2D.  It can alternatively be expressed as an integral over a surface in 2D or a volume in 3D using the method of <a href="#li_comparison_1985">Li et al. (1985)</a>, which is more convenient for implementation within a finite element code.</p><p>Following the terminology of <a href="#warp3d_17.3.1">Healy et al. (2012)</a>, the integrated value of the <span class="moose-katex-inline-equation" id="moose-equation-ac4fd534-e9ab-4e65-8a43-7bc3d7ae6e5f"><script>var element = document.getElementById("moose-equation-ac4fd534-e9ab-4e65-8a43-7bc3d7ae6e5f");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span>-integral over a segment of a crack front, represented as <span class="moose-katex-inline-equation" id="moose-equation-7333c164-7663-48eb-bce9-8ee9360781f4"><script>var element = document.getElementById("moose-equation-7333c164-7663-48eb-bce9-8ee9360781f4");katex.render("\\bar{J}", element, {displayMode:false,throwOnError:false});</script></span>, can be expressed as a summation of four terms: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-2397e943-8551-4243-acff-ac5957e8dd6c"></span><script>var element = document.getElementById("moose-equation-2397e943-8551-4243-acff-ac5957e8dd6c");katex.render("\\bar{J}=\\bar{J}_1+\\bar{J}_2+\\bar{J}_3+\\bar{J}_4", element, {displayMode:true,throwOnError:false});</script></span> where the individual terms are defined as: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-6c22d4b3-0f87-4132-93ca-697f2b0fd51c"></span><script>var element = document.getElementById("moose-equation-6c22d4b3-0f87-4132-93ca-697f2b0fd51c");katex.render("\\bar{J}_1=\\int_{V_0}\\biggl( P_{ji}\\frac{\\partial u_i}{\\partial X_k}\\frac{\\partial q_k}{\\partial X_j} -W\\frac{\\partial q_k}{\\partial X_k} \\biggr) dV_0", element, {displayMode:true,throwOnError:false});</script></span></p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-6277cce2-71a2-4a81-b744-a99cb1a6bd28"></span><script>var element = document.getElementById("moose-equation-6277cce2-71a2-4a81-b744-a99cb1a6bd28");katex.render("\\bar{J}_2=-\\int_{V_0}\\biggl( \\frac{\\partial W}{\\partial X_k} - P_{ji}\\frac{\\partial^2u_i}{\\partial X_j\\partial X_k} \\biggr) q_k dV_0", element, {displayMode:true,throwOnError:false});</script></span></p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-cfdb88c9-f9fe-44e6-8397-776361202766"></span><script>var element = document.getElementById("moose-equation-cfdb88c9-f9fe-44e6-8397-776361202766");katex.render("\\bar{J}_3=-\\int_{V_0}\\biggl( T\\frac{\\partial q_k}{\\partial X_k} - \\rho \\frac{\\partial^2 u_i}{\\partial t^2} \\frac{\\partial u_i}{\\partial X_k} q_k + \\rho \\frac{\\partial u_i}{\\partial t} \\frac{\\partial^2 u_i}{\\partial t \\partial X_k} q_k \\biggr) dV_0", element, {displayMode:true,throwOnError:false});</script></span></p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-b3bea48d-d581-4664-8ca4-eb149a164fe5"></span><script>var element = document.getElementById("moose-equation-b3bea48d-d581-4664-8ca4-eb149a164fe5");katex.render("\\bar{J}_4=-\\int_{A_0} t_i\\frac{\\partial u_i}{\\partial X_k} q_k dA_0", element, {displayMode:true,throwOnError:false});</script></span> In these equations, <span class="moose-katex-inline-equation" id="moose-equation-8bab0021-d654-41ff-967a-caec1e6ae782"><script>var element = document.getElementById("moose-equation-8bab0021-d654-41ff-967a-caec1e6ae782");katex.render("V_0", element, {displayMode:false,throwOnError:false});</script></span> is the undeformed volume, <span class="moose-katex-inline-equation" id="moose-equation-4a0b5bb8-7c8e-4291-951c-7f1dd1263d68"><script>var element = document.getElementById("moose-equation-4a0b5bb8-7c8e-4291-951c-7f1dd1263d68");katex.render("A_0", element, {displayMode:false,throwOnError:false});</script></span> is the combined area of the two crack faces, <span class="moose-katex-inline-equation" id="moose-equation-7bf3e129-f05a-4823-ad36-84b7d798acd1"><script>var element = document.getElementById("moose-equation-7bf3e129-f05a-4823-ad36-84b7d798acd1");katex.render("P_{ji}", element, {displayMode:false,throwOnError:false});</script></span> is the 1st Piola-Kirchoff stress tensor, <span class="moose-katex-inline-equation" id="moose-equation-72089436-8414-4056-8c76-0c1e3e42a4a4"><script>var element = document.getElementById("moose-equation-72089436-8414-4056-8c76-0c1e3e42a4a4");katex.render("u_i", element, {displayMode:false,throwOnError:false});</script></span> is the displacement vector, <span class="moose-katex-inline-equation" id="moose-equation-97b23279-f4db-4174-9351-dc80657fff4f"><script>var element = document.getElementById("moose-equation-97b23279-f4db-4174-9351-dc80657fff4f");katex.render("X_k", element, {displayMode:false,throwOnError:false});</script></span> is the undeformed coordinate vector, <span class="moose-katex-inline-equation" id="moose-equation-0b68ee6a-1688-4027-80f3-c51335cb0b66"><script>var element = document.getElementById("moose-equation-0b68ee6a-1688-4027-80f3-c51335cb0b66");katex.render("W", element, {displayMode:false,throwOnError:false});</script></span> is the stress-work density, <span class="moose-katex-inline-equation" id="moose-equation-4600dfe2-dccb-4690-b8ba-7a0f158aa3a9"><script>var element = document.getElementById("moose-equation-4600dfe2-dccb-4690-b8ba-7a0f158aa3a9");katex.render("T", element, {displayMode:false,throwOnError:false});</script></span> is the kinetic energy density, <span class="moose-katex-inline-equation" id="moose-equation-f2933476-538a-4dff-809d-c8a7531bbae3"><script>var element = document.getElementById("moose-equation-f2933476-538a-4dff-809d-c8a7531bbae3");katex.render("t", element, {displayMode:false,throwOnError:false});</script></span> is time, <span class="moose-katex-inline-equation" id="moose-equation-1bd322fc-18c6-4b2b-a59a-65d3a1e27c40"><script>var element = document.getElementById("moose-equation-1bd322fc-18c6-4b2b-a59a-65d3a1e27c40");katex.render("\\rho", element, {displayMode:false,throwOnError:false});</script></span> is the material density, and <span class="moose-katex-inline-equation" id="moose-equation-bc04fc6c-6021-4f45-ae63-bdf1fd80faec"><script>var element = document.getElementById("moose-equation-bc04fc6c-6021-4f45-ae63-bdf1fd80faec");katex.render("t_i", element, {displayMode:false,throwOnError:false});</script></span> is the vector of tractions applied to the crack face.</p><p>The vector field <span class="moose-katex-inline-equation" id="moose-equation-10e3911d-5db6-415a-94d6-b119314e40be"><script>var element = document.getElementById("moose-equation-10e3911d-5db6-415a-94d6-b119314e40be");katex.render("q_k", element, {displayMode:false,throwOnError:false});</script></span> is a vector field that is oriented in the crack normal direction. This field has a magnitude of 1 between the crack tip and the inner radius of the ring over which the integral is to be performed, and drops from 1 to 0 between the inner and outer radius of that ring, and has a value of 0 elsewhere. In 3D, <span class="moose-katex-inline-equation" id="moose-equation-e2f4d7aa-75cc-49f6-af9a-89266aa44b8c"><script>var element = document.getElementById("moose-equation-e2f4d7aa-75cc-49f6-af9a-89266aa44b8c");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span> is evaluated by calculating the integral <span class="moose-katex-inline-equation" id="moose-equation-fd58982b-3087-4cbe-b05d-6cab1e367196"><script>var element = document.getElementById("moose-equation-fd58982b-3087-4cbe-b05d-6cab1e367196");katex.render("\\bar{J}", element, {displayMode:false,throwOnError:false});</script></span> over a segment of the crack front. A separate <span class="moose-katex-inline-equation" id="moose-equation-c8f6091f-46c8-4be7-a9f1-0938928e9bcd"><script>var element = document.getElementById("moose-equation-c8f6091f-46c8-4be7-a9f1-0938928e9bcd");katex.render("q", element, {displayMode:false,throwOnError:false});</script></span> field is formed for each segment along the crack front, and for each ring over which the integral is to be evaluated. Each of those <span class="moose-katex-inline-equation" id="moose-equation-07f64b68-ee41-4513-b6cc-578902b5f9a6"><script>var element = document.getElementById("moose-equation-07f64b68-ee41-4513-b6cc-578902b5f9a6");katex.render("q", element, {displayMode:false,throwOnError:false});</script></span> fields is multiplied by a weighting function that varies from a value of 0 at the ends to a finite value in the middle of the segment. The value of <span class="moose-katex-inline-equation" id="moose-equation-746f14f4-0abd-48a2-a514-6b80dfb35c99"><script>var element = document.getElementById("moose-equation-746f14f4-0abd-48a2-a514-6b80dfb35c99");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span> at each point on the curve is evaluated by dividing <span class="moose-katex-inline-equation" id="moose-equation-c835fc3f-7a2e-498d-a827-326c47561db3"><script>var element = document.getElementById("moose-equation-c835fc3f-7a2e-498d-a827-326c47561db3");katex.render("\\bar{J}", element, {displayMode:false,throwOnError:false});</script></span> by the integrated value of the weighting function over the segment containing that point.</p><p>The first term in <span class="moose-katex-inline-equation" id="moose-equation-3f209016-64c8-4ec9-943b-fae08f547d9f"><script>var element = document.getElementById("moose-equation-3f209016-64c8-4ec9-943b-fae08f547d9f");katex.render("\\bar{J}", element, {displayMode:false,throwOnError:false});</script></span>, <span class="moose-katex-inline-equation" id="moose-equation-0e5fa4c0-5325-4a15-9c26-c3f661eff17e"><script>var element = document.getElementById("moose-equation-0e5fa4c0-5325-4a15-9c26-c3f661eff17e");katex.render("\\bar{J}_1", element, {displayMode:false,throwOnError:false});</script></span>, represents the effects of strain energy in homogeneous material in the absence of thermal strains or inertial effects. The second term, <span class="moose-katex-inline-equation" id="moose-equation-1297f5de-4524-49da-808f-49961fc4b9e9"><script>var element = document.getElementById("moose-equation-1297f5de-4524-49da-808f-49961fc4b9e9");katex.render("\\bar{J}_2", element, {displayMode:false,throwOnError:false});</script></span>, accounts for the effects of material inhomogenieties and gradients of thermal strain.  For small strains, this term can be represented as: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-0ceb4d44-906f-4950-884a-90dbae1bf3fa"></span><script>var element = document.getElementById("moose-equation-0ceb4d44-906f-4950-884a-90dbae1bf3fa");katex.render("\\bar{J}_2 = \\int_{V_0} \\sigma_{ij} \\left [ \\alpha_{ij} \\frac{\\partial \\bar{\\theta}}{\\partial X_k} + \\frac{\\partial \\alpha_{ij}}{\\partial X_k} \\bar{\\theta} \\right] q_k dV_0", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-8a6206c0-235d-4b22-92ce-9c15b6a4f181"><script>var element = document.getElementById("moose-equation-8a6206c0-235d-4b22-92ce-9c15b6a4f181");katex.render("\\sigma_{ij}", element, {displayMode:false,throwOnError:false});</script></span>, <span class="moose-katex-inline-equation" id="moose-equation-33804a62-562a-4c3b-bdf3-2f57ca73266a"><script>var element = document.getElementById("moose-equation-33804a62-562a-4c3b-bdf3-2f57ca73266a");katex.render("\\alpha_{ij}", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-5488e009-11a1-42af-b88d-6d41cb6dfc35"><script>var element = document.getElementById("moose-equation-5488e009-11a1-42af-b88d-6d41cb6dfc35");katex.render("\\bar{\\theta}", element, {displayMode:false,throwOnError:false});</script></span> are the Cauchy stress, thermal conductivity, and difference between the current temperature and a reference temperature, respectively.</p><p>The third term in <span class="moose-katex-inline-equation" id="moose-equation-3eb2540d-ed42-4be4-b842-3c33be7fdfd2"><script>var element = document.getElementById("moose-equation-3eb2540d-ed42-4be4-b842-3c33be7fdfd2");katex.render("\\bar{J}", element, {displayMode:false,throwOnError:false});</script></span>, <span class="moose-katex-inline-equation" id="moose-equation-4d7e57a8-630d-4a09-a908-ecd4a0ac4969"><script>var element = document.getElementById("moose-equation-4d7e57a8-630d-4a09-a908-ecd4a0ac4969");katex.render("\\bar{J}_3", element, {displayMode:false,throwOnError:false});</script></span>, accounts for inertial effects in a dynamic analysis, and the fourth term, <span class="moose-katex-inline-equation" id="moose-equation-0320aa0c-4697-47e2-b44b-7393f45efac3"><script>var element = document.getElementById("moose-equation-0320aa0c-4697-47e2-b44b-7393f45efac3");katex.render("\\bar{J}_4", element, {displayMode:false,throwOnError:false});</script></span> accounts for the effects of surface tractions on the crack face.</p><p>The MOOSE implementation of the <span class="moose-katex-inline-equation" id="moose-equation-7226bb85-8ec8-4f45-93a1-f01d5f909a64"><script>var element = document.getElementById("moose-equation-7226bb85-8ec8-4f45-93a1-f01d5f909a64");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span>-integral calculator can be used for arbitrary curved 3D crack fronts, and includes the <span class="moose-katex-inline-equation" id="moose-equation-48ace936-b482-4bac-a990-3a75445434e2"><script>var element = document.getElementById("moose-equation-48ace936-b482-4bac-a990-3a75445434e2");katex.render("\\bar{J}_1", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-5bdb80be-c302-4bab-a7ad-958806b3338c"><script>var element = document.getElementById("moose-equation-5bdb80be-c302-4bab-a7ad-958806b3338c");katex.render("\\bar{J}_2", element, {displayMode:false,throwOnError:false});</script></span> terms to account for the effects of quasistatic mechanically and thermally induced strains. The last two terms have not been implemented. For quasistatic loading conditions, there are no inertial effects, so <span class="moose-katex-inline-equation" id="moose-equation-e23b43e0-dc52-4130-80d7-d2cf9984256f"><script>var element = document.getElementById("moose-equation-e23b43e0-dc52-4130-80d7-d2cf9984256f");katex.render("\\bar{J}_3=0", element, {displayMode:false,throwOnError:false});</script></span>. <span class="moose-katex-inline-equation" id="moose-equation-3c51072d-4c58-40da-ba41-a763b70709a3"><script>var element = document.getElementById("moose-equation-3c51072d-4c58-40da-ba41-a763b70709a3");katex.render("\\bar{J}_4", element, {displayMode:false,throwOnError:false});</script></span> would be nonzero for pressurized cracks, and should be implemented in the future to consider such cases.</p><p>Pointwise values <span class="moose-katex-inline-equation" id="moose-equation-b1fbfa42-11e5-4075-8e8d-249719073e00"><script>var element = document.getElementById("moose-equation-b1fbfa42-11e5-4075-8e8d-249719073e00");katex.render("J(s)", element, {displayMode:false,throwOnError:false});</script></span> are calculated from the <span class="moose-katex-inline-equation" id="moose-equation-745a942c-62b9-4a98-bb94-6fcd331e0721"><script>var element = document.getElementById("moose-equation-745a942c-62b9-4a98-bb94-6fcd331e0721");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span>-integral over a crack front segment <span class="moose-katex-inline-equation" id="moose-equation-d539f80e-e136-43cb-a33d-90e402202e80"><script>var element = document.getElementById("moose-equation-d539f80e-e136-43cb-a33d-90e402202e80");katex.render("\\bar{J}", element, {displayMode:false,throwOnError:false});</script></span> using the expression <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-0dc1d057-ad02-4fce-b292-2ca309507754"></span><script>var element = document.getElementById("moose-equation-0dc1d057-ad02-4fce-b292-2ca309507754");katex.render("J(s) = \\frac{\\bar{J}(s)}{\\int q(s) ds}", element, {displayMode:true,throwOnError:false});</script></span> To use the <span class="moose-katex-inline-equation" id="moose-equation-0a871952-01c5-4526-8a29-3ff0f68af87b"><script>var element = document.getElementById("moose-equation-0a871952-01c5-4526-8a29-3ff0f68af87b");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span>-integral capability in MOOSE, a user specifies a set of nodes along the crack front, information used to calculate the crack normal directions along the crack front, and the inner and outer radii of the set of rings over which the integral is to be performed. The code automatically defines the full set of <span class="moose-katex-inline-equation" id="moose-equation-a04b4ecf-e822-473f-a1b5-08fffbdcc815"><script>var element = document.getElementById("moose-equation-a04b4ecf-e822-473f-a1b5-08fffbdcc815");katex.render("q", element, {displayMode:false,throwOnError:false});</script></span> functions for each point along the crack front, and outputs either the value of <span class="moose-katex-inline-equation" id="moose-equation-b73924e4-520a-46da-bcef-2da12664aff8"><script>var element = document.getElementById("moose-equation-b73924e4-520a-46da-bcef-2da12664aff8");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span> or <span class="moose-katex-inline-equation" id="moose-equation-14c8d72a-7608-4b9d-ab95-f4594ed41d92"><script>var element = document.getElementById("moose-equation-14c8d72a-7608-4b9d-ab95-f4594ed41d92");katex.render("K_I", element, {displayMode:false,throwOnError:false});</script></span> at each of those points. In addition, the user can ask for any other variable in the model to be output at points corresponding to those where <span class="moose-katex-inline-equation" id="moose-equation-15e24a90-b356-4d33-951b-ec2fd22d4021"><script>var element = document.getElementById("moose-equation-15e24a90-b356-4d33-951b-ec2fd22d4021");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span> is evaluated along the crack front.</p></section><section id="7996f978-df75-49f8-a87e-7db6022f6f55" data-section-level="2" data-section-text="Interaction Integral"><h2 id="interaction-integral">Interaction Integral</h2><p>The interaction integral method is based on the <span class="moose-katex-inline-equation" id="moose-equation-5844c224-14d5-4f39-b157-a859d0b3e376"><script>var element = document.getElementById("moose-equation-5844c224-14d5-4f39-b157-a859d0b3e376");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span>-integral and makes it possible to evaluate mixed-mode stress intensity factors <span class="moose-katex-inline-equation" id="moose-equation-260c72c0-1bc1-4402-8890-02f49e510092"><script>var element = document.getElementById("moose-equation-260c72c0-1bc1-4402-8890-02f49e510092");katex.render("K_I", element, {displayMode:false,throwOnError:false});</script></span>, <span class="moose-katex-inline-equation" id="moose-equation-14bbd38f-0cf4-4f20-95cd-7dce092c9c56"><script>var element = document.getElementById("moose-equation-14bbd38f-0cf4-4f20-95cd-7dce092c9c56");katex.render("K_{II}", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-4ed785a1-c43a-4288-a987-2907ce208a33"><script>var element = document.getElementById("moose-equation-4ed785a1-c43a-4288-a987-2907ce208a33");katex.render("K_{III}", element, {displayMode:false,throwOnError:false});</script></span>, as well as the T-stress, in the vicinity of three-dimensional cracks. The formulation relies on superimposing Williams&#x27; solution for stress and displacement around a crack (in this context called &#x27;auxiliary fields&#x27;) and the computed finite element stress and displacement fields (called &#x27;actual fields&#x27;). The total superimposed <span class="moose-katex-inline-equation" id="moose-equation-b22ef4df-4db8-4667-aae3-696ac42c87a5"><script>var element = document.getElementById("moose-equation-b22ef4df-4db8-4667-aae3-696ac42c87a5");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span> can be separated into three parts: the <span class="moose-katex-inline-equation" id="moose-equation-5106c22b-a71f-4c5e-b9d7-845f3a993115"><script>var element = document.getElementById("moose-equation-5106c22b-a71f-4c5e-b9d7-845f3a993115");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span> of the actual fields, the <span class="moose-katex-inline-equation" id="moose-equation-d04b19ab-cde3-422c-8746-64b4da1d908d"><script>var element = document.getElementById("moose-equation-d04b19ab-cde3-422c-8746-64b4da1d908d");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span> of the auxiliary fields, and an interaction part containing the terms with both actual and auxiliary field quantities. The last part is called the interaction integral and for a fairly straight crack without body forces, thermal loading or crack face tractions, the interaction integral over a crack front segment can be written (<a href="#walters_interaction_2005">Walters et al., 2005</a>): <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-1b9b248e-7f18-429a-bc80-c12cdef94a73"></span><script>var element = document.getElementById("moose-equation-1b9b248e-7f18-429a-bc80-c12cdef94a73");katex.render("\\bar{I}(s) = \\int_V \\left[ \\sigma_{ij} u_{j,1}^{(aux)} + \\sigma_{ij}^{(aux)} u_{j,1} - \\sigma_{jk} \\epsilon_{jk}^{(aux)} \\delta_{1i} \\right] q_{,i} \\, \\mathrm{d}V + \\int_V \\left[ \\epsilon^*_{ij,1} \\sigma_{ij}^{(aux)} - b_i u_{i,1}^{(aux)} \\right] q \\, \\mathrm{d}V", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-244f2396-1817-406e-868b-d8ced791b3e8"><script>var element = document.getElementById("moose-equation-244f2396-1817-406e-868b-d8ced791b3e8");katex.render("\\sigma", element, {displayMode:false,throwOnError:false});</script></span> is the stress, <span class="moose-katex-inline-equation" id="moose-equation-c76ab7cd-356a-4657-a8e3-3aface29ba03"><script>var element = document.getElementById("moose-equation-c76ab7cd-356a-4657-a8e3-3aface29ba03");katex.render("u", element, {displayMode:false,throwOnError:false});</script></span> is the displacement, and <span class="moose-katex-inline-equation" id="moose-equation-a77dbc13-56ad-44d8-8c79-4af1506503ff"><script>var element = document.getElementById("moose-equation-a77dbc13-56ad-44d8-8c79-4af1506503ff");katex.render("q", element, {displayMode:false,throwOnError:false});</script></span> is identical to the <span class="moose-katex-inline-equation" id="moose-equation-7d76189b-f2e6-43bc-b00c-faaab96dfe78"><script>var element = document.getElementById("moose-equation-7d76189b-f2e6-43bc-b00c-faaab96dfe78");katex.render("q", element, {displayMode:false,throwOnError:false});</script></span>-functions used for <span class="moose-katex-inline-equation" id="moose-equation-73fb9636-abbb-48bb-a110-2cd466c423b7"><script>var element = document.getElementById("moose-equation-73fb9636-abbb-48bb-a110-2cd466c423b7");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span>-integrals. The last two terms in this equation account for the effects of the gradient of the eigenstrain, <span class="moose-katex-inline-equation" id="moose-equation-d7074eb1-4116-4d84-bff1-d6b33b1d3f7d"><script>var element = document.getElementById("moose-equation-d7074eb1-4116-4d84-bff1-d6b33b1d3f7d");katex.render("\\epsilon^*", element, {displayMode:false,throwOnError:false});</script></span>, and for the effects of the body force, <span class="moose-katex-inline-equation" id="moose-equation-b85ae2a3-9f86-4cac-be23-55b8e092c515"><script>var element = document.getElementById("moose-equation-b85ae2a3-9f86-4cac-be23-55b8e092c515");katex.render("b", element, {displayMode:false,throwOnError:false});</script></span>. If the eigenstrain is a thermal strain, its gradient is computed using the gradient of the temperature field and the temperature derivative of the eigenstrain. In that case, the user supplies the temperature and eigenstrain name through the <code>temperature</code> and <code>eigenstrain_name</code> parameters, respectively. If the eigenstrain is from another source, its gradient must be computed by the eigenstrain material model in the form of a RankThreeTensor object, whose name is specified for the fracture integrals using the <code>eigenstrain_gradient</code> parameter.</p><p>In the same way as for the <span class="moose-katex-inline-equation" id="moose-equation-10d6cc35-481b-41b5-9ba4-f5595b291d24"><script>var element = document.getElementById("moose-equation-10d6cc35-481b-41b5-9ba4-f5595b291d24");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span>-integral, the pointwise value <span class="moose-katex-inline-equation" id="moose-equation-dfa80ac8-2737-4614-bcae-9b1988cdad6f"><script>var element = document.getElementById("moose-equation-dfa80ac8-2737-4614-bcae-9b1988cdad6f");katex.render("I(s)", element, {displayMode:false,throwOnError:false});</script></span> at location <span class="moose-katex-inline-equation" id="moose-equation-69f172ce-fa4f-4903-87bb-8bb76011c892"><script>var element = document.getElementById("moose-equation-69f172ce-fa4f-4903-87bb-8bb76011c892");katex.render("s", element, {displayMode:false,throwOnError:false});</script></span> is obtained from <span class="moose-katex-inline-equation" id="moose-equation-28402b93-b410-49c7-931a-e111e915bdda"><script>var element = document.getElementById("moose-equation-28402b93-b410-49c7-931a-e111e915bdda");katex.render("\\bar{I}(s)", element, {displayMode:false,throwOnError:false});</script></span> using: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-571cd428-2fc6-4d05-b506-7fdd7d10b5d0"></span><script>var element = document.getElementById("moose-equation-571cd428-2fc6-4d05-b506-7fdd7d10b5d0");katex.render("I(s) = \\frac{\\bar{I}(s)}{\\int q(s) \\mathrm{d}s}", element, {displayMode:true,throwOnError:false});</script></span> Next, we relate the interaction integral <span class="moose-katex-inline-equation" id="moose-equation-2b2f57da-ee02-4282-9881-36452f5b60f4"><script>var element = document.getElementById("moose-equation-2b2f57da-ee02-4282-9881-36452f5b60f4");katex.render("I(s)", element, {displayMode:false,throwOnError:false});</script></span> to stress intensity factors. By writing <span class="moose-katex-inline-equation" id="moose-equation-c39edbce-0d00-424d-ade1-d73714a6c9fc"><script>var element = document.getElementById("moose-equation-c39edbce-0d00-424d-ade1-d73714a6c9fc");katex.render("J^S", element, {displayMode:false,throwOnError:false});</script></span>, with actual and auxiliary fields superimposed, in terms of the mixed-mode stress intensity factors <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-bda5f29e-5ffe-4adc-bc03-f56020f21cb0"></span><script>var element = document.getElementById("moose-equation-bda5f29e-5ffe-4adc-bc03-f56020f21cb0");katex.render("\\begin{aligned} J^S(s) &= \\frac{1-\\nu^2}{E} \\left[ \\left( K_I+ K_I^{(aux)} \\right)^2 + \\left( K_{II} + K_{II}^{(aux)} \\right)^2 \\right] \\\\ &+ \\frac{1+\\nu}{E} \\left( K_{III}+ K_{III}^{(aux)} \\right)^2 \\\\ & = J(s) + J^{(aux)}(s) + I(s) \\end{aligned}", element, {displayMode:true,throwOnError:false});</script></span> the interaction integral part evaluates to <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-07afcda1-3d36-4366-8b6f-5019665a6218"></span><script>var element = document.getElementById("moose-equation-07afcda1-3d36-4366-8b6f-5019665a6218");katex.render("\\begin{aligned} I(s) &= \\frac{1-\\nu^2}{E} \\left( 2 K_I K_I^{(aux)} + 2 K_{II} K_{II}^{(aux)} \\right) \\\\ & + \\frac{1+\\nu}{E} \\left( K_{III} K_{III}^{(aux)} \\right) \\end{aligned}", element, {displayMode:true,throwOnError:false});</script></span> To obtain individual stress intensity factors, the interaction integral is evaluated with different auxiliary fields. For instance, by choosing <span class="moose-katex-inline-equation" id="moose-equation-4ddc7f45-5780-4a06-86a0-9b4df4ebb897"><script>var element = document.getElementById("moose-equation-4ddc7f45-5780-4a06-86a0-9b4df4ebb897");katex.render("K_I^{(aux)} = 1.0", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-71430293-c41d-4fed-a388-b71f100b16a3"><script>var element = document.getElementById("moose-equation-71430293-c41d-4fed-a388-b71f100b16a3");katex.render("K_{II}^{(aux)} = K_{III}^{(aux)} = 0", element, {displayMode:false,throwOnError:false});</script></span> and computing the volume integral <span class="moose-katex-inline-equation" id="moose-equation-4db5317e-2189-4281-8bb4-8e0cdc961556"><script>var element = document.getElementById("moose-equation-4db5317e-2189-4281-8bb4-8e0cdc961556");katex.render("I(s)", element, {displayMode:false,throwOnError:false});</script></span> over the actual and auxiliary fields, <span class="moose-katex-inline-equation" id="moose-equation-378ba16c-4a14-4a09-94ce-1a7b34c864f9"><script>var element = document.getElementById("moose-equation-378ba16c-4a14-4a09-94ce-1a7b34c864f9");katex.render("K_I", element, {displayMode:false,throwOnError:false});</script></span> can be solved for.</p><p>If all three interaction integral stress intensity factors are computed, there is an option to output an equivalent stress intensity factor computed by: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-8d6d5cef-3fa7-4d75-b582-55518a6fbf1f"></span><script>var element = document.getElementById("moose-equation-8d6d5cef-3fa7-4d75-b582-55518a6fbf1f");katex.render("K_{eq} = \\sqrt{ K_I^2 + K_{II}^2 + \\frac{K_{III}^2}{1-\\nu}}.", element, {displayMode:true,throwOnError:false});</script></span> The <span class="moose-katex-inline-equation" id="moose-equation-4c65c133-21c3-433f-992e-cead6de52a5d"><script>var element = document.getElementById("moose-equation-4c65c133-21c3-433f-992e-cead6de52a5d");katex.render("T", element, {displayMode:false,throwOnError:false});</script></span>-stress is the first second-order parameter in Williams&#x27; expansion of stress at a crack tip and is a constant stress parallel to the crack (<a href="#larsson_influence_1973">Larsson and Carlsson, 1973</a>) (<a href="#rice_limitations_1974">Rice, 1974</a>). Contrary to <span class="moose-katex-inline-equation" id="moose-equation-8bdad090-20a8-4eea-9f4d-6e0f0075a505"><script>var element = document.getElementById("moose-equation-8bdad090-20a8-4eea-9f4d-6e0f0075a505");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span>, <span class="moose-katex-inline-equation" id="moose-equation-fc215a11-4481-47f3-9abb-0f200a132ad5"><script>var element = document.getElementById("moose-equation-fc215a11-4481-47f3-9abb-0f200a132ad5");katex.render("T", element, {displayMode:false,throwOnError:false});</script></span>-stress depends on geometry and size and can give a more accurate description of the stresses and strains around a crack tip than <span class="moose-katex-inline-equation" id="moose-equation-a86d05a0-da71-4725-b21b-c6a7e0288bca"><script>var element = document.getElementById("moose-equation-a86d05a0-da71-4725-b21b-c6a7e0288bca");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span> alone. The <span class="moose-katex-inline-equation" id="moose-equation-baee0c82-419f-466f-8cf3-da52166b2239"><script>var element = document.getElementById("moose-equation-baee0c82-419f-466f-8cf3-da52166b2239");katex.render("T", element, {displayMode:false,throwOnError:false});</script></span>-stress characterizes the crack-tip constraint and a negative <span class="moose-katex-inline-equation" id="moose-equation-046142ea-9f5c-48da-96df-621c9017ff68"><script>var element = document.getElementById("moose-equation-046142ea-9f5c-48da-96df-621c9017ff68");katex.render("T", element, {displayMode:false,throwOnError:false});</script></span>-stress is associated with loss of constraint and a higher fracture toughness than would be predicted from a one-parameter <span class="moose-katex-inline-equation" id="moose-equation-6c51c9bd-0191-411f-a03e-1111d4118a8d"><script>var element = document.getElementById("moose-equation-6c51c9bd-0191-411f-a03e-1111d4118a8d");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span> description of the load on the crack. <span class="moose-katex-inline-equation" id="moose-equation-a28d2bb5-3844-48a6-8273-6668e028ce03"><script>var element = document.getElementById("moose-equation-a28d2bb5-3844-48a6-8273-6668e028ce03");katex.render("T", element, {displayMode:false,throwOnError:false});</script></span>-stresses can be calculated with the interaction integral methodology using appropriate auxiliary fields (<a href="#toshio_determination_1992">Nakamura and Parks, 1992</a>). The current implementation of the <span class="moose-katex-inline-equation" id="moose-equation-ff0acff8-d482-4b82-afb8-865c6c37fba1"><script>var element = document.getElementById("moose-equation-ff0acff8-d482-4b82-afb8-865c6c37fba1");katex.render("T", element, {displayMode:false,throwOnError:false});</script></span>-stress computation is valid for two-dimensional and three-dimensional cracks under Mode I loading.</p></section><section id="85a4e32a-94f1-439f-88d4-564e6170e203" data-section-level="2" data-section-text="Usage"><h2 id="usage">Usage</h2><p>The MOOSE implementation of the capability to compute these fracture integrals is provided using a variety of MOOSE objects, which are quite complex to define manually, especially for 3D simulations. For this reason, the to compute <span class="moose-katex-inline-equation" id="moose-equation-5fab5cdb-7790-4625-bc9d-de9a722dddc2"><script>var element = document.getElementById("moose-equation-5fab5cdb-7790-4625-bc9d-de9a722dddc2");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span>-integrals or interaction integrals, the <a href="../../source/actions/DomainIntegralAction.html">DomainIntegral Action</a> should be used to set up all of the required objects.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[DomainIntegral]
+  integrals = JIntegral
+  boundary = 800
+  crack_direction_method = CrackDirectionVector
+  crack_direction_vector = &#x27;1 0 0&#x27;
+  radius_inner = &#x27;4.0 5.5&#x27;
+  radius_outer = &#x27;5.5 7.0&#x27;
+  output_variable = &#x27;disp_x&#x27;
+  output_q = false
+  incremental = true
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#c24efecf-24d2-4ba5-86e7-ab58892dd98a">(moose/modules/tensor_mechanics/test/tests/j_integral/j_integral_3d.i)</a></section><section id="decbb33b-0804-41a3-b416-178826f260cc" data-section-level="2" data-section-text="C - Integral"><h2 id="c-integral">C-Integral</h2><p>The C(t) integral is a fracture integral that is obtained in essentially the same way as the <span class="moose-katex-inline-equation" id="moose-equation-5c31250b-a06a-4e01-a76a-517a4d7b9644"><script>var element = document.getElementById("moose-equation-5c31250b-a06a-4e01-a76a-517a4d7b9644");katex.render("J", element, {displayMode:false,throwOnError:false});</script></span>-integral described above, but by replacing displacements and strains with displacement rates and strain rates:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-cfac64f0-d931-4873-982f-f0af0a1c0d4d"></span><script>var element = document.getElementById("moose-equation-cfac64f0-d931-4873-982f-f0af0a1c0d4d");katex.render("{C}(t)=\\int_{\\Gamma}\\biggl( P_{ji}\\frac{\\partial \\dot{u}_i}{\\partial X_k}ds -\\dot{W}dy \\biggr) d\\Gamma", element, {displayMode:true,throwOnError:false});</script></span></p><p>This integral is computed in an analogous way to the J-integral: A domain integral is solved on the crack front geometry defined in the mesh. This integral becomes the <span class="moose-katex-inline-equation" id="moose-equation-c6b93e3f-edc8-47e6-83d0-ab24f937d092"><script>var element = document.getElementById("moose-equation-c6b93e3f-edc8-47e6-83d0-ab24f937d092");katex.render("C^{*}", element, {displayMode:false,throwOnError:false});</script></span> integral as creep behavior becomes steady state. Then, creep crack growth behavior during secondary creep can be obtained from this integral. A number of approximate expressions for <span class="moose-katex-inline-equation" id="moose-equation-79369843-a707-4f71-87ef-f5c4fe1ce388"><script>var element = document.getElementById("moose-equation-79369843-a707-4f71-87ef-f5c4fe1ce388");katex.render("C^{*}", element, {displayMode:false,throwOnError:false});</script></span> are available in the literature (<a href="#bongyoon_2003">Bong Yoon et al., 2003</a>).</p><section id="3996a051-6b1b-4ccd-9a51-75bfb83dba18" data-section-level="3" data-section-text="Usage"><h3 id="usage">Usage</h3><p>To compute <span class="moose-katex-inline-equation" id="moose-equation-2ee3414b-9362-4695-af01-0dac48d91377"><script>var element = document.getElementById("moose-equation-2ee3414b-9362-4695-af01-0dac48d91377");katex.render("C", element, {displayMode:false,throwOnError:false});</script></span>-integrals, the <a href="../../source/actions/DomainIntegralAction.html">DomainIntegral Action</a> should be used to set up all of the required objects. In particular, two additional inputs are required <code>integrals = CIntegral</code> and <code>inelastic_models</code>. The former refers to the type of integral requested (&#x27;C&#x27;) and the latter refers to the name of the power law creep model &ndash;only supported material model at present. The power law exponent in the material model is used to compute the strain energy rate density in the fracture integral under the assumption of a creep strain rate field subject to steady-state (secondary) crack growth.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[DomainIntegral]
+  integrals = CIntegral
+  boundary = 1001
+  crack_direction_method = CurvedCrackFront
+  crack_end_direction_method = CrackDirectionVector
+  crack_direction_vector_end_1 = &#x27;0.0 1.0 0.0&#x27;
+  crack_direction_vector_end_2 = &#x27;1.0 0.0 0.0&#x27;
+  radius_inner = &#x27;12.5 25.0 37.5&#x27;
+  radius_outer = &#x27;25.0 37.5 50.0&#x27;
+  intersecting_boundary = &#x27;1 2&#x27;
+  symmetry_plane = 2
+  incremental = true
+  inelastic_models = &#x27;powerlawcrp&#x27;
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#e6259e4c-01b9-4cc6-aad4-e80623f5f33b">(moose/modules/tensor_mechanics/test/tests/j_integral_vtest/c_int_surfbreak_ellip_crack_sym_mm.i)</a></section></section><section id="2318259d-6e1d-436f-9e0f-ad3948047ec1" data-section-level="2" data-section-text="References"><h2 id="references">References</h2><div class="moose-bibliography"><ol><li id="bongyoon_2003">Kee Bong&nbsp;Yoon, Tae Gyu&nbsp;Park, and Ashok Saxena.
+Creep crack growth analysis of elliptic surface cracks in pressure vessels.
+<em>International Journal of Pressure Vessels and Piping</em>, 80(7):465 &ndash; 479, 2003.<a href="#408b1d9f-bb5e-4062-b1e5-86a57d0a8399" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="408b1d9f-bb5e-4062-b1e5-86a57d0a8399"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{bongyoon_2003,
+    Author = "Bong Yoon, Kee and Gyu Park, Tae and Saxena, Ashok",
+    Title = "Creep crack growth analysis of elliptic surface cracks in pressure vessels",
+    Journal = "International Journal of Pressure Vessels and Piping",
+    Volume = "80",
+    Number = "7",
+    Pages = "465 - 479",
+    Year = "2003"
+}
+</code></pre></div></div></li><li id="warp3d_17.3.1">Brian Healy, Arne Gullerud, Kyle Koppenhoefer, Arun Roy, Sushovan RoyChowdhury, Matt Walters, Barron Bichon, Kristine Cochran, Adam Carlyle, James Sobotka, Mark Messner, and Robert Dodds.
+Warp3d-release 17.3.1.
+Technical Report UILU-ENG-95-2012, University of Illinois at Urbana-Champaign, 2012.<a href="#a11c0454-2fd3-441f-8b55-e76822d28e55" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="a11c0454-2fd3-441f-8b55-e76822d28e55"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@techreport{warp3d_17.3.1,
+    Author = "Healy, Brian and Gullerud, Arne and Koppenhoefer, Kyle and Roy, Arun and RoyChowdhury, Sushovan and Walters, Matt and Bichon, Barron and Cochran, Kristine and Carlyle, Adam and Sobotka, James and Messner, Mark and Dodds, Robert",
+    Institution = "University of Illinois at Urbana-Champaign",
+    Number = "UILU-ENG-95-2012",
+    Title = "WARP3D-Release 17.3.1",
+    Year = "2012"
+}
+</code></pre></div></div></li><li id="larsson_influence_1973">S.G. Larsson and A.J. Carlsson.
+Influence of non-singular stress terms and specimen geometry on small-scale yielding at crack tips in elastic-plastic materials.
+<em>Journal of the Mechanics and Physics of Solids</em>, 21(4):263–277, July 1973.<a href="#22cf42bd-9306-40b0-b312-1958ed48262d" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="22cf42bd-9306-40b0-b312-1958ed48262d"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{larsson_influence_1973,
+    Author = "Larsson, S.G. and Carlsson, A.J.",
+    Journal = "Journal of the Mechanics and Physics of Solids",
+    Month = "July",
+    Number = "4",
+    Pages = "263--277",
+    Title = "Influence of non-singular stress terms and specimen geometry on small-scale yielding at crack tips in elastic-plastic materials",
+    Volume = "21",
+    Year = "1973"
+}
+</code></pre></div></div></li><li id="li_comparison_1985">F.&nbsp;Z. Li, C.&nbsp;F. Shih, and A.&nbsp;Needleman.
+A comparison of methods for calculating energy release rates.
+<em>Engineering Fracture Mechanics</em>, 21(2):405–421, 1985.
+<a href="https://doi.org/10.1016/0013-7944(85)90029-3">doi:10.1016/0013-7944(85)90029-3</a>.<a href="#e642641a-833b-41b8-83a5-d9e561a25f00" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="e642641a-833b-41b8-83a5-d9e561a25f00"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{li_comparison_1985,
+    Author = "Li, F. Z. and Shih, C. F. and Needleman, A.",
+    Doi = "10.1016/0013-7944(85)90029-3",
+    Journal = "Engineering Fracture Mechanics",
+    Number = "2",
+    Pages = "405--421",
+    Title = "A comparison of methods for calculating energy release rates",
+    Volume = "21",
+    Year = "1985"
+}
+</code></pre></div></div></li><li id="toshio_determination_1992">Toshio Nakamura and David&nbsp;M. Parks.
+Determination of elastic t-stress along three-dimensional crack fronts using an interaction integral.
+<em>International Journal of Solids and Structures</em>, 29(13):1597–1611, January 1992.
+<a href="https://doi.org/10.1016/0020-7683(92)90011-H">doi:10.1016/0020-7683(92)90011-H</a>.<a href="#f79288dc-b954-49e6-8679-ceb148d22db4" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="f79288dc-b954-49e6-8679-ceb148d22db4"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{toshio_determination_1992,
+    Author = "Nakamura, Toshio and Parks, David M.",
+    Doi = "10.1016/0020-7683(92)90011-H",
+    Issn = "00207683",
+    Journal = "International Journal of Solids and Structures",
+    Language = "en",
+    Month = "January",
+    Number = "13",
+    Pages = "1597--1611",
+    Title = "Determination of elastic T-stress along three-dimensional crack fronts using an interaction integral",
+    Volume = "29",
+    Year = "1992"
+}
+</code></pre></div></div></li><li id="rice_path_1968">J.&nbsp;R. Rice.
+A path independent integral and the approximate analysis of strain concentration by notches and cracks.
+<em>Journal of Applied Mechanics</em>, 35(2):379, 1968.
+<a href="https://doi.org/10.1115/1.3601206">doi:10.1115/1.3601206</a>.<a href="#e70cb764-c7a4-46b6-b319-001e4953ead3" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="e70cb764-c7a4-46b6-b319-001e4953ead3"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{rice_path_1968,
+    Author = "Rice, J. R.",
+    Doi = "10.1115/1.3601206",
+    Journal = "Journal of Applied Mechanics",
+    Number = "2",
+    Pages = "379",
+    Title = "A Path Independent Integral and the Approximate Analysis of Strain Concentration by Notches and Cracks",
+    Volume = "35",
+    Year = "1968"
+}
+</code></pre></div></div></li><li id="rice_limitations_1974">J.R. Rice.
+Limitations to the small scale yielding approximation for crack tip plasticity.
+<em>Journal of the Mechanics and Physics of Solids</em>, 22(1):17–26, January 1974.<a href="#644415b7-8645-4002-8b05-ae4868ef204b" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="644415b7-8645-4002-8b05-ae4868ef204b"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{rice_limitations_1974,
+    Author = "Rice, J.R.",
+    Journal = "Journal of the Mechanics and Physics of Solids",
+    Month = "January",
+    Number = "1",
+    Pages = "17--26",
+    Title = "Limitations to the small scale yielding approximation for crack tip plasticity",
+    Volume = "22",
+    Year = "1974"
+}
+</code></pre></div></div></li><li id="walters_interaction_2005">Matthew&nbsp;C. Walters, Glaucio&nbsp;H. Paulino, and Robert&nbsp;H. Dodds.
+Interaction integral procedures for 3-<span class="bibtex-protected">D</span> curved cracks including surface tractions.
+<em>Engineering Fracture Mechanics</em>, 72(11):1635–1663, July 2005.<a href="#1f800949-44c3-416c-bb52-b4f4cf8f8835" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="1f800949-44c3-416c-bb52-b4f4cf8f8835"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{walters_interaction_2005,
+    Author = "Walters, Matthew C. and Paulino, Glaucio H. and Dodds, Robert H.",
+    Journal = "Engineering Fracture Mechanics",
+    Month = "July",
+    Number = "11",
+    Pages = "1635--1663",
+    Title = "Interaction integral procedures for 3-{D} curved cracks including surface tractions",
+    Volume = "72",
+    Year = "2005"
+}
+</code></pre></div></div></li></ol></div></section></section><div class="moose-modal modal" id="c24efecf-24d2-4ba5-86e7-ab58892dd98a"><div class="modal-content"><h4>(moose/modules/tensor_mechanics/test/tests/j_integral/j_integral_3d.i)</h4><pre class="moose-pre"><code class="language-text">#This tests the J-Integral evaluation capability.
+#This is a 3d extrusion of a 2d plane strain model with 2 elements
+#through the thickness, and calculates the J-Integrals using options
+#to treat it as 3d.
+#The analytic solution for J1 is 2.434.  This model
+#converges to that solution with a refined mesh.
+#Reference: National Agency for Finite Element Methods and Standards (U.K.):
+#Test 1.1 from NAFEMS publication &quot;Test Cases in Linear Elastic Fracture
+#Mechanics&quot; R0020.
+
+[GlobalParams]
+  order = FIRST
+  family = LAGRANGE
+  displacements = &#x27;disp_x disp_y disp_z&#x27;
+  volumetric_locking_correction = true
+[]
+
+[Mesh]
+  file = crack3d.e
+[]
+
+[AuxVariables]
+  [./SED]
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
+[]
+
+[Functions]
+  [./rampConstant]
+    type = PiecewiseLinear
+    x = &#x27;0. 1.&#x27;
+    y = &#x27;0. 1.&#x27;
+    scale_factor = -1e2
+  [../]
+[]
+
+[DomainIntegral]
+  integrals = JIntegral
+  boundary = 800
+  crack_direction_method = CrackDirectionVector
+  crack_direction_vector = &#x27;1 0 0&#x27;
+  radius_inner = &#x27;4.0 5.5&#x27;
+  radius_outer = &#x27;5.5 7.0&#x27;
+  output_variable = &#x27;disp_x&#x27;
+  output_q = false
+  incremental = true
+[]
+
+[Modules/TensorMechanics/Master]
+  [./master]
+    strain = FINITE
+    add_variables = true
+    incremental = true
+    generate_output = &#x27;stress_xx stress_yy stress_zz vonmises_stress&#x27;
+  [../]
+[]
+
+[AuxKernels]
+  [./SED]
+    type = MaterialRealAux
+    variable = SED
+    property = strain_energy_density
+    execute_on = timestep_end
+  [../]
+[]
+
+[BCs]
+  [./crack_y]
+    type = DirichletBC
+    variable = disp_y
+    boundary = 100
+    value = 0.0
+  [../]
+  [./no_z]
+    type = DirichletBC
+    variable = disp_z
+    boundary = 500
+    value = 0.0
+  [../]
+  [./no_z2]
+    type = DirichletBC
+    variable = disp_z
+    boundary = 510
+    value = 0.0
+  [../]
+
+  [./no_x]
+    type = DirichletBC
+    variable = disp_x
+    boundary = 700
+    value = 0.0
+  [../]
+
+  [./Pressure]
+    [./Side1]
+      boundary = 400
+      function = rampConstant
+    [../]
+  [../]
+
+[]
+
+[Materials]
+  [./elasticity_tensor]
+    type = ComputeIsotropicElasticityTensor
+    youngs_modulus = 207000
+    poissons_ratio = 0.3
+  [../]
+  [./elastic_stress]
+    type = ComputeFiniteStrainElasticStress
+  [../]
+[]
+
+
+[Executioner]
+  type = Transient
+
+  petsc_options = &#x27;-snes_ksp_ew&#x27;
+  petsc_options_iname = &#x27;-ksp_gmres_restart&#x27;
+  petsc_options_value = &#x27;101&#x27;
+
+  line_search = &#x27;none&#x27;
+
+  l_max_its = 50
+  nl_max_its = 20
+  nl_abs_tol = 1e-5
+  l_tol = 1e-2
+
+  start_time = 0.0
+  dt = 1
+
+  end_time = 1
+  num_steps = 1
+[]
+
+[Postprocessors]
+  [./disp_x_centercrack]
+    type = CrackFrontData
+    crack_front_definition = crackFrontDefinition
+    variable = disp_x
+    crack_front_point_index = 1
+  [../]
+[]
+
+[Outputs]
+  file_base = j_integral_3d_out
+  exodus = true
+  csv = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="e6259e4c-01b9-4cc6-aad4-e80623f5f33b"><div class="modal-content"><h4>(moose/modules/tensor_mechanics/test/tests/j_integral_vtest/c_int_surfbreak_ellip_crack_sym_mm.i)</h4><pre class="moose-pre"><code class="language-text">[GlobalParams]
+  order = FIRST
+  family = LAGRANGE
+  displacements = &#x27;disp_x disp_y disp_z&#x27;
+  volumetric_locking_correction = true
+[]
+
+[Mesh]
+  file = c_integral_coarse.e
+  partitioner = centroid
+  centroid_partitioner_direction = z
+[]
+
+[AuxVariables]
+  [./SED]
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
+  [./resid_z]
+  [../]
+[]
+
+[Functions]
+  [./rampConstantUp]
+    type = PiecewiseLinear
+    x = &#x27;0. 0.1 100.0&#x27;
+    y = &#x27;0. 1 1&#x27;
+    scale_factor = -68.95 #MPa
+  [../]
+  [./dts]
+  type = PiecewiseLinear
+  x = &#x27;0   1&#x27;
+  y = &#x27;1   400000&#x27;
+[../]
+[]
+
+[Modules/TensorMechanics/Master]
+  [./master]
+    strain = FINITE
+    add_variables = true
+    incremental = true
+    generate_output = &#x27;stress_xx stress_yy stress_zz vonmises_stress&#x27;
+  [../]
+[]
+
+[AuxKernels]
+  [./SED]
+    type = MaterialRealAux
+    variable = SED
+    property = strain_energy_density
+    execute_on = timestep_end
+  [../]
+[]
+
+[BCs]
+  [./crack_y]
+    type = DirichletBC
+    variable = disp_z
+    boundary = 6
+    value = 0.0
+  [../]
+  [./no_y]
+    type = DirichletBC
+    variable = disp_y
+    boundary = 12
+    value = 0.0
+  [../]
+  [./no_x]
+    type = DirichletBC
+    variable = disp_x
+    boundary = 1
+    value = 0.0
+  [../]
+  [./Pressure]
+    [./Side1]
+      boundary = 5
+      function = rampConstantUp
+    [../]
+  [../]
+[] # BCs
+
+[Materials]
+  [./elasticity_tensor]
+    type = ComputeIsotropicElasticityTensor
+    youngs_modulus = 206800
+    poissons_ratio = 0.0
+  [../]
+  [./radial_return_stress]
+    type = ComputeMultipleInelasticStress
+    inelastic_models = &#x27;powerlawcrp&#x27;
+  [../]
+  [./powerlawcrp]
+    type = PowerLawCreepStressUpdate
+    coefficient = 3.125e-21 # 7.04e-17 #
+    n_exponent = 4.0
+    m_exponent = 0.0
+    activation_energy = 0.0
+    # max_inelastic_increment = 0.01
+  [../]
+[]
+
+[DomainIntegral]
+  integrals = CIntegral
+  boundary = 1001
+  crack_direction_method = CurvedCrackFront
+  crack_end_direction_method = CrackDirectionVector
+  crack_direction_vector_end_1 = &#x27;0.0 1.0 0.0&#x27;
+  crack_direction_vector_end_2 = &#x27;1.0 0.0 0.0&#x27;
+  radius_inner = &#x27;12.5 25.0 37.5&#x27;
+  radius_outer = &#x27;25.0 37.5 50.0&#x27;
+  intersecting_boundary = &#x27;1 2&#x27;
+  symmetry_plane = 2
+  incremental = true
+  inelastic_models = &#x27;powerlawcrp&#x27;
+[]
+
+[Executioner]
+
+   type = Transient
+  # Two sets of linesearch options are for petsc 3.1 and 3.3 respectively
+  #Preconditioned JFNK (default)
+  solve_type = &#x27;NEWTON&#x27;
+
+#  petsc_options = &#x27;-snes_ksp_ew&#x27;
+  petsc_options_iname = &#x27;-ksp_gmres_restart -pc_type -pc_hypre_type -pc_hypre_boomeramg_max_iter&#x27;
+  petsc_options_value = &#x27;201                hypre    boomeramg      4&#x27;
+  line_search = &#x27;none&#x27;
+
+   l_max_its = 50
+   nl_max_its = 20
+   nl_abs_tol = 1e-3
+   nl_rel_tol = 1e-11
+   l_tol = 1e-2
+
+   start_time = 0.0
+   end_time = 401
+
+   [./TimeStepper]
+     type = FunctionDT
+     function = dts
+     min_dt = 1.0
+   [../]
+[]
+
+[Postprocessors]
+  [./_dt]
+    type = TimestepSize
+  [../]
+  [./nl_its]
+    type = NumNonlinearIterations
+  [../]
+  [./lin_its]
+    type = NumLinearIterations
+  [../]
+  [./react_z]
+    type = NodalSum
+    variable = resid_z
+    boundary = 5
+  [../]
+[]
+
+[Outputs]
+  execute_on = &#x27;timestep_end&#x27;
+  exodus = true
+  csv = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

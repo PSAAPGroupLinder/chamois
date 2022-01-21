@@ -1,0 +1,125 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>LinearCombinationFunction | Chamois</title><link rel="icon" type="image/x-icon" href="../../media/chamois_logo.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down">Chamois</a><a href="https://github.com/matthiasneuner/chamois" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="7e9c7bec-a853-42df-bbfe-3c114b260d30" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#" class="sidenav-trigger" data-target="b5405476-816d-40e2-8fc1-8779a4cb141e"><i class="material-icons">menu</i></a><ul class="sidenav" id="b5405476-816d-40e2-8fc1-8779a4cb141e"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="f4f296b0-91db-41e1-b3cb-130315a40547" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="7e9c7bec-a853-42df-bbfe-3c114b260d30"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul><ul class="dropdown-content" id="f4f296b0-91db-41e1-b3cb-130315a40547"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="moose-content col s12 m12 l12"><section id="3ce89da6-9b59-49cf-bc99-f386f70d61f8" data-section-level="1" data-section-text="LinearCombinationFunction"><h1 id="linearcombinationfunction">LinearCombinationFunction</h1><p>Returns the linear combination of the functions</p><section id="0fa1375b-c77d-47bb-97f3-620fc4c05046" data-section-level="2" data-section-text="Example input syntax"><h2 id="example-input-syntax">Example input syntax</h2><p>In this input file, we show how a <code>LinearCombinationFunction</code> may be used to combine a variety of different functions, then compare the results to a manually computed linear combination.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Functions]
+  [./xtimes]
+    type = ParsedFunction
+    value = 1.1*x
+  [../]
+
+  [./twoxplus1]
+    type = ParsedFunction
+    value = 2*x+1
+  [../]
+
+  [./xsquared]
+    type = ParsedFunction
+    value = (x-2)*x
+  [../]
+
+  [./tover2]
+    type = ParsedFunction
+    value = 0.5*t
+  [../]
+
+  [./the_linear_combo]
+    type = LinearCombinationFunction
+    functions = &#x27;xtimes twoxplus1 xsquared tover2&#x27;
+    w = &#x27;3 -1.2 0.4 3&#x27;
+  [../]
+
+  [./should_be_answer]
+    type = ParsedFunction
+    value = 3*1.1*x-1.2*(2*x+1)+0.4*(x-2)*x+3*0.5*t
+  [../]
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#e31fb602-a7af-4ff1-bcfd-dc67cd009c83">(moose/test/tests/functions/linear_combination_function/lcf1.i)</a></section><section id="92a6205a-1a9b-42d2-8123-dc26f15b101c" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="169b6d11-99b2-41c3-ba70-7aaf83a02d49" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">functions</span><span class="moose-parameter-header-description">This function will return Sum_over_i(w_i * functions_i)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;FunctionName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>This function will return Sum_over_i(w_i * functions_i)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">w</span><span class="moose-parameter-header-description">This function will return Sum_over_i(w_i * functions_i)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;double&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>This function will return Sum_over_i(w_i * functions_i)</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="d027a50f-f4a6-4557-9648-a0f7d7dc5a5c" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">execute_on</span><span class="moose-parameter-header-default">LINEAR</span><span class="moose-parameter-header-description">The list of flag(s) indicating when this object should be executed, the available options include NONE, INITIAL, LINEAR, NONLINEAR, TIMESTEP_END, TIMESTEP_BEGIN, FINAL, CUSTOM, ALWAYS.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>LINEAR</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>ExecFlagEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, INITIAL, LINEAR, NONLINEAR, TIMESTEP_END, TIMESTEP_BEGIN, FINAL, CUSTOM, ALWAYS</p><p class="moose-parameter-description"><span>Description:</span>The list of flag(s) indicating when this object should be executed, the available options include NONE, INITIAL, LINEAR, NONLINEAR, TIMESTEP_END, TIMESTEP_BEGIN, FINAL, CUSTOM, ALWAYS.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="c28101c8-77fb-4db6-b2da-772367087a48" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="e31fb602-a7af-4ff1-bcfd-dc67cd009c83"><div class="modal-content"><h4>(moose/test/tests/functions/linear_combination_function/lcf1.i)</h4><pre class="moose-pre"><code class="language-text"># LinearCombinationFunction function test
+# See [Functions] block for a description of the tests
+
+[Mesh]
+  type = GeneratedMesh
+  dim = 1
+  xmin = 0
+  xmax = 2
+  nx = 10
+[]
+
+[Variables]
+  [./dummy]
+  [../]
+[]
+
+[Kernels]
+  [./dummy_u]
+    type = TimeDerivative
+    variable = dummy
+  [../]
+[]
+
+
+[AuxVariables]
+  [./the_linear_combo]
+  [../]
+[]
+
+[AuxKernels]
+  [./the_linear_combo]
+    type = FunctionAux
+    variable = the_linear_combo
+    function = the_linear_combo
+  [../]
+[]
+
+
+[Functions]
+  [./xtimes]
+    type = ParsedFunction
+    value = 1.1*x
+  [../]
+
+  [./twoxplus1]
+    type = ParsedFunction
+    value = 2*x+1
+  [../]
+
+  [./xsquared]
+    type = ParsedFunction
+    value = (x-2)*x
+  [../]
+
+  [./tover2]
+    type = ParsedFunction
+    value = 0.5*t
+  [../]
+
+  [./the_linear_combo]
+    type = LinearCombinationFunction
+    functions = &#x27;xtimes twoxplus1 xsquared tover2&#x27;
+    w = &#x27;3 -1.2 0.4 3&#x27;
+  [../]
+
+  [./should_be_answer]
+    type = ParsedFunction
+    value = 3*1.1*x-1.2*(2*x+1)+0.4*(x-2)*x+3*0.5*t
+  [../]
+[]
+
+[Postprocessors]
+  [./should_be_zero]
+    type = NodalL2Error
+    function = should_be_answer
+    variable = the_linear_combo
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+  dt = 0.5
+  end_time = 1
+[]
+
+[Outputs]
+  execute_on = &#x27;timestep_end&#x27;
+  file_base = lcf1
+  hide = dummy
+  exodus = false
+  csv = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

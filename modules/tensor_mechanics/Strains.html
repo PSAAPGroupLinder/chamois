@@ -1,0 +1,380 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Strain Formulations in Tensor Mechanics | Chamois</title><link rel="icon" type="image/x-icon" href="../../media/chamois_logo.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down">Chamois</a><a href="https://github.com/matthiasneuner/chamois" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="095faf7b-f387-4ff8-8b3c-f4f129b95a34" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#" class="sidenav-trigger" data-target="6491b73a-9b06-475d-a663-46baaf253fef"><i class="material-icons">menu</i></a><ul class="sidenav" id="6491b73a-9b06-475d-a663-46baaf253fef"><li><a href="../../getting_started.html">Getting Started</a></li><li><a href="../../singularity.html">Singularity container</a></li><li><a href="../../publications.html">Publications</a></li><li><a href="../../contributors.html">Contributors</a></li><li><a href="#!" class="dropdown-trigger" data-target="524b9198-d5f0-4d2d-b4a0-46a12733fe92" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="095faf7b-f387-4ff8-8b3c-f4f129b95a34"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul><ul class="dropdown-content" id="524b9198-d5f0-4d2d-b4a0-46a12733fe92"><li><a href="../../syntax/chamois.html">Chamois syntax</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="moose-content col s12 m12 l12"><section id="7bd5405b-7f57-4ec1-9e91-b7c9d64ed405" data-section-level="1" data-section-text="Strain Formulations in Tensor Mechanics"><h1 id="strain-formulations-in-tensor-mechanics">Strain Formulations in Tensor Mechanics</h1><p>The tensor mechanics module offers three different types of strain calculation: Small linearized total strain, small linearized incremental strain, and finite incremental strain.</p><section id="0efd6551-6df8-419d-b05a-d32935d1758d" data-section-level="2" data-section-text="Small Linearized Total Strain"><h2 id="small-linearized-total-strain">Small Linearized Total Strain</h2><p>For linear elasticity problems, the Tensor Mechanics module includes a small strain and total strain material <a href="../../source/materials/ComputeSmallStrain.html">ComputeSmallStrain</a>.  This material is useful for verifying material models with hand calculations because of the simplified strain calculations.</p><p>Linearized small strain theory assumes that the gradient of displacement with respect to position is much smaller than unity, and the squared displacement gradient term is neglected in the small strain definition to give: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-6e21321c-24e2-4f08-b472-a4005e31b321"></span><script>var element = document.getElementById("moose-equation-6e21321c-24e2-4f08-b472-a4005e31b321");katex.render("\\epsilon = \\frac{1}{2} \\left( u \\nabla + \\nabla u \\right) \\quad when \\quad \\frac{\\partial u}{ \\partial x} << 1", element, {displayMode:true,throwOnError:false});</script></span> For more details on the linearized small strain assumption and derivation, see a Continuum Mechanics text such as <a href="#malvern1969introduction">Malvern (1969)</a> or <a href="#bower2009applied">Bower (2009)</a>, specifically <a href="http://solidmechanics.org/Text/Chapter2_1/Chapter2_1.php#Sect2_1_7">Chapter 2</a>.</p><p>Total strain theories are path independent: in MOOSE, path independence means that the total strain, from the beginning of the entire simulation, is used to calculate stress and other material properties.  Incremental theories, on the other hand, use the increment of strain at timestep to calculate stress.  Because the total strain formulation <code>ComputeSmallStrain</code> is path independent, no old values of strain or stress from the previous timestep are stored in MOOSE.  For a comparison of total strain vs incremental strain theories with experimental data, see <a href="#shammamy1967incremental">Shammamy and Sidebottom (1967)</a>.</p><p>The input file syntax for small strain is</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Modules/TensorMechanics/Master]
+  [Modules/TensorMechanics/Master]
+    [Modules/TensorMechanics/Master]
+      [./block1]
+        strain = SMALL
+        add_variables = true
+      [../]
+    []
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#946ddf5e-b960-4fc9-b218-c2c64d5383a5">(moose/modules/tensor_mechanics/tutorials/basics/part_1.1.i)</a></section><section id="4cc7134c-5c27-4fbb-adf6-2368b61ce608" data-section-level="2" data-section-text="Incremental Small Strains"><h2 id="incremental-small-strains">Incremental Small Strains</h2><p>Applicable for small linearized strains, MOOSE includes an incremental small strain material, <a href="../../source/materials/ComputeIncrementalSmallStrain.html">ComputeIncrementalSmallStrain</a>. As in the small strain material, the incremental small strain class assumes the gradient of displacement with respect to position is much smaller than unity, and the squared displacement gradient term is neglected in the small strain definition to give: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-c873999c-e09c-44ee-adca-ebf9468f6b38"></span><script>var element = document.getElementById("moose-equation-c873999c-e09c-44ee-adca-ebf9468f6b38");katex.render("\\epsilon = \\frac{1}{2} \\left( u \\nabla + \\nabla u \\right) \\quad when \\quad \\frac{\\partial u}{ \\partial x} << 1", element, {displayMode:true,throwOnError:false});</script></span> As the class name suggests, <code>ComputeIncrementalSmallStrain</code> is an incremental formulation. The stress increment is calculated from the current strain increment at each time step. In this class, the rotation tensor is defined to be the rank-2 Identity tensor: no rotations are allowed in the model. Stateful properties, including <code>strain_old</code> and <code>stress_old</code>, are stored. This incremental small strain material is useful as a component of verifying more complex finite incremental strain-stress calculations.</p><p>The input file syntax for incremental small strain is</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[./TensorMechanics]
+  [./Master]
+    [./all]
+      strain = SMALL
+      incremental = true
+      add_variables = true
+      eigenstrain_names = eigenstrain
+      generate_output = &#x27;strain_xx strain_yy strain_zz&#x27;
+    [../]
+  [../]
+[../]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#c1042a65-5667-443f-9419-b0cfab121b6d">(moose/modules/tensor_mechanics/test/tests/thermal_expansion/constant_expansion_coeff.i)</a></section><section id="1df75a65-6a93-4d48-ac52-08bcbb21bdad" data-section-level="2" data-section-text="Finite Large Strains"><h2 id="finite-large-strains">Finite Large Strains</h2><p>For finite strains, use <a href="../../source/materials/ComputeFiniteStrain.html">ComputeFiniteStrain</a> in which an incremental form is employed such that the strain increment and the rotation increment are calculated.</p><section id="043064a0-c2c4-46bf-a568-a0962b36a115" data-section-level="3" data-section-text="Incremental Deformation Gradient"><h3 id="incremental-deformation-gradient">Incremental Deformation Gradient</h3><p>The finite strain mechanics approach used in the MOOSE tensor_mechanics module is the incremental corotational form from <a href="#rashid1993incremental">Rashid (1993)</a>. In this form, the generic time increment under consideration is such that <span class="moose-katex-inline-equation" id="moose-equation-fff751ca-5be0-4029-b072-36318dabef8c"><script>var element = document.getElementById("moose-equation-fff751ca-5be0-4029-b072-36318dabef8c");katex.render("t \\in [t_n, t_{n+1}]", element, {displayMode:false,throwOnError:false});</script></span>. The configurations of the material element under consideration at <span class="moose-katex-inline-equation" id="moose-equation-fb80dce3-3697-4022-b602-bbbce20c2e84"><script>var element = document.getElementById("moose-equation-fb80dce3-3697-4022-b602-bbbce20c2e84");katex.render("t = t_n", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-f743f192-b781-4c81-bf33-c23bcfd5509c"><script>var element = document.getElementById("moose-equation-f743f192-b781-4c81-bf33-c23bcfd5509c");katex.render("t = t_{n+1}", element, {displayMode:false,throwOnError:false});</script></span> are denoted by <span class="moose-katex-inline-equation" id="moose-equation-03085938-624f-425d-906b-c13610ee4302"><script>var element = document.getElementById("moose-equation-03085938-624f-425d-906b-c13610ee4302");katex.render("\\kappa_n", element, {displayMode:false,throwOnError:false});</script></span>, and <span class="moose-katex-inline-equation" id="moose-equation-59d61226-6e2b-4b10-8469-c48f904c3aa9"><script>var element = document.getElementById("moose-equation-59d61226-6e2b-4b10-8469-c48f904c3aa9");katex.render("\\kappa_{n + 1}", element, {displayMode:false,throwOnError:false});</script></span>, respectively. The incremental motion over the time increment is assumed to be given in the form of the inverse of the deformation gradient <span class="moose-katex-inline-equation" id="moose-equation-bb4b4316-e6a4-4505-b7df-704714d7fe4b"><script>var element = document.getElementById("moose-equation-bb4b4316-e6a4-4505-b7df-704714d7fe4b");katex.render("\\hat{\\boldsymbol{F}}", element, {displayMode:false,throwOnError:false});</script></span> of <span class="moose-katex-inline-equation" id="moose-equation-5e857b0b-8b4d-44eb-a171-a6e300d39a2b"><script>var element = document.getElementById("moose-equation-5e857b0b-8b4d-44eb-a171-a6e300d39a2b");katex.render("\\kappa_{n + 1}", element, {displayMode:false,throwOnError:false});</script></span> with respect to <span class="moose-katex-inline-equation" id="moose-equation-1f09eb59-e1c9-4782-8491-46a21784f212"><script>var element = document.getElementById("moose-equation-1f09eb59-e1c9-4782-8491-46a21784f212");katex.render("\\kappa_n", element, {displayMode:false,throwOnError:false});</script></span>, which may be written as</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-66709a03-9444-4615-8ccf-614608a19409"></span><script>var element = document.getElementById("moose-equation-66709a03-9444-4615-8ccf-614608a19409");katex.render("\\hat{\\boldsymbol{F}}^{-1} = 1 - \\frac{\\partial \\hat{\\boldsymbol{u}}}{\\partial \\boldsymbol{x}},", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-d2f3c2ad-603d-4dbc-8961-cbfd00a13155"><script>var element = document.getElementById("moose-equation-d2f3c2ad-603d-4dbc-8961-cbfd00a13155");katex.render("\\hat{\\boldsymbol{u}}(\\boldsymbol{x})", element, {displayMode:false,throwOnError:false});</script></span> is the incremental displacement field for the time step, and <span class="moose-katex-inline-equation" id="moose-equation-d22400bd-f94d-451b-b21d-e4d3f1648110"><script>var element = document.getElementById("moose-equation-d22400bd-f94d-451b-b21d-e4d3f1648110");katex.render("\\boldsymbol{x}", element, {displayMode:false,throwOnError:false});</script></span> is the position vector of materials points in <span class="moose-katex-inline-equation" id="moose-equation-293eb383-8257-43a5-8f90-89c589943cb8"><script>var element = document.getElementById("moose-equation-293eb383-8257-43a5-8f90-89c589943cb8");katex.render("\\kappa_{n+1}", element, {displayMode:false,throwOnError:false});</script></span>. Note that <span class="moose-katex-inline-equation" id="moose-equation-2b1bb295-d7a0-4251-b004-e9314b4cf0f2"><script>var element = document.getElementById("moose-equation-2b1bb295-d7a0-4251-b004-e9314b4cf0f2");katex.render("\\hat{\\boldsymbol{F}}", element, {displayMode:false,throwOnError:false});</script></span> is NOT the deformation gradient, but rather the incremental deformation gradient of <span class="moose-katex-inline-equation" id="moose-equation-721dec6c-2251-4644-abd5-56ca22a8904c"><script>var element = document.getElementById("moose-equation-721dec6c-2251-4644-abd5-56ca22a8904c");katex.render("\\kappa_{n+1}", element, {displayMode:false,throwOnError:false});</script></span> with respect to <span class="moose-katex-inline-equation" id="moose-equation-dd066d64-81c8-4c27-8292-2a051ee7458e"><script>var element = document.getElementById("moose-equation-dd066d64-81c8-4c27-8292-2a051ee7458e");katex.render("\\kappa_n", element, {displayMode:false,throwOnError:false});</script></span>. Thus, <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-015601a5-0499-406f-ade8-7b50b11ddf9e"></span><script>var element = document.getElementById("moose-equation-015601a5-0499-406f-ade8-7b50b11ddf9e");katex.render("\\hat{\\boldsymbol{F}} = \\boldsymbol{F}_{n+1} \\boldsymbol{F}_n^{-1}", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-70cdf837-640d-4b9d-be23-871a8a24ebc1"><script>var element = document.getElementById("moose-equation-70cdf837-640d-4b9d-be23-871a8a24ebc1");katex.render("\\boldsymbol{F}_n", element, {displayMode:false,throwOnError:false});</script></span> is the total deformation gradient at time <span class="moose-katex-inline-equation" id="moose-equation-45818f48-9638-489b-b671-2eaf35547e1b"><script>var element = document.getElementById("moose-equation-45818f48-9638-489b-b671-2eaf35547e1b");katex.render("t_n", element, {displayMode:false,throwOnError:false});</script></span>.</p><p>For this form, we assume <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-4191591f-63b8-4440-af86-139de2854338"></span><script>var element = document.getElementById("moose-equation-4191591f-63b8-4440-af86-139de2854338");katex.render("\\begin{aligned} \\dot{\\boldsymbol{F}} \\boldsymbol{F}^{-1} =& \\boldsymbol{D}\\ \\mathrm{(constant\\ and\\ symmetric),\\ } t_n<t<t_{n+1}\\\\ \\boldsymbol{F}(t^{-}_{n+1}) =& \\hat{\\boldsymbol{U}}\\ \\mathrm{(symmetric\\ positive\\ definite)}\\\\ \\boldsymbol{F}(t_{n+1}) =& \\hat{\\boldsymbol{R}} \\hat{\\boldsymbol{U}} = \\hat{\\boldsymbol{F}}\\ (\\hat{\\boldsymbol{R}}\\ \\mathrm{proper\\ orthogonal}) \\end{aligned}", element, {displayMode:true,throwOnError:false});</script></span></p><p>In tensor mechanics, there are two decomposition options to obtain the strain increment: TaylorExpansion and EigenSolution, with the default set to TaylorExpansion. See the <a href="../../source/materials/ComputeFiniteStrain.html">ComputeFiniteStrain</a> for a description of both decomposition options.</p></section><section id="63f0991c-0fc9-4684-a2b0-1989c9da416d" data-section-level="3" data-section-text="Large Strain Closed Loop Loading Cycle"><h3 id="large_strain_closed_loop_loading_cycle">Large Strain Closed Loop Loading Cycle</h3><p>It is important to note that some inaccuracies are inherently present in incremental (hypoelastic) representations of finite strain behavior. This is an issue for the MOOSE implementation discussed here, as well as the implementations of other major commercial codes. The magnitude of the error increases as the magnitude of the strain increases, so this is typically only a practical issue for very large strains, for which hyperelastic models are more appropriate. This can be demonstrated with the closed loop loading cycle illustrated in <a href="#closed_loop_cycle_loading">Figure 1</a>. Since the initial and final configurations are the same, with elastic material, one would expect that the stress would return to zero in the final underformed state. With this incremental formulation, however, a residual stress remains, and the magnitude of that residual stress increases with the magnitude of the loading cycle. This occurs because the integral of the rate-of-deformation over the full loading cycle is not zero. A detailed explanation can be found in <a href="#belytschko2003">Belytschko et al. (2003)</a>.</p><div class="card moose-float" style="width:95%;float:right;padding-top:1.5%;" id="closed_loop_cycle_loading"><div class="card-content"><picture class="materialboxed moose-image"><img src="closed_loop_large_deform_cycle_loading.png"></img></picture><p class="moose-caption"><span class="moose-caption-heading">Figure 1: </span><span class="moose-caption-text">Closed loop large deformation loading cycle.</span></p></div></div></section><section id="17a5d67c-4450-4204-82e4-dd2c66621110" data-section-level="3" data-section-text="Volumetric Locking Correction"><h3 id="volumetric-locking-correction">Volumetric Locking Correction</h3><p>In <a href="../../source/materials/ComputeFiniteStrain.html">ComputeFiniteStrain</a> <span class="moose-katex-inline-equation" id="moose-equation-c8164659-67f9-496e-ad77-6c0f2ed8fab7"><script>var element = document.getElementById("moose-equation-c8164659-67f9-496e-ad77-6c0f2ed8fab7");katex.render("\\hat{\\boldsymbol{F}}", element, {displayMode:false,throwOnError:false});</script></span> is calculated and can optionally include a volumetric locking correction following the B-bar method: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-388a9137-1782-433a-aca8-cf055b12b2d1"></span><script>var element = document.getElementById("moose-equation-388a9137-1782-433a-aca8-cf055b12b2d1");katex.render("\\hat{\\boldsymbol{F}}_{corr} = \\hat{\\boldsymbol{F}} \\left( \\frac{|\\mathrm{av}_{el}(\\hat{\\boldsymbol{F}})|}{|\\hat{\\boldsymbol{F}}|} \\right)^{\\frac{1}{3}},", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-9436a2f1-3051-49f3-9973-06de07b52c77"><script>var element = document.getElementById("moose-equation-9436a2f1-3051-49f3-9973-06de07b52c77");katex.render("\\mathrm{av}_{el}()", element, {displayMode:false,throwOnError:false});</script></span> is the average value for the entire element.</p><p>Once the strain increment is calculated, it is added to the total strain from <span class="moose-katex-inline-equation" id="moose-equation-5281bc46-ac33-4589-b12d-47a194f177c6"><script>var element = document.getElementById("moose-equation-5281bc46-ac33-4589-b12d-47a194f177c6");katex.render("t_n", element, {displayMode:false,throwOnError:false});</script></span>. The total strain from <span class="moose-katex-inline-equation" id="moose-equation-eb688726-901c-4602-8ab6-7f4478d076df"><script>var element = document.getElementById("moose-equation-eb688726-901c-4602-8ab6-7f4478d076df");katex.render("t_{n+1}", element, {displayMode:false,throwOnError:false});</script></span> must then be rotated using the rotation increment.</p><p>The input file syntax for a finite incremental strain material is</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[./TensorMechanics]
+  [./Master]
+    [./all]
+      strain = FINITE
+      add_variables = true
+    [../]
+  [../]
+[../]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#c01700ba-77a5-459d-b4dd-e0882896576e">(moose/modules/tensor_mechanics/test/tests/finite_strain_elastic/finite_strain_elastic_new_test.i)</a></section></section><section id="fff379b1-b135-4cea-b165-b87d247fc150" data-section-level="2" data-section-text="References"><h2 id="references">References</h2><div class="moose-bibliography"><ol><li id="belytschko2003">Ted Belytschko, Wing&nbsp;Kam Liu, and Brian Moran.
+<em><span class="bibtex-protected">N</span>onlinear <span class="bibtex-protected">F</span>inite <span class="bibtex-protected">E</span>lements for <span class="bibtex-protected">C</span>ontinua and <span class="bibtex-protected">S</span>tructures</em>.
+John Wiley &amp; Sons, West Sussex, England, 2003.<a href="#9a687ab2-9d12-4e0b-8765-31ddbb1436ff" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="9a687ab2-9d12-4e0b-8765-31ddbb1436ff"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@book{belytschko2003,
+    author = "Belytschko, Ted and Liu, Wing Kam and Moran, Brian",
+    title = "{N}onlinear {F}inite {E}lements for {C}ontinua and {S}tructures",
+    year = "2003",
+    publisher = "John Wiley \\& Sons, West Sussex, England"
+}
+</code></pre></div></div></li><li id="bower2009applied">A.&nbsp;F. Bower.
+<em>Applied Mechanics of Solids</em>.
+CRC press, 2009.<a href="#2b331a39-72f4-47e6-b062-1183e59ee819" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="2b331a39-72f4-47e6-b062-1183e59ee819"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@book{bower2009applied,
+    author = "Bower, A. F.",
+    title = "Applied Mechanics of Solids",
+    publisher = "CRC press",
+    year = "2009"
+}
+</code></pre></div></div></li><li id="malvern1969introduction">Lawrence&nbsp;E Malvern.
+<em>Introduction to the Mechanics of a Continuous Medium</em>.
+Prentice-Hall, 1969.<a href="#d9d17173-0045-4bdc-9a31-fe8f69911d80" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="d9d17173-0045-4bdc-9a31-fe8f69911d80"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@book{malvern1969introduction,
+    author = "Malvern, Lawrence E",
+    title = "Introduction to the Mechanics of a Continuous Medium",
+    year = "1969",
+    publisher = "Prentice-Hall"
+}
+</code></pre></div></div></li><li id="rashid1993incremental">MM&nbsp;Rashid.
+Incremental kinematics for finite element applications.
+<em>International Journal for Numerical Methods in Engineering</em>, 36(23):3937–3956, 1993.<a href="#f385999a-f0b4-4416-a44e-4a021bca98c9" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="f385999a-f0b4-4416-a44e-4a021bca98c9"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{rashid1993incremental,
+    author = "Rashid, MM",
+    title = "Incremental kinematics for finite element applications",
+    journal = "International Journal for Numerical Methods in Engineering",
+    volume = "36",
+    number = "23",
+    pages = "3937--3956",
+    year = "1993",
+    publisher = "Wiley Online Library"
+}
+</code></pre></div></div></li><li id="shammamy1967incremental">MR&nbsp;Shammamy and OM&nbsp;Sidebottom.
+Incremental versus total-strain theories for proportionate and nonproportionate loading of torsion-tension members.
+<em>Experimental Mechanics</em>, 7(12):497–505, 1967.<a href="#013ab508-62a4-422d-9f3d-cf3eae23a6b8" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="013ab508-62a4-422d-9f3d-cf3eae23a6b8"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{shammamy1967incremental,
+    author = "Shammamy, MR and Sidebottom, OM",
+    title = "Incremental versus total-strain theories for proportionate and nonproportionate loading of torsion-tension members",
+    journal = "Experimental Mechanics",
+    volume = "7",
+    number = "12",
+    pages = "497--505",
+    year = "1967",
+    publisher = "Springer"
+}
+</code></pre></div></div></li></ol></div></section></section><div class="moose-modal modal" id="946ddf5e-b960-4fc9-b218-c2c64d5383a5"><div class="modal-content"><h4>(moose/modules/tensor_mechanics/tutorials/basics/part_1.1.i)</h4><pre class="moose-pre"><code class="language-text">#Tensor Mechanics tutorial: the basics
+#Step 1, part 1
+#2D simulation of uniaxial tension with linear elasticity
+
+[GlobalParams]
+  displacements = &#x27;disp_x disp_y&#x27;
+[]
+
+[Mesh]
+  file = necking_quad4.e
+[]
+
+[Modules/TensorMechanics/Master]
+  [./block1]
+    strain = SMALL #Small linearized strain, automatically set to XY coordinates
+    add_variables = true #Add the variables from the displacement string in GlobalParams
+  [../]
+[]
+
+[Materials]
+  [./elasticity_tensor]
+    type = ComputeIsotropicElasticityTensor
+    youngs_modulus = 2.1e5
+    poissons_ratio = 0.3
+  [../]
+  [./stress]
+    type = ComputeLinearElasticStress
+  [../]
+[]
+
+[BCs]
+  [./left]
+    type = DirichletBC
+    variable = disp_x
+    boundary = left
+    value = 0.0
+  [../]
+  [./bottom]
+    type = DirichletBC
+    variable = disp_y
+    boundary = bottom
+    value = 0.0
+  [../]
+  [./top]
+    type = DirichletBC
+    variable = disp_y
+    boundary = top
+    value = 0.05
+  [../]
+[]
+
+[Preconditioning]
+  [./SMP]
+    type = SMP
+    full = true
+  [../]
+[]
+
+[Executioner]
+  type = Steady
+
+  solve_type = &#x27;NEWTON&#x27;
+
+  petsc_options = &#x27;-snes_ksp_ew&#x27;
+  petsc_options_iname = &#x27;-pc_type -sub_pc_type -pc_asm_overlap -ksp_gmres_restart&#x27;
+  petsc_options_value = &#x27;asm lu 1 101&#x27;
+[]
+
+[Outputs]
+  exodus = true
+  perf_graph = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="c1042a65-5667-443f-9419-b0cfab121b6d"><div class="modal-content"><h4>(moose/modules/tensor_mechanics/test/tests/thermal_expansion/constant_expansion_coeff.i)</h4><pre class="moose-pre"><code class="language-text"># This test involves only thermal expansion strains on a 2x2x2 cube of approximate
+# steel material.  An initial temperature of 25 degrees C is given for the material,
+# and an auxkernel is used to calculate the temperature in the entire cube to
+# raise the temperature each time step.  After the first timestep,in which the
+# temperature jumps, the temperature increases by 6.25C each timestep.
+# The thermal strain increment should therefore be
+#     6.25 C * 1.3e-5 1/C = 8.125e-5 m/m.
+
+# This test is also designed to be used to identify problems with restart files
+
+[Mesh]
+  type = GeneratedMesh
+  dim = 3
+  nx = 2
+  ny = 2
+  nz = 2
+[]
+
+[GlobalParams]
+  displacements = &#x27;disp_x disp_y disp_z&#x27;
+[]
+
+[AuxVariables]
+  [./temp]
+  [../]
+[]
+
+[Functions]
+  [./temperature_load]
+    type = ParsedFunction
+    value = t*(500.0)+300.0
+  [../]
+[]
+
+[Modules]
+  [./TensorMechanics]
+    [./Master]
+      [./all]
+        strain = SMALL
+        incremental = true
+        add_variables = true
+        eigenstrain_names = eigenstrain
+        generate_output = &#x27;strain_xx strain_yy strain_zz&#x27;
+      [../]
+    [../]
+  [../]
+[]
+
+[AuxKernels]
+  [./tempfuncaux]
+    type = FunctionAux
+    variable = temp
+    function = temperature_load
+  [../]
+[]
+
+[BCs]
+  [./x_bot]
+    type = DirichletBC
+    variable = disp_x
+    boundary = left
+    value = 0.0
+  [../]
+  [./y_bot]
+    type = DirichletBC
+    variable = disp_y
+    boundary = bottom
+    value = 0.0
+  [../]
+  [./z_bot]
+    type = DirichletBC
+    variable = disp_z
+    boundary = back
+    value = 0.0
+  [../]
+[]
+
+[Materials]
+  [./elasticity_tensor]
+    type = ComputeIsotropicElasticityTensor
+    youngs_modulus = 2.1e5
+    poissons_ratio = 0.3
+  [../]
+  [./small_stress]
+    type = ComputeFiniteStrainElasticStress
+  [../]
+  [./thermal_expansion_strain]
+    type = ComputeThermalExpansionEigenstrain
+    stress_free_temperature = 298
+    thermal_expansion_coeff = 1.3e-5
+    temperature = temp
+    eigenstrain_name = eigenstrain
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+  solve_type = &#x27;PJFNK&#x27;
+
+  l_max_its = 50
+  nl_max_its = 50
+  nl_rel_tol = 1e-12
+  nl_abs_tol = 1e-10
+  l_tol = 1e-9
+
+  start_time = 0.0
+  end_time = 0.075
+  dt = 0.0125
+  dtmin = 0.0001
+[]
+
+[Outputs]
+  csv = true
+  exodus = true
+  checkpoint = true
+[]
+
+[Postprocessors]
+  [./strain_xx]
+    type = ElementAverageValue
+    variable = strain_xx
+  [../]
+  [./strain_yy]
+    type = ElementAverageValue
+    variable = strain_yy
+  [../]
+  [./strain_zz]
+    type = ElementAverageValue
+    variable = strain_zz
+  [../]
+  [./temperature]
+    type = AverageNodalVariableValue
+    variable = temp
+  [../]
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="c01700ba-77a5-459d-b4dd-e0882896576e"><div class="modal-content"><h4>(moose/modules/tensor_mechanics/test/tests/finite_strain_elastic/finite_strain_elastic_new_test.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 3
+  elem_type = HEX8
+[]
+
+[GlobalParams]
+  displacements = &#x27;disp_x disp_y disp_z&#x27;
+[]
+
+[Functions]
+  [./tdisp]
+    type = ParsedFunction
+    value = &#x27;0.01 * t&#x27;
+  [../]
+[]
+
+[Modules]
+  [./TensorMechanics]
+    [./Master]
+      [./all]
+        strain = FINITE
+        add_variables = true
+      [../]
+    [../]
+  [../]
+[]
+
+[BCs]
+  [./symmy]
+    type = DirichletBC
+    variable = disp_y
+    boundary = bottom
+    value = 0
+  [../]
+  [./symmx]
+    type = DirichletBC
+    variable = disp_x
+    boundary = left
+    value = 0
+  [../]
+  [./symmz]
+    type = DirichletBC
+    variable = disp_z
+    boundary = back
+    value = 0
+  [../]
+  [./tdisp]
+    type = FunctionDirichletBC
+    variable = disp_z
+    boundary = front
+    function = tdisp
+  [../]
+[]
+
+[Materials]
+  [./elasticity_tensor]
+    type = ComputeElasticityTensor
+    C_ijkl = &#x27;1.684e5 0.176e5 0.176e5 1.684e5 0.176e5 1.684e5 0.754e5 0.754e5 0.754e5&#x27;
+    fill_method = symmetric9
+  [../]
+  [./stress]
+    type = ComputeFiniteStrainElasticStress
+  [../]
+[]
+
+[Preconditioning]
+  [./smp]
+    type = SMP
+    full = true
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+  dt = 0.05
+
+  #Preconditioned JFNK (default)
+  solve_type = &#x27;PJFNK&#x27;
+
+  petsc_options_iname = -pc_hypre_type
+  petsc_options_value = boomeramg
+  nl_abs_tol = 1e-10
+  nl_rel_step_tol = 1e-10
+  dtmax = 10.0
+  nl_rel_tol = 1e-10
+  end_time = 1
+  dtmin = 0.05
+  num_steps = 10
+  nl_abs_step_tol = 1e-10
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
